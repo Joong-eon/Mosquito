@@ -8,6 +8,7 @@ public class Program {
 		System.out.println("hello~!~!~!!");
 		System.out.println("im jun~");
 		System.out.println("1111111");
+		System.out.println("제발 되어라");
 	}
 
 }
