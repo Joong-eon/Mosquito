@@ -9,6 +9,7 @@ public class Program {
 		System.out.println("im jun~");
 		System.out.println("1111111");
 		System.out.println("제발 되어라");
+		System.out.println("되냐?");
 	}
 
 }
