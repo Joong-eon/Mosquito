@@ -7,7 +7,7 @@ public class Program {
 		
 		System.out.println("hello~!~!~!!");
 		System.out.println("im jun~");
-		System.out.println("??");
+		System.out.println("1111111");
 	}
 
 }
