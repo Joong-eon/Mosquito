@@ -1,14 +1,21 @@
+
 package com.newlecture.mosquito;
 
 import java.awt.Frame;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+import com.newlecture.mosquito.entity.Stage;
+import com.newlecture.mosquito.service.DataService;
 
 public class Program {
 
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
 		Frame frame = new GameFrame();
-		
 		DataService ds = new DataService();
 		
 		
@@ -22,7 +29,7 @@ public class Program {
 		// gameConfig.txt에 stage1에 대한 항목이 존재하면 유효한 값을 반환합니다.
 		System.out.printf("스테이지%d에서 생성 가능한 최대 모기 수 : %d\n", 1, defalutStage.mosqMaxCount);
 		
-	
-	}
 
+		
+	}
 }
