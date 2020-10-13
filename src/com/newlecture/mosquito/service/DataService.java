@@ -12,17 +12,17 @@ import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
 
-// µ¥ÀÌÅÍ ÀÔÃâ·ÂÀ» ´ã´çÇÏ´Â ¼­ºñ½º °´Ã¼
+// ë°ì´í„° ì…ì¶œë ¥ì„ ë‹´ë‹¹í•˜ëŠ” ì„œë¹„ìŠ¤ ê°ì²´
 public class DataService {
 
 	// [default] : 
-	// [stageN] : N¹øÂ° ½ºÅ×ÀÌÁöÀÇ ±âº» Á¤º¸¸¦ ÀúÀå.
+	// [stageN] : Në²ˆì§¸ ìŠ¤í…Œì´ì§€ì˜ ê¸°ë³¸ ì •ë³´ë¥¼ ì €ì¥.
 	
 	private String gameFileName;
 	private String userFileName;
 	
 	
-	// mapÀÌ¶õ -> Key(ÀÌ¸§), Value(µ¥ÀÌÅÍ)·Î ÀÚ·á¸¦ ÀúÀå ÇÒ ¼ö ÀÖ´Â ÄÃ·º¼ÇÀÇ ÀÏÁ¾
+	// mapì´ë€ -> Key(ì´ë¦„), Value(ë°ì´í„°)ë¡œ ìë£Œë¥¼ ì €ì¥ í•  ìˆ˜ ìˆëŠ” ì»¬ë ‰ì…˜ì˜ ì¼ì¢…
 	// TreeMap<[defalut], TreeMap<playerLevel,1>> 
 	private TreeMap<String, TreeMap<String, String>> allDatas;
 	private static DataService instance;
@@ -35,8 +35,8 @@ public class DataService {
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
 		try {
-			loadGameConfig();		// GameConfig.txt ÆÄÀÏ ÀĞ¾î¿È
-			loadUserConfig();		// UserConfig.txt ÆÄÀÏÀ» ÀĞ¾î¿È
+			loadGameConfig();		// GameConfig.txt íŒŒì¼ ì½ì–´ì˜´
+			loadUserConfig();		// UserConfig.txt íŒŒì¼ì„ ì½ì–´ì˜´
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class DataService {
 	}
 	
 
-	// data Æú´õ¿¡ Á¸Á¦ÇÏ´Â gameConfig ÆÄÀÏÀ» ÀĞ¾î¿È
+	// data í´ë”ì— ì¡´ì œí•˜ëŠ” gameConfig íŒŒì¼ì„ ì½ì–´ì˜´
 	private void loadGameConfig() throws IOException {
 		FileInputStream fis = new FileInputStream("data/gameConfig.txt");
 		Scanner scan = new Scanner(fis);
@@ -61,10 +61,10 @@ public class DataService {
 
 			line.trim();
 			String firstText = line.substring(0, 1);
-			if (true == firstText.equals("[")) { // [·Î ½ÃÀÛÇÏ´Â ¶óÀÎÀº ¾î¶² Ç×¸ñÀÎÁö¸¦ ¾Ë·ÁÁÖ´Â ÅØ½ºÆ®
-				// »õ·Î¿î Ç×¸ñÀ» ³ÖÀ» °Çµ¥ ±âÁ¸ Ç×¸ñ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é ÀüÃ¼ µ¥ÀÌÅÍ¿¡ ³Ö¾îÁÜ
+			if (true == firstText.equals("[")) { // [ë¡œ ì‹œì‘í•˜ëŠ” ë¼ì¸ì€ ì–´ë–¤ í•­ëª©ì¸ì§€ë¥¼ ì•Œë ¤ì£¼ëŠ” í…ìŠ¤íŠ¸
+				// ìƒˆë¡œìš´ í•­ëª©ì„ ë„£ì„ ê±´ë° ê¸°ì¡´ í•­ëª© ë°ì´í„°ê°€ ìˆìœ¼ë©´ ì „ì²´ ë°ì´í„°ì— ë„£ì–´ì¤Œ
 				if (datas != null) {
-					// ÀüÃ¼ µ¥ÀÌÅÍ¿¡ Ãß°¡
+					// ì „ì²´ ë°ì´í„°ì— ì¶”ê°€
 					allDatas.put(title, datas);
 					datas = null;
 					title = "";
@@ -74,7 +74,7 @@ public class DataService {
 				System.out.println("change Title : " + title);
 
 			} else if (false == title.equals("")) {
-				if (datas == null) { // ¼¼ºÎ Ç×¸ñ ÀĞ¾î¿Ã°Å¶ó ´ãÀ» °ø°£ ¸¸µé¾î³õÀ½
+				if (datas == null) { // ì„¸ë¶€ í•­ëª© ì½ì–´ì˜¬ê±°ë¼ ë‹´ì„ ê³µê°„ ë§Œë“¤ì–´ë†“ìŒ
 					datas = new TreeMap<String, String>();
 				}
 				String[] contents = line.split("=");
@@ -83,14 +83,14 @@ public class DataService {
 			}
 		}
 
-		// ´ÙÀ½ÁÙÀÌ ¾ø°Å³ª, Å¸ÀÌÆ²ÀÌ ¹Ù²î¸é
+		// ë‹¤ìŒì¤„ì´ ì—†ê±°ë‚˜, íƒ€ì´í‹€ì´ ë°”ë€Œë©´
 		if (false == title.equals("") || null != datas) {
 			allDatas.put(title, datas);
 			datas = null;
 			title = "";
 		}
 
-		// Ãâ·Â È®ÀÎ¿ë
+		// ì¶œë ¥ í™•ì¸ìš©
 //		for (String key : allDatas.keySet()) {
 //			System.out.println("[" + key + "]");
 //			TreeMap<String, String> contents = allDatas.get(key);
@@ -109,13 +109,13 @@ public class DataService {
 	private void loadUserConfig() {
 		// TODO Auto-generated method stub
 		
-		// UserConfig.txt ÆÄÀÏÀ» ÀĞ¾î¿È
-		// GameConfig ÆÄÀÏ°ú ºĞ¸®ÇÑ ÀÌÀ¯ : UserConfig ÆÄÀÏ °°Àº °æ¿ì´Â À¯ÀúÀÇ °ÔÀÓ °á°ú¿¡ µû¶ó ÀúÀåµÇ´Â °ªÀÌ »ı±æ °Í°°¾Æ¼­ µû·Î ºĞ¸®ÇÔ
-		// (GameConfig¿¡ °°ÀÌ ÇÏ¸é ±»ÀÌ ÇÑ¹ø´õ ÀúÀå ¾ÈÇØµµ µÇ´Â°É ÀúÀåÇØ¾ßÇÏ´Â ºÒÇÊ¿äÇÑ ÀÏÀÌ »ı±è)
+		// UserConfig.txt íŒŒì¼ì„ ì½ì–´ì˜´
+		// GameConfig íŒŒì¼ê³¼ ë¶„ë¦¬í•œ ì´ìœ  : UserConfig íŒŒì¼ ê°™ì€ ê²½ìš°ëŠ” ìœ ì €ì˜ ê²Œì„ ê²°ê³¼ì— ë”°ë¼ ì €ì¥ë˜ëŠ” ê°’ì´ ìƒê¸¸ ê²ƒê°™ì•„ì„œ ë”°ë¡œ ë¶„ë¦¬í•¨
+		// (GameConfigì— ê°™ì´ í•˜ë©´ êµ³ì´ í•œë²ˆë” ì €ì¥ ì•ˆí•´ë„ ë˜ëŠ”ê±¸ ì €ì¥í•´ì•¼í•˜ëŠ” ë¶ˆí•„ìš”í•œ ì¼ì´ ìƒê¹€)
 	}
 	
 	public static void save() throws IOException {
-		// ÃßÈÄ °³¹ß ¿¹Á¤
+		// ì¶”í›„ ê°œë°œ ì˜ˆì •
 	}
 	
 	
@@ -133,12 +133,12 @@ public class DataService {
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
 
-			// °ª ³Ö±â
+			// ê°’ ë„£ê¸°
 			stage.mosqCreateCount = Integer.parseInt(mosqCreateCount);
 			stage.mosqMaxCount = Integer.parseInt(mosqMaxCount);
 			stage.mosqCreateTime = Integer.parseInt(mosqCreateTime);
 			
-			// °ª ³Ö±â
+			// ê°’ ë„£ê¸°
 			stage.buttMaxCount = Integer.parseInt(buttMaxCount);
 			stage.buttCreateCount = Integer.parseInt(buttCreateCount);
 			stage.buttCreateTime = Integer.parseInt(buttCreateTime);

@@ -14,32 +14,21 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		
-		System.out.println("ï¿½èº´ï¿½ï¿½ ");
-		System.out.println("Thanks!");
-		System.out.println("?•ˆ?…•?•ˆ?…• >?… <");
-		
 		DataService ds = new DataService();
 		
 		
-		// ¾Æ·¡ ÄÚµå´Â DataServiceÀÇ ¿¹½Ã ÀÔ´Ï´Ù. ³ªÁß¿¡ Áö¿ï°Ô¿ä.
-		// ÃÊ±â ÇÃ·¹ÀÌ¾î ·¹º§(µî±Ş)À» °¡Á®¿À·Á°í ÇÏ¸é => ÇÃ·¹ÀÌ¾î ·¹º§Àº Á¤¼öÇü(¼ıÀÚ)ÀÌ¹Ç·Î getIntValue()¸¦ »ç¿ëÇÕ´Ï´Ù 
-		int playerLevel = DataService.getInstance().getIntValue("default", "playerLevel");		// ¿ÀÅ¸³ª¸é ¾ÈµÅ¿ä,,,
+		// ì•„ë˜ ì½”ë“œëŠ” DataServiceì˜ ì˜ˆì‹œ ì…ë‹ˆë‹¤. ë‚˜ì¤‘ì— ì§€ìš¸ê²Œìš”.
+		// ì´ˆê¸° í”Œë ˆì´ì–´ ë ˆë²¨(ë“±ê¸‰)ì„ ê°€ì ¸ì˜¤ë ¤ê³  í•˜ë©´ => í”Œë ˆì´ì–´ ë ˆë²¨ì€ ì •ìˆ˜í˜•(ìˆ«ì)ì´ë¯€ë¡œ getIntValue()ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤ 
+		int playerLevel = DataService.getInstance().getIntValue("default", "playerLevel");		// ì˜¤íƒ€ë‚˜ë©´ ì•ˆë¼ìš”,,,
 		System.out.println(playerLevel);
 		
-		// ½ºÅ×ÀÌÁö Á¤º¸¸¦ °¡Á®¿À·Á°í ÇÏ¸é => ½ºÅ×ÀÌÁö Á¤º¸´Â Stage°´Ã¼¿¡ µ¥ÀÌÅÍ¸¦ ´ã¾Æ ¹İÈ¯ÇÕ´Ï´Ù. ¸Ş¼Òµå´Â getStageValue()»ç¿ë!
+		// ìŠ¤í…Œì´ì§€ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ë ¤ê³  í•˜ë©´ => ìŠ¤í…Œì´ì§€ ì •ë³´ëŠ” Stageê°ì²´ì— ë°ì´í„°ë¥¼ ë‹´ì•„ ë°˜í™˜í•©ë‹ˆë‹¤. ë©”ì†Œë“œëŠ” getStageValue()ì‚¬ìš©!
 		Stage defalutStage = DataService.getInstance().getStageValue(1);
-		// gameConfig.txt¿¡ stage1¿¡ ´ëÇÑ Ç×¸ñÀÌ Á¸ÀçÇÏ¸é À¯È¿ÇÑ °ªÀ» ¹İÈ¯ÇÕ´Ï´Ù.
-		System.out.printf("½ºÅ×ÀÌÁö%d¿¡¼­ »ı¼º °¡´ÉÇÑ ÃÖ´ë ¸ğ±â ¼ö : %d\n", 1, defalutStage.mosqMaxCount);
+		// gameConfig.txtì— stage1ì— ëŒ€í•œ í•­ëª©ì´ ì¡´ì¬í•˜ë©´ ìœ íš¨í•œ ê°’ì„ ë°˜í™˜í•©ë‹ˆë‹¤.
+		System.out.printf("ìŠ¤í…Œì´ì§€%dì—ì„œ ìƒì„± ê°€ëŠ¥í•œ ìµœëŒ€ ëª¨ê¸° ìˆ˜ : %d\n", 1, defalutStage.mosqMaxCount);
 		
-		
-		
+	
 		
 		
 	}
-	
-	
-	
-	
-
 }
