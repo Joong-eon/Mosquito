@@ -10,9 +10,9 @@ import com.newlecture.mosquito.service.MosquitoService;
 import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas{
-	//°´Ã¼ ¼±¾ð
+	//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	public static Canvas instance;
-	Thread th;//½º·¹µå
+	Thread th;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	private MosquitoService mosqs;
 	private Weapon weapon;
@@ -21,7 +21,9 @@ public class StageCanvas extends Canvas{
 	//private StageService stages;
 	
 	
-	public StageCanvas() {//»ý¼ºÀÚ
+	public StageCanvas() {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		instance = this;
+		
 		mosqs = new MosquitoService();
 		weapon = new Weapon();
 		butt = new Butterfly();
@@ -34,7 +36,9 @@ public class StageCanvas extends Canvas{
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		super.paint(g);
+		
+		weapon.paint(g);
+		//super.paint(g);
 	}
 
 
@@ -46,11 +50,11 @@ public class StageCanvas extends Canvas{
 	
 	public boolean mouseDown(Event evt, int x, int y) {
 		
-		
+		weapon.move(x,y);
 		return super.mouseDown(evt, x, y);
 	}
 	
-	public void start() {//½º·¹µå »ý¼º
+	public void start() {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		Runnable sub = new Runnable() {
 
@@ -58,7 +62,16 @@ public class StageCanvas extends Canvas{
 			public void run() {
 
 				while (true) {
+					weapon.update();
+
+					repaint();
 					
+					try {
+						Thread.sleep(17);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		};
@@ -66,6 +79,4 @@ public class StageCanvas extends Canvas{
 		th = new Thread(sub);
 		th.start();
 	}
-	
-	
 }
