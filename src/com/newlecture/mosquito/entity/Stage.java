@@ -1,19 +1,19 @@
 package com.newlecture.mosquito.entity;
 
-// °ªÀ» ´ã±â À§ÇØ¼­¸¸ ¾²ÀÌ´Â ±¸Á¶Ã¼ °°Àº Á¤º¸ Å¬·¡½º
-// °ªÀ» ´ã°í ÀÖ´Â °Í ¿Ü¿¡´Â º°´Ù¸¥ ±â´ÉÀÌ ¾ø¾î
-// º¯¼öÀÇ Á¢±ÙÁ¦¾îÀÚ¸¦ publicÀ¸·Î ¼³Á¤ÇÔ. 
+//ê°’ì„ ë‹´ê¸° ìœ„í•´ì„œë§Œ ì“°ì´ëŠ” êµ¬ì¡°ì²´ ê°™ì€ ì •ë³´ í´ë˜ìŠ¤
+//ê°’ì„ ë‹´ê³  ìˆëŠ” ê²ƒ ì™¸ì—ëŠ” ë³„ë‹¤ë¥¸ ê¸°ëŠ¥ì´ ì—†ì–´
+//ë³€ìˆ˜ì˜ ì ‘ê·¼ì œì–´ìë¥¼ publicìœ¼ë¡œ ì„¤ì •í•¨. 
 
 public class Stage {
-	public int stageIndex;			// ÇöÀç ½ºÅ×ÀÌÁö ÀÎµ¦½º
+	public int stageIndex;			// í˜„ì¬ ìŠ¤í…Œì´ì§€ ì¸ë±ìŠ¤
 	
-	public int mosqCreateCount;		// ½ºÅ×ÀÌÁö ´ç ÃÖ´ë »ı¼º °¡´ÉÇÑ ¸ğ±â ¼ö
-	public int mosqMaxCount;		// »ı¼º ÁÖ±â¿¡ µû¶ó »ı¼ºµÇ´Â ¸ğ±â ¼ö
-	public int mosqCreateTime;		// ¸ğ±â »ı¼ºÁÖ±â
+	public int mosqCreateCount;		// ìŠ¤í…Œì´ì§€ ë‹¹ ìµœëŒ€ ìƒì„± ê°€ëŠ¥í•œ ëª¨ê¸° ìˆ˜
+	public int mosqMaxCount;		// ìƒì„± ì£¼ê¸°ì— ë”°ë¼ ìƒì„±ë˜ëŠ” ëª¨ê¸° ìˆ˜
+	public int mosqCreateTime;		// ëª¨ê¸° ìƒì„±ì£¼ê¸°
 	
-	public int buttMaxCount;		// ½ºÅ×ÀÌÁö ´ç ÃÖ´ë »ı¼º °¡´ÉÇÑ ³ªºñ ¼ö
-	public int buttCreateCount;		// »ı¼º ÁÖ±â¿¡ µû¶ó »ı¼ºµÇ´Â ³ªºñ ¼ö
-	public int buttCreateTime; 		// ³ªºñ »ı¼º ÁÖ±â
+	public int buttMaxCount;		// ìŠ¤í…Œì´ì§€ ë‹¹ ìµœëŒ€ ìƒì„± ê°€ëŠ¥í•œ ë‚˜ë¹„ ìˆ˜
+	public int buttCreateCount;		// ìƒì„± ì£¼ê¸°ì— ë”°ë¼ ìƒì„±ë˜ëŠ” ë‚˜ë¹„ ìˆ˜
+	public int buttCreateTime; 		// ë‚˜ë¹„ ìƒì„± ì£¼ê¸°
 	
 	
 	public Stage() {
