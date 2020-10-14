@@ -9,6 +9,7 @@ public class GameFrame extends Frame {
 	public GameFrame() {
 		
 		StageCanvas stageCanvas = new StageCanvas();
+		stageCanvas.start();
 		
 		this.setSize(500,500);
 		this.setVisible(true);
