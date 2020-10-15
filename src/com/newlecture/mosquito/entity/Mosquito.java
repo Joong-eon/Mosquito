@@ -11,28 +11,29 @@ public class Mosquito {
 	private double x;
 	private double y;	
 
-	//¾Ö´Ï¸ŞÀÌ¼ÇÀ» À§ÇÑ º¯¼ö
+	// ì• ë‹ˆë©”ì´ì…˜ì„ ìœ„í•œ ë³€ìˆ˜
 	private double vx;
 	private double vy;	
 	private double dx;
 	private double dy;	
 	private int moveIndex;
-	private int speed = 2; //°ª º¯°æ ÇÊ¿ä
-	private int walkTempo = 10; //°ª º¯°æ ÇÊ¿ä
+	private int speed = 2; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+	private int walkTempo = 10; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 
-	//ÀÌ¹ÌÁö¸¦ À§ÇÑ º¯¼ö
+	//ì´ë¯¸ì§€ ë³€ìˆ˜
 	private Image img;
 	private int w = 320; 
 	private int h = 270; 
-	private int timeoutForMoving=30;//ÃÊ±âÈ­
+	private int timeoutForMoving=30;//ï¿½Ê±ï¿½È­
 	Random rand;
 	
-	//¸ğ±â ½ºÅİ
+	//ëª¨ê¸° ìŠ¤íƒ¯ë³€ìˆ˜
 	private int hp;
 	private int power;
-	//»ı¼ºÀÚ
+	
+	//ìƒì„±ì
 	public Mosquito() {
-		this(100,100); //°ª º¯°æ ÇÊ¿ä
+		this(100,100); //ëœë¤ê°’ìœ¼ë¡œ ìˆ˜ì •
 	}
 	public Mosquito(double x, double y) {
 		this.x = x;
@@ -40,10 +41,10 @@ public class Mosquito {
 		rand = new Random();
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		img = tk.getImage("res/mosquito.png");
-		this.move(250,250); //°ª º¯°æ ÇÊ¿ä
+		this.move(250,250); //ëœë¤ê°’ìœ¼ë¡œ ìˆ˜ì •
 	}
 	
-	//¿òÁ÷ÀÓ(move)ÇÔ¼ö
+	//ì›€ì§ì„ í•¨ìˆ˜
 	private void move(double x, double y) {
 		this.dx = x;
 		this.dy = y;
@@ -55,7 +56,7 @@ public class Mosquito {
 		this.vy = h/d*speed;
 	}
 	
-	//¾÷µ¥ÀÌÆ®(update)ÇÔ¼ö
+	//ì—…ë°ì´íŠ¸ í•¨ìˆ˜
 	public void update() {
 
 		timeoutForMoving--;
@@ -64,7 +65,7 @@ public class Mosquito {
 			int dy = rand.nextInt(StageCanvas.instance.getHeight()-h)+h/2;
 
 			this.move(dx,dy);
-			timeoutForMoving = rand.nextInt(60)+60; //°ª º¯°æ ÇÊ¿ä
+			timeoutForMoving = rand.nextInt(60)+60; //ëœë¤ê°’ ìˆ˜ì •í•„ìš”
 		}
 
 		if((this.x-1<=this.dx&&this.dx<=this.x+1)&&
@@ -77,7 +78,7 @@ public class Mosquito {
 		this.y += this.vy;
 	}
 	
-	//ÆäÀÎÆ®(paint)ÇÔ¼ö
+	//í˜ì¸íŠ¸ í•¨ìˆ˜
 	public void paint(Graphics g) {
 
 		int w = this.w;
@@ -95,7 +96,7 @@ public class Mosquito {
 		else
 			walkTempo --;
 		int offsetX = moveIndex*w;
-		if(moveIndex<5) //°ª º¯°æ ÇÊ¿ä
+		if(moveIndex<5) 
 			offsetX-=1;
 
 		if(vx>0)
@@ -105,16 +106,16 @@ public class Mosquito {
 
 	}
 	
-	//¸ğ±â °ø°İ(attack)ÇÔ¼ö
+	//ê³µê²©í•¨ìˆ˜
 	public void attack() {
 		int power = this.power;
-		power = 1; //°ª º¯°æ ÇÊ¿ä
+		power = 1; //ë³€ìˆ˜ ì²˜ë¦¬
 	}
 	
-	//¸ğ±â Ã¼·Â(hp)ÇÔ¼ö
+	//ëª¨ê¸° ì²´ë ¥í•˜ìˆ˜
 //	public void hp() {
 //		int hp = this.hp;
-//		hp = 2; //º¯¼öÃ³¸®(½ºÅ×ÀÌÁö¸¶´Ù ¿Ã¶ó°¡°Ô²û)
+//		hp = 2; //ë³€ìˆ˜ì²˜ë¦¬í•´ì„œ ìŠ¤í…Œì´ì§€ë§ˆë‹¤ ê°’ ë³€í™”
 //		while(player.attck()) {
 //			hp--;
 //			
@@ -124,7 +125,7 @@ public class Mosquito {
 //		}
 //	}
 	
-	//¸ğ±â Á×À½ÇÔ¼ö
+	//ëª¨ê¸° ì£½ëŠ” í•¨ìˆ˜
 //	private void die() {
 //		
 //		
