@@ -12,6 +12,8 @@ public class ImageLoader {
 	public static Image menuBtnNormal;
 	public static Image menuBtnHover;
 	public static Image menuBtnPressed;
+	public static Image menuBackground;
+	public static Image butterfly;
 	
 	static {
 		try {
@@ -19,6 +21,8 @@ public class ImageLoader {
 			menuBtnNormal = ImageIO.read(new File("res/woodButton_normal.png"));
 			menuBtnHover = ImageIO.read(new File("res/woodButton_hover.png"));
 			menuBtnPressed = ImageIO.read(new File("res/woodButton_pressed.png"));
+			menuBackground = ImageIO.read(new File("res/menu_bg.jpg"));
+			butterfly = ImageIO.read(new File("res/butterfly.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
