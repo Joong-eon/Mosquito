@@ -13,12 +13,16 @@ public class ImageLoader {
 	public static Image menuBtnHover;
 	public static Image menuBtnPressed;
 	
+	public static Image butterfly;
+	
 	static {
 		try {
 			// 동기 방식 이미지 로드.
 			menuBtnNormal = ImageIO.read(new File("res/woodButton_normal.png"));
 			menuBtnHover = ImageIO.read(new File("res/woodButton_hover.png"));
 			menuBtnPressed = ImageIO.read(new File("res/woodButton_pressed.png"));
+			
+			butterfly = ImageIO.read(new File("res/butterfly.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
