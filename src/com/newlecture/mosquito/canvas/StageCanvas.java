@@ -52,7 +52,7 @@ public class StageCanvas extends Canvas{
 		Graphics bg = buf.getGraphics();
 
 		timer.paint(bg);
-
+		butt.paint(bg);
 		g.drawImage(buf, 0, 0, this);//
 		
 	}
@@ -80,7 +80,7 @@ public class StageCanvas extends Canvas{
 				while (true) {
 					//weapon.update();
 					timer.update();
-					
+					butt.update();
 					repaint();
 					
 					try {
