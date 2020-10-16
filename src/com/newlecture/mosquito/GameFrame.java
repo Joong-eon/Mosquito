@@ -27,12 +27,6 @@ public class GameFrame extends Frame {
 		this.setVisible(true);
 
 		this.add(menuCanvas);
-		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent we) {
-				System.exit(0);
-			}
-		});
 
 	}
 
