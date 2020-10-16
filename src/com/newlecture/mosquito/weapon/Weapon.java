@@ -15,6 +15,7 @@ public class Weapon {
 	private int damage;
 	private double prob;
 	private Image img;
+	private int isClicked=0;
 	
 	private int w = 72;
 	private int h = 52;
@@ -40,7 +41,7 @@ public class Weapon {
 	
 	public void paint(Graphics g) {
 		System.out.println(1);
-		if(x != 0 && y !=0) {
+		if(isClicked == 1) {
 			if(moveTempo == 0) {
 				moveIndex++;
 				moveTempo = 6;
@@ -56,8 +57,7 @@ public class Weapon {
 		
 		if(moveIndex == 8) {
 			moveIndex = 1;
-			x = 0;
-			y = 0;
+			isClicked = 0;
 		}
 	}
 	
@@ -75,4 +75,10 @@ public class Weapon {
 	public void cursor() {//마우스 위치에 따라 이동 이동
 		
 	}
+
+	public void setIsClicked(int isClicked) {
+		this.isClicked = isClicked;
+	}
+	
+	
 }
