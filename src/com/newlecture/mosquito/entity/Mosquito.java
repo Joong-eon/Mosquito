@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.util.Random;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.service.ImageLoader;
 
 public class Mosquito extends Bug {
 //	private double x;
@@ -20,11 +21,12 @@ public class Mosquito extends Bug {
 //	private int speed = 2; //�� ���� �ʿ�
 //	private int walkTempo = 10; //�� ���� �ʿ�
 
+	private static String mosquito;
+	
 	//이미지 변수
-	private Image img;
-//	private int w = 320; 
+	Image img = ImageLoader.mosquito ;//	private int w = 320; 
 //	private int h = 270; 
-	private int timeoutForMoving=30;//�ʱ�ȭ
+//	private int timeoutForMoving=30;//�ʱ�ȭ
 	private Random rand;	
 	//모기 스탯변수
 	private int hp;
@@ -32,10 +34,10 @@ public class Mosquito extends Bug {
 	
 	//생성자
 	public Mosquito() {
-		this(100,100); //랜덤값으로 수정
+	//	this(100,100); //랜덤값으로 수정
 	}
 	public Mosquito(double x, double y) {
-		super(x,y,320,270,"res/mosquito.png");
+		super(x,y,320,270,mosquito );
 //		this.x = x;
 //		this.y = y;
 	rand = new Random();
@@ -59,50 +61,56 @@ public class Mosquito extends Bug {
 	//업데이트 함수
 		
 		
-	public void update() {
-
-		timeoutForMoving--;
-		if(timeoutForMoving == 0) {
-			
-			double width = getWidth();
-			double height = getHeight();
-			int w = StageCanvas.instance.getWidth()-(int)width;
-			int h = StageCanvas.instance.getHeight()-(int)height;
-			
-			int dx = rand.nextInt(w)+(int)this.getWidth()/2;
-			int dy = rand.nextInt(h)+(int)this.getHeight()/2;
-
-			this.move(dx,dy);
-			timeoutForMoving = rand.nextInt(60)+60; //랜덤값 수정필요
-		}
-			double x = getX();
-			double y = getY();
-			double dx = getDx();
-			double dy = getDy();
-			double vx = getVx();
-			double vy = getVy();
-			int movIndex = getMovIndex();
-
-		if((x-1<=dx&&dx<=x+1)&&
-				(y-1<=dy&&dy<=y+1)) {
-			vx=0;
-			vy=0;
-			movIndex = 0;
-			timeoutForMoving = 1;
-		}
-		x += vx;
-		y += vy;
-		
-        this.setX(x); 
-		
-		this.setY(y);
-		this.setVx(vx);
-		this.setVy(vy);
-		
-		this.setMovIndex(movIndex);
-	}
-	
-	//페인트 함수
+//	public void update() {
+//
+//		timeoutForMoving--;
+//		if(timeoutForMoving == 0) {
+//			
+//			double width = getWidth();
+//			double height = getHeight();
+////			int w = StageCanvas.instance.getWidth()-(int)width;
+////			int h = StageCanvas.instance.getHeight()-(int)height;
+//			
+//			int w = StageCanvas.instance.getWidth()-(int)width;
+//     		int h = StageCanvas.instance.getHeight()-(int)height;
+//			
+////			int dx = rand.nextInt(w)+(int)this.getWidth()/2;
+////			int dy = rand.nextInt(h)+(int)this.getHeight()/2;
+//     		
+//     		int dx = rand.nextInt(w);
+//			int dy = rand.nextInt(h);
+//
+//			this.move(dx,dy);
+//			timeoutForMoving = rand.nextInt(60)+60; //랜덤값 수정필요
+//		}
+//			double x = getX();
+//			double y = getY();
+////			double dx = getDx();
+////			double dy = getDy();
+//			double vx = getVx();
+//			double vy = getVy();
+//			int movIndex = getMovIndex();
+//
+////		if((x-1<=dx&&dx<=x+1)&&
+////				(y-1<=dy&&dy<=y+1)) {
+////			vx=0;
+////			vy=0;
+////			movIndex = 0;
+////			timeoutForMoving = 1;
+////		}
+//		x += vx;
+//		y += vy;
+//		
+//        this.setX(x); 
+//		
+//		this.setY(y);
+//		this.setVx(vx);
+//		this.setVy(vy);
+//		
+//		this.setMovIndex(movIndex);
+//	}
+//	
+//	//페인트 함수
 	public void paint(Graphics g) {
 
 		int w = (int)this.getWidth();

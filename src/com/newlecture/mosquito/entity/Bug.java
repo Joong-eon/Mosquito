@@ -2,8 +2,18 @@ package com.newlecture.mosquito.entity;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Random;
+
+import com.newlecture.mosquito.GameFrame;
 
 public abstract class Bug{
+	
+	
+	
+
+	
+	
+	
 	private double x;
 	private double y;
 
@@ -16,29 +26,53 @@ public abstract class Bug{
 	private double height;
 	private Image img;
 
-	private int movIndex = 0;
-	private int speed = 1;
-	private int walkTempo = 6;
+	private int timeoutForMoving=30;
+	private int movIndex ;
+	private int speed ;
+	private int walkTempo ;
+	private int outRange ;
+	
+	private Random rand = new Random();
+	
 
-	public Bug() {
+
+	public Bug() {   // 모기, 나비 초기값.
 		this(0,0,0,0,null);
+		
+		int w = GameFrame.canvasWidth;
+		int h = GameFrame.canvasHeight;
+		
+		// 나비가 화면 바깥에서 나오게하기 위해 상하좌우 60만큼 좌표 추가
+		double x = (double) rand.nextInt(w + outRange * 2 + 1) - 60; 
+		double y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
+
+		// 만약 화면 안쪽에 나비가 생성되었을 경우 좌표 다시 설정
+		while (-30 < x && x < w + 30 && -30 < y && y < h + 30) {
+			x = (double) rand.nextInt(w + outRange * 2 + 1) - 60;
+			y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
+		}
 	}
 	public Bug(double x, double y, String imgSrc) {
-		this(x,y,0,0,imgSrc);
+		this(x,y,0,0,imgSrc );
 	}
 
 	public  Bug(double x, double y, int width, int height, String imgSrc) {
-	//	Toolkit tk = Toolkit.getDefaultToolkit();//비동기
+	
 		img =getImage();//tk.getImage(imgSrc);
 
 		this.x=x;
 		this.y=y;
 		this.width = width;
 		this.height = height;
+		
+		
+		movIndex = 0;
+		speed = 1;
+		walkTempo = 6;
 
 	}
 
-	protected abstract Image getImage() ;//서비스함수가아닌 자식에게만 공유 할 것은 protected
+	protected abstract Image getImage() ;
 		
 	
 	public void move(double x, double y) {
@@ -56,24 +90,31 @@ public abstract class Bug{
 
 	}
 
-	public abstract void update(); //자식에게 강요
+	public  void update() {
+	timeoutForMoving--;
+	if (timeoutForMoving == 0) {
+		double width = (int)this.width;
+		double height = (int)this.height;
 
+		int w = GameFrame.canvasWidth - (int) width;
+		int h = GameFrame.canvasHeight - (int) height;
+		int dx = rand.nextInt(w);
+		int dy = rand.nextInt(h);
+
+		this.move(dx, dy);
+	
+		timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
+	}
+	
+
+	x += vx;
+	y += vy;
+
+	
+	}
 	public abstract void paint(Graphics g);
 	
-	public boolean isSelected(int x, int y) {
-		int w = (int)this.width;
-		int h = (int)this.height;
-		int x1 = (int)this.x - w/2;
-		int y1 = (int)this.y- h+13;
-		int x2 = x1+w;
-		int y2 = y1+h;
-
-		if((x1  < x && x < x2)  
-				&& (y1 < y && y < y2))
-			return true;
-
-		return false;
-	}
+	
 
 	public double getX() {
 		return x;
@@ -169,6 +210,12 @@ public abstract class Bug{
 
 	public void setWalkTempo(int walkTempo) {
 		this.walkTempo = walkTempo;
+	}
+	public int getTimeoutForMoving() {
+		return timeoutForMoving;
+	}
+	public void setTimeoutForMoving(int timeoutForMoving) {
+		this.timeoutForMoving = timeoutForMoving;
 	}
 
 

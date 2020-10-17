@@ -1,6 +1,7 @@
 package com.newlecture.mosquito.service;
 
 import java.awt.Image;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ public class ImageLoader {
 	public static Image menuBtnHover;
 	public static Image menuBtnPressed;
 	public static Image menuBackground;
+	public static Image  mosquito;
 	public static Image butterfly;
 	
 	static {
@@ -22,6 +24,7 @@ public class ImageLoader {
 			menuBtnHover = ImageIO.read(new File("res/woodButton_hover.png"));
 			menuBtnPressed = ImageIO.read(new File("res/woodButton_pressed.png"));
 			menuBackground = ImageIO.read(new File("res/menu_bg.jpg"));
+		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
