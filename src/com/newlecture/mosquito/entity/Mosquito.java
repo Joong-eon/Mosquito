@@ -21,13 +21,13 @@ public class Mosquito extends Bug {
 //	private int speed = 2; //�� ���� �ʿ�
 //	private int walkTempo = 10; //�� ���� �ʿ�
 
-	private static String mosquito;
+//	private static String mosquito;
 	
 	//이미지 변수
 	Image img = ImageLoader.mosquito ;//	private int w = 320; 
 //	private int h = 270; 
 //	private int timeoutForMoving=30;//�ʱ�ȭ
-	private Random rand;	
+	private Random rand=new Random();	
 	//모기 스탯변수
 	private int hp;
 	private int power;
@@ -37,10 +37,10 @@ public class Mosquito extends Bug {
 	//	this(100,100); //랜덤값으로 수정
 	}
 	public Mosquito(double x, double y) {
-		super(x,y,320,270,mosquito );
+		super(x,y,320,270,"res/mosquito.png");
 //		this.x = x;
 //		this.y = y;
-	rand = new Random();
+//	rand = new Random();
 //		Toolkit tk = Toolkit.getDefaultToolkit();
 //		img = tk.getImage("res/mosquito.png");
 //		this.move(250,250); //랜덤값으로 수정

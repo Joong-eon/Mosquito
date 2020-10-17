@@ -15,7 +15,7 @@ import com.newlecture.mosquito.service.ImageLoader;
 public class Butterfly extends Bug {
 
 	
-	private static String butterfly;
+//	private static String butterfly;
 //	private double x;
 //	private double y;
 //
@@ -37,14 +37,26 @@ public class Butterfly extends Bug {
 //	private int movTempo;
 //	private int timeoutForMoving = 120;
 	
-	Image img = ImageLoader.butterfly;
+	
+	private Image img = ImageLoader.butterfly;
 	
 	private double lifeTime;
 	private int penaltyTime = 5;
 	
 	private Random rand = new Random();
 	
-	public Butterfly() {  // 생성자 추가
+//	static{
+//		try {
+//			img = ImageIO.read(new File("res/butterfly.png"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	
+	
+	public Butterfly() {  
 		
 	}
 
@@ -64,7 +76,7 @@ public class Butterfly extends Bug {
 
 		// 객체 좌표, 크기, 속도 설정
 		
-		super(x,y,60,60,  butterfly);
+		super(x,y,60,60, "res/butterfly.png");
 //		this.x = x;
 //		this.y = y;
 //
