@@ -10,6 +10,8 @@ mosqCreateTime=5
 buttMaxCount=0
 buttCreateCount=0
 buttCreateTime=0
+killScore=10
+winScore=300
 [stage2]
 mosqCreateCount=10
 mosqMaxCount=50
@@ -17,3 +19,5 @@ mosqCreateTime=3
 buttMaxCount=3
 buttCreateCount=2
 buttCreateTime=10
+killScore=20
+winScore=1000

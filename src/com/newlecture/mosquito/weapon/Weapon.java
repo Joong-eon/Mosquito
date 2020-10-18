@@ -41,7 +41,7 @@ public class Weapon {//추상클래스 구현
 	}
 	
 	public void paint(Graphics g) {
-		System.out.println(1);
+		
 		if(isClicked == 1) {
 			if(moveTempo == 0) {
 				moveIndex++;
@@ -66,12 +66,12 @@ public class Weapon {//추상클래스 구현
 		
 	}
 	
-	
+	/*
 	public void move(int x, int y) {//모기를 잡는 행위를 하는것
 		System.out.println(x+"  ,"+ y);
 		this.x = x;
 		this.y = y;
-	}
+	}*/
 	
 	public void cursor() {//마우스 위치에 따라 이동 이동
 		

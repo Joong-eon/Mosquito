@@ -48,12 +48,29 @@ public class StageCanvas extends Canvas{
 		p1 = new Player();
 		mos = new Mosquito();
 		
+		/* 추후 메뉴화면에서 적용
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		 Image cursorimage =ImageLoader.mosquito;
 		 Point point = new Point(5,5);
 	     Cursor cursor = tk.createCustomCursor(cursorimage, point, "");
 	     
-	     setCursor(cursor);
+	     setCursor(cursor);*/
+		
+		addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				
+				p1.getCurrentWp().setX(e.getX());
+				p1.getCurrentWp().setY(e.getY());
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 
@@ -74,6 +91,7 @@ public class StageCanvas extends Canvas{
 		timer.paint(bg);
 		butt.paint(bg);
 		mos.paint(bg);
+		p1.getCurrentWp().paint(bg);
 		g.drawImage(buf, 0, 0, this);//
 		
 	}
@@ -86,6 +104,8 @@ public class StageCanvas extends Canvas{
 	}
 	
 	public boolean mouseDown(Event evt, int x, int y) {
+		
+		//커서 이미지 변경 
 		
 		weapon.setIsClicked(1);//클릭 쿨타임 생성
 		

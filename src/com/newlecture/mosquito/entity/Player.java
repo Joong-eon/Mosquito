@@ -11,6 +11,7 @@ public class Player {
 	private int hp;
 	private int score;
 	
+	
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
 	
 	
@@ -26,6 +27,7 @@ public class Player {
 	
 	
 	public boolean attack(Bug bug) {
+		
 		//무기 확률 체크
 		double prob = Math.random();//0~1 랜덤 실수
 		
@@ -33,6 +35,7 @@ public class Player {
 			int bugHp = bug.getHp();
 			bugHp -= currentWp.getDamage();
 			bug.setHp(bugHp);
+			
 			return true;
 		}else
 			return false;
@@ -43,6 +46,56 @@ public class Player {
 	
 	public void changeWeapon() {
 		
+	}
+
+
+	public int getMoney() {
+		return money;
+	}
+
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+
+	public int getTier() {
+		return tier;
+	}
+
+
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
+
+
+	public Weapon getCurrentWp() {
+		return currentWp;
+	}
+
+
+	public void setCurrentWp(Weapon currentWp) {
+		this.currentWp = currentWp;
+	}
+
+
+	public int getHp() {
+		return hp;
+	}
+
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	

@@ -17,8 +17,8 @@ public class Timer {
 	private int y=0;
 	private int w = 39;
 	private int h = 44;
-	
-	private int timeForTimer = 120;
+	//private int totalCount=100;
+	private int timeForTimer = 60;
 	
 	
 	public Timer() {
@@ -41,9 +41,11 @@ public class Timer {
 		//1초당 이미지 좌표 변경
 		timeForTimer--;
 		if(timeForTimer == 0) {
+			//totalCount--;
+			
 			x += w;//십의자리 일의자리 좌표 세팅
 			
-			timeForTimer = 120;
+			timeForTimer = 60;
 		}
 	}
 	
