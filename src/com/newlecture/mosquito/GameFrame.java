@@ -2,6 +2,9 @@ package com.newlecture.mosquito;
 
 import java.awt.Canvas;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
 
@@ -27,6 +30,13 @@ public class GameFrame extends Frame {
 		this.setVisible(true);
 
 		this.add(menuCanvas);
+		
+		// close 코드 
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
 
 	}
 
