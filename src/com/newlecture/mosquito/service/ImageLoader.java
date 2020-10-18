@@ -14,7 +14,7 @@ public class ImageLoader {
 	public static Image menuBtnHover;
 	public static Image menuBtnPressed;
 	public static Image menuBackground;
-	public static Image  mosquito;
+	public static Image mosquito;
 	public static Image butterfly;
 	
 	static {

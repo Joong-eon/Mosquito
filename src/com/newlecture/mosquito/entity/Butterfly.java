@@ -38,7 +38,7 @@ public class Butterfly extends Bug {
 //	private int timeoutForMoving = 120;
 	
 	
-	private Image img = ImageLoader.butterfly;
+	private Image img;
 	
 	private double lifeTime;
 	private int penaltyTime = 5;
@@ -57,9 +57,15 @@ public class Butterfly extends Bug {
 //	
 	
 	public Butterfly() {  
+		// 
+		super();
+		this.setWidth(60);
+		this.setHeight(60);
+		setImg(ImageLoader.butterfly);
+		
 		
 	}
-
+/*
 	public Butterfly(double x, double y) {
 //		int w = GameFrame.canvasWidth;
 //		int h = GameFrame.canvasHeight;
@@ -77,13 +83,14 @@ public class Butterfly extends Bug {
 		// 객체 좌표, 크기, 속도 설정
 		
 		super(x,y,60,60, "res/butterfly.png");
+		System.out.println(img.toString()+"11111111");
 //		this.x = x;
 //		this.y = y;
 //
 //		this.width = 60;
 //		this.height = 60;
 		//this.speed = 1;
-	}
+	}*/
 
 //	public void move(double x, double y) {
 //		this.dx = x;
@@ -128,9 +135,12 @@ public class Butterfly extends Bug {
 //	}
 
 	public void paint(Graphics g) {
-
+		
+		//System.out.println(this.getX() + " ,,,,," + this.getY());
 		int w = (int) this.getWidth();
 		int h = (int) this.getHeight();
+		
+		//System.out.println(w + " ,,,,, 너비");
 		int x1 = (int) this.getX();
 		int y1 = (int) this.getY();
 		int x2 = x1 + w;

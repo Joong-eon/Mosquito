@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Mosquito;
+import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.service.MosquitoService;
@@ -21,6 +23,8 @@ public class StageCanvas extends Canvas{
 	private Butterfly butt;
 	private Stage stage1;
 	private Timer timer;
+	private Player p1;
+	private Mosquito mos;
 	//private StageService stages;
 	
 	private int count=1;
@@ -29,12 +33,13 @@ public class StageCanvas extends Canvas{
 	public StageCanvas() {//������
 		instance = this;
 		
-		mosqs = new MosquitoService();
+		//mosqs = new MosquitoService();
 		weapon = new Weapon();
 		butt = new Butterfly();
 		stage1 = new Stage();
 		timer = new Timer();
-		
+		p1 = new Player();
+		mos = new Mosquito();
 	}
 
 
@@ -53,6 +58,7 @@ public class StageCanvas extends Canvas{
 
 		timer.paint(bg);
 		butt.paint(bg);
+		mos.paint(bg);
 		g.drawImage(buf, 0, 0, this);//
 		
 	}
@@ -66,7 +72,11 @@ public class StageCanvas extends Canvas{
 	
 	public boolean mouseDown(Event evt, int x, int y) {
 		
-		weapon.setIsClicked(1);
+		weapon.setIsClicked(1);//클릭 쿨타임 생성
+		
+		//클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
+		p1.attack();
+		
 		return super.mouseDown(evt, x, y);
 	}
 	
@@ -81,6 +91,7 @@ public class StageCanvas extends Canvas{
 					//weapon.update();
 					timer.update();
 					butt.update();
+					mos.update();
 					repaint();
 					
 					try {

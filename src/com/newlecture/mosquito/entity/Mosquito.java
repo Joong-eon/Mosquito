@@ -35,6 +35,10 @@ public class Mosquito extends Bug {
 	//생성자
 	public Mosquito() {
 	//	this(100,100); //랜덤값으로 수정
+		super();
+		this.setWidth(320);
+		this.setHeight(270);
+		setImg(ImageLoader.mosquito);
 	}
 	public Mosquito(double x, double y) {
 		super(x,y,320,270,"res/mosquito.png");
@@ -112,21 +116,19 @@ public class Mosquito extends Bug {
 //	
 //	//페인트 함수
 	public void paint(Graphics g) {
-
 		int w = (int)this.getWidth();
 		int h = (int)this.getHeight();
-		int x1 = (int)this.getX()- w/2;
-		int y1 = (int)this.getY()-h/+13;
-		int x2 = x1+w;
-		int y2 = y1+h;
+		int x1 = (int)this.getX();
+		int y1 = (int)this.getY();
+		int x2 = x1 + 60;
+		int y2 = y1 + 60;
 		int walkTempo = getWalkTempo();
 		int movIndex = getMovIndex();
-		
 	
 		double vx = getVx();
 		double vy = getVy();
-		
 		Image img = getImg();
+		
 
 		if(walkTempo == 0) {
 			movIndex++;
@@ -134,15 +136,23 @@ public class Mosquito extends Bug {
 			walkTempo = 3; 
 		}
 		else
-			walkTempo --;
+			walkTempo--;
 		int offsetX = movIndex*w;
 		if(movIndex<5) 
 			offsetX-=1;
-
-		if(vx>0)
-			g.drawImage(img, x1, y1, x2, y2, 0+offsetX, 0, w+offsetX, h, StageCanvas.instance);
-		if(vx<0)
-			g.drawImage(img, x1, y1, x2, y2, 0+offsetX, h, w+offsetX, h+h, StageCanvas.instance);
+		
+		//int direction = 0;//Bug 클래스에 멤버 변수로 넣고 update에서 timeout==0일
+						//때마다 방향 체크해서 값 변경해주는걸로 해주면 될듯.
+/*
+		if(this.getX()<this.getDx()) {
+			this.setDirection(0);
+		}else {
+			this.setDirection(270);
+		}*/
+		System.out.println(this.getDirection());
+		
+		g.drawImage(img, x1, y1, x2, y2, 0+offsetX, this.getDirection(), w+offsetX, this.getDirection() + h, StageCanvas.instance);
+		
 		setWalkTempo(walkTempo);
 		setMovIndex(movIndex);
 

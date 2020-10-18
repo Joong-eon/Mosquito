@@ -9,11 +9,6 @@ import com.newlecture.mosquito.GameFrame;
 public abstract class Bug{
 	
 	
-	
-
-	
-	
-	
 	private double x;
 	private double y;
 
@@ -31,19 +26,20 @@ public abstract class Bug{
 	private int speed ;
 	private int walkTempo ;
 	private int outRange ;
+	private int direction;
+	private int currentDir;
 	
 	private Random rand = new Random();
 	
 
 
 	public Bug() {   // 모기, 나비 초기값.
-		this(0,0,0,0,null);
 		int w = GameFrame.canvasWidth;
 		int h = GameFrame.canvasHeight;
 		
 		// 나비가 화면 바깥에서 나오게하기 위해 상하좌우 60만큼 좌표 추가
-		double x = (double) rand.nextInt(w + outRange * 2 + 1) - 60; 
-		double y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
+		this.x = (double) rand.nextInt(w + outRange * 2 + 1) - 60; 
+		this.y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
 		
 		// 만약 화면 안쪽에 나비가 생성되었을 경우 좌표 다시 설정
 		while (-30 < x && x < w + 30 && -30 < y && y < h + 30) {
@@ -51,13 +47,18 @@ public abstract class Bug{
 			y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
 		}
 		
+		
+		movIndex = 0;
+		speed = 1;
+		walkTempo = 6;
 	}
+	
 	public Bug(double x, double y, String imgSrc) {
 		this(x,y,0,0,imgSrc );
 		
 	}
 
-	public  Bug(double x, double y, int width, int height, String imgSrc) {
+	public Bug(double x, double y, int width, int height, String imgSrc) {
 	
 		img =getImage();//tk.getImage(imgSrc);
 
@@ -77,8 +78,6 @@ public abstract class Bug{
 		
 	
 	public void move(double x, double y) {
-//			this.x = x;
-//			this.y = y;
 	    this.dx = x;
 		this.dy = y;
 
@@ -92,26 +91,45 @@ public abstract class Bug{
 	}
 
 	public  void update() {
-	timeoutForMoving--;
-	if (timeoutForMoving == 0) {
-		double width = (int)this.width;
-		double height = (int)this.height;
+		timeoutForMoving--;
+		if (timeoutForMoving == 0) {
+			double width = (int) this.width;
+			double height = (int) this.height;
 
-		int w = GameFrame.canvasWidth - (int) width;
-		int h = GameFrame.canvasHeight - (int) height;
-		int dx = rand.nextInt(w);
-		int dy = rand.nextInt(h);
+			int w = GameFrame.canvasWidth - (int) width;
+			int h = GameFrame.canvasHeight - (int) height;
+			int dx = rand.nextInt(w);
+			int dy = rand.nextInt(h);
+			//왼쪽
+			this.move(dx, dy);
+			
+			if(this.x < dx && currentDir == 0) {
+				currentDir = 1;
+				if(direction == 0)
+					direction = (int)width;
+				else
+					direction = 0;
+			}
+			else if(this.x >= dx && currentDir == 1) {
+				currentDir = 0;
+				if(direction == 0)
+					direction = (int)width;
+				else
+					direction = 0;
+			}
+			/*
+			if(this.x < dx)
+				currentDir = 1;//오른쪽
+			else
+				currentDir = 0;*/
 
-		this.move(dx, dy);
-	
-		timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
-	}
-	
+			timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
+		}
 
-	x += vx;
-	y += vy;
+		x += vx;
+		y += vy;
+		
 
-	
 	}
 	public abstract void paint(Graphics g);
 	
@@ -217,6 +235,14 @@ public abstract class Bug{
 	}
 	public void setTimeoutForMoving(int timeoutForMoving) {
 		this.timeoutForMoving = timeoutForMoving;
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 
 

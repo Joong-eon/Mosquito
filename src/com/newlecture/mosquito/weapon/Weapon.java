@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
 
-public class Weapon {
+public class Weapon {//추상클래스 구현
 	
 	private String type;
 	private int damage;
@@ -76,9 +76,7 @@ public class Weapon {
 		
 	}
 
-	public void setIsClicked(int isClicked) {
+	public void setIsClicked(int isClicked) {// 클릭 쿨타임 설정
 		this.isClicked = isClicked;
 	}
-	
-	
 }
