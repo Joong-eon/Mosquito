@@ -11,6 +11,9 @@ public abstract class Bug{
 	
 	private double x;
 	private double y;
+	private int hp;
+
+	
 
 	// 애니메이션을 위한 변수
 	private double vx;
@@ -28,6 +31,7 @@ public abstract class Bug{
 	private int outRange ;
 	private int direction;
 	private int currentDir;
+
 	
 	private Random rand = new Random();
 	
@@ -51,27 +55,6 @@ public abstract class Bug{
 		movIndex = 0;
 		speed = 1;
 		walkTempo = 6;
-	}
-	
-	public Bug(double x, double y, String imgSrc) {
-		this(x,y,0,0,imgSrc );
-		
-	}
-
-	public Bug(double x, double y, int width, int height, String imgSrc) {
-	
-		img =getImage();//tk.getImage(imgSrc);
-
-		this.x=x;
-		this.y=y;
-		this.width = width;
-		this.height = height;
-		
-		
-		movIndex = 0;
-		speed = 1;
-		walkTempo = 6;
-
 	}
 
 	protected abstract Image getImage() ;
@@ -103,7 +86,7 @@ public abstract class Bug{
 			//왼쪽
 			this.move(dx, dy);
 			
-			if(this.x < dx && currentDir == 0) {
+			if(this.x < dx && currentDir == 0) {//모기의 방향 설정
 				currentDir = 1;
 				if(direction == 0)
 					direction = (int)width;
@@ -117,11 +100,6 @@ public abstract class Bug{
 				else
 					direction = 0;
 			}
-			/*
-			if(this.x < dx)
-				currentDir = 1;//오른쪽
-			else
-				currentDir = 0;*/
 
 			timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
 		}
@@ -131,6 +109,18 @@ public abstract class Bug{
 		
 
 	}
+	
+	public boolean isSelected(int x, int y) {
+		
+		if((x > this.x-this.width/2 && x < this.x+this.width/2)
+				&& (y > this.y-this.height/2 && x < this.y+this.height/2)) {
+			return true;
+		}else
+			return false;
+	}
+	
+	
+	
 	public abstract void paint(Graphics g);
 	
 	
@@ -244,7 +234,14 @@ public abstract class Bug{
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
+	
+	public int getHp() {
+		return hp;
+	}
 
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
 
 }
 

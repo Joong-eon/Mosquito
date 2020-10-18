@@ -1,15 +1,22 @@
 package com.newlecture.mosquito.canvas;
 
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.MosquitoService;
 import com.newlecture.mosquito.weapon.Weapon;
 
@@ -40,6 +47,14 @@ public class StageCanvas extends Canvas{
 		timer = new Timer();
 		p1 = new Player();
 		mos = new Mosquito();
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		 Image cursorimage =ImageLoader.mosquito;
+		 Point point = new Point(5,5);
+	     Cursor cursor = tk.createCustomCursor(cursorimage, point, "");
+	     
+	     setCursor(cursor);
+		
 	}
 
 
@@ -75,10 +90,20 @@ public class StageCanvas extends Canvas{
 		weapon.setIsClicked(1);//클릭 쿨타임 생성
 		
 		//클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
-		p1.attack();
+		
+		if(mos.isSelected(x, y)) {
+			p1.attack(mos);
+		}
+		System.out.println(x);
+		//p1.attack();
+		
+		//1. mosq 배열 루프 돌면서  맞은 놈 찾기
+		//2. p1.attack(mosqu[n]);
 		
 		return super.mouseDown(evt, x, y);
 	}
+	
+	
 	
 	public void start() {//������ ����
 

@@ -24,8 +24,21 @@ public class Player {
 		
 	}
 	
-	public void attack() {
-		//currentWp.
+	
+	public boolean attack(Bug bug) {
+		//무기 확률 체크
+		double prob = Math.random();//0~1 랜덤 실수
+		
+		if(prob <= currentWp.getProb()) {
+			int bugHp = bug.getHp();
+			bugHp -= currentWp.getDamage();
+			bug.setHp(bugHp);
+			return true;
+		}else
+			return false;
+
+		//currentwp.~~~~~~~~~();
+		//mosq.attak(30);		// 해당 모기의 체력을 30 감소시킨당
 	}
 	
 	public void changeWeapon() {
