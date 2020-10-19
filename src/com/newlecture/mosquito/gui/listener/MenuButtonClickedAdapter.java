@@ -18,14 +18,12 @@ public class MenuButtonClickedAdapter implements ButtonClickedListener{
 	public void onPressed(Button target) {
 		// TODO Auto-generated method stub
 		target.setImg(ImageLoader.menuBtnPressed);
-		System.out.println("btnPressed");
 	}
 
 	@Override
 	public void onReleased(Button target) {
 		// TODO Auto-generated method stub
 		target.setImg(ImageLoader.menuBtnNormal);
-		System.out.println("btnReleased");
 	}
 
 }

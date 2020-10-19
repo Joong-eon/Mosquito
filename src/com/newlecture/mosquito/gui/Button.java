@@ -139,7 +139,6 @@ public class Button {
 
 	public void setImg(Image img) {
 		this.img = img;
-		System.out.println("Change Img");
 	}
 
 	public ButtonClickedListener getClickListener() {

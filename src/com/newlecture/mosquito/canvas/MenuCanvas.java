@@ -80,7 +80,6 @@ public class MenuCanvas extends Canvas {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("mousePressed");
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onPressed(buttons[i]);
@@ -91,7 +90,6 @@ public class MenuCanvas extends Canvas {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						// 이벤트에게 클릭된 버튼의 정보를 넘겨줌. 오버라이드한 함수에서 어떤 버튼이 클릭되었는지 알 수 있도록

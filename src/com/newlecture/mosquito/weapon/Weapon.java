@@ -1,83 +1,89 @@
 package com.newlecture.mosquito.weapon;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.entity.Bug;
 
-public class Weapon {//추상클래스 구현
-	
+public class Weapon {// 추상클래스 구현
+
 	private String type;
 	private int damage;
 	private double prob;
 	private Image img;
-	private int isClicked=0;
-	private double range = 0.8;
-	
-	private int w = 72;
-	private int h = 52;
-	private int x=0;
-	private int y=0;
-	
+	private boolean isClicked;
+	private int range = 3;
+
+	private int width = 72;
+	private int height = 52;
+	private int x = 0;
+	private int y = 0;
+
 	private int moveTempo = 6;
 	private int moveIndex = 1;
-	
-	
+	private int mouseIndex = 0;
+
 	public Weapon() {
-		try {
-			img = ImageIO.read(new File("res/hand2.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		isClicked = false;
 		damage = 10;
 		type = "hand";
 		prob = 0.3;
 	}
-	
+
 	public void paint(Graphics g) {
-		
-		if(isClicked == 1) {
-			if(moveTempo == 0) {
-				moveIndex++;
-				moveTempo = 6;
-			}
-			else
-				moveTempo--;
-		}
-			
-		
-		int moveImg = moveIndex*w;
-		
-		g.drawImage(img, x, y, x+w, y+h, moveImg-w, 0, moveImg, h, StageCanvas.instance);
-		
-		if(moveIndex == 8) {
-			moveIndex = 1;
-			isClicked = 0;
-		}
-	}
-	
-	public void update() {
-		
-	}
-	
-	/*
-	public void move(int x, int y) {//모기를 잡는 행위를 하는것
-		System.out.println(x+"  ,"+ y);
-		this.x = x;
-		this.y = y;
-	}*/
-	
-	public void cursor() {//마우스 위치에 따라 이동 이동
-		
+
+		g.setColor(Color.GREEN);
+		g.drawRect(x - range, y - range, range * 2, range * 2);
+		g.drawImage(img, x, y, x + width, y + height, 0, 0, width, height, StageCanvas.instance);
 	}
 
-	public void setIsClicked(int isClicked) {// 클릭 쿨타임 설정
+	public void update() {
+		mouseIndex++;
+	}
+
+	public boolean isClickable() {
+		if (mouseIndex > 20) { // 1초에 60프레임 반복함. 20 = 60/3 = 약 0.3초
+			mouseIndex = 0;
+			return true;
+		} else
+			return false;
+	}
+
+	// 웨폰의 공격 범위에 벌레가 들어왔는지 판단하는 메소드
+	public boolean isAttackRange(Bug bug) {
+		boolean isIntersect = false;
+		
+		// Bug의 좌표
+		double bX1 = bug.getX();
+		double bY1 = bug.getY();
+		double bX2 = bug.getX() + bug.getWidth();
+		double bY2 = bug.getY() + bug.getHeight();
+
+		// weapon의 공격 범위
+		double mX1 = x - range;
+		double mY1 = y - range;
+		double mX2 = x + range;
+		double mY2 = y + range;
+		
+		if ( ( (bX1 <= mX1 && mX1 <= bX2) || (bX1 <= mX2 && mX2 <= bX2) ) 
+				&&  ( (bY1 <= mY1 && mY1 <= bY2) || (bY1 <= mY2 && mY2 <= bY2) ) ) {
+			isIntersect = true;
+		} else {
+			isIntersect = false;
+		}
+
+		return isIntersect;
+	}
+
+	public void setIsClicked(boolean isClicked) {// 클릭 쿨타임 설정
 		this.isClicked = isClicked;
 	}
 
@@ -113,28 +119,28 @@ public class Weapon {//추상클래스 구현
 		this.img = img;
 	}
 
-	public double getRange() {
+	public int getRange() {
 		return range;
 	}
 
-	public void setRange(double range) {
+	public void setRange(int range) {
 		this.range = range;
 	}
 
-	public int getW() {
-		return w;
+	public int getWidth() {
+		return width;
 	}
 
-	public void setW(int w) {
-		this.w = w;
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
-	public int getH() {
-		return h;
+	public int getHeight() {
+		return height;
 	}
 
-	public void setH(int h) {
-		this.h = h;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
 	public int getX() {
@@ -169,7 +175,8 @@ public class Weapon {//추상클래스 구현
 		this.moveIndex = moveIndex;
 	}
 
-	public int getIsClicked() {
+	public boolean getIsClicked() {
 		return isClicked;
 	}
+
 }
