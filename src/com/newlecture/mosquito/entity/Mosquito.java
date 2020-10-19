@@ -45,6 +45,7 @@ public class Mosquito extends Bug {
 	public void paint(Graphics g) {
 		int w = (int)this.getWidth();
 		int h = (int)this.getHeight();
+		
 		int x1 = (int)this.getX() - w/2;
 		int y1 = (int)this.getY() - h/2;
 		int x2 = x1 + 60;
