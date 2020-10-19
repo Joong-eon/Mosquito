@@ -16,8 +16,8 @@ public class GameFrame extends Frame {
 	public static final int FREE_MENU = 1002;
 	public static final int EXIT_MENU = 1003;
 	
-	public static int canvasWidth = 500;
-	public static int canvasHeight = 500;
+	public static int canvasWidth = 1500;
+	public static int canvasHeight = 1000;
 
 	public GameFrame() {
 		instance = this;
