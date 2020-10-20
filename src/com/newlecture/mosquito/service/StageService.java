@@ -86,9 +86,4 @@ public class StageService {
 		this.totalScore = totalScore;
 	}
 	
-	
-	
-	
-	
-	
 }

@@ -10,6 +10,7 @@ public class Player {
 	private Weapon currentWp;
 	private int hp;
 	private int score;
+	private Weapon[] weapons;
 	
 	
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
@@ -22,7 +23,7 @@ public class Player {
 		hp = 100;
 		
 		currentWp = new Weapon();
-		
+		weapons = new Weapon[3];
 	}
 	
 	

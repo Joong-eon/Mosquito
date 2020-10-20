@@ -48,6 +48,7 @@ public class Button {
 		this.img = img;
 		this.imgSx = imgSx;
 		this.imgSy = imgSy;
+		
 		this.imgWidth = img.getWidth(null);
 		this.imgHeight = img.getHeight(null);
 		

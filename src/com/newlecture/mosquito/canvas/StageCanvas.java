@@ -20,6 +20,7 @@ import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.gui.Button;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
@@ -33,6 +34,7 @@ public class StageCanvas extends Canvas {
 	private StageService stageService;
 	private Timer timer;
 	private Player p1;
+	private Button weaponBtn;
 
 	private int count = 1;
 
@@ -42,7 +44,9 @@ public class StageCanvas extends Canvas {
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
-
+		
+		//p1.getCurrentWp()
+		//weaponBtn = new Button(, null, 700, 500, 72, 52, 0, 0);//
 
 		addMouseMotionListener(new MouseMotionListener() {
 
