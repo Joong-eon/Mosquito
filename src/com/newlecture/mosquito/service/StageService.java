@@ -3,6 +3,8 @@ package com.newlecture.mosquito.service;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Bug;
+import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
 
 public class StageService {
@@ -13,11 +15,33 @@ public class StageService {
 	
 	
 	public StageService() {
-		//currentStage = ;
-		stageIndex = DataService.getInstance().getIntValue("default", "stageIndex");
-		stage = DataService.getInstance().getStageValue(stageIndex);
-		bugs = new ArrayList<Bug>();
+		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
+		changeStage(startIndex);
+	}
+	
+	public void changeStage(int stageIndex) {
+		this.stageIndex = stageIndex;		// 현재 스테이지 바꾸고
 		
+		if(bugs == null) {
+			bugs = new ArrayList<Bug>();	
+		} else {
+			bugs.clear();
+		}
+		
+		// 새로운 스테이지 정보 가져오기
+		stage = DataService.getInstance().getStageValue(stageIndex);
+		
+		//모기 & 나비 생성
+		int mosqCreateCount = stage.getMosqCreateCount();
+		int buttCreateCount = stage.getButtCreateCount();
+
+		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
+			bugs.add(new Mosquito());
+		}
+		
+		for (int i = 0; i < buttCreateCount; i++) {		// 나비
+			bugs.add(new Butterfly());
+		}
 	}
 	
 	public void setScore() {
@@ -42,8 +66,8 @@ public class StageService {
 		return stage;
 	}
 
-	public void setStage(Stage currentStage) {
-		this.stage = currentStage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	public int getStageIndex() {

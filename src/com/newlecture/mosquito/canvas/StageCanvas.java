@@ -38,25 +38,11 @@ public class StageCanvas extends Canvas {
 
 	public StageCanvas() {// ������
 		instance = this;
-
+		
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
 
-		
-		// 모기 & 나비 배열 구성
-		int mosqCreateCount = stageService.getStage().getMosqCreateCount();
-		int buttCreateCount = stageService.getStage().getButtCreateCount();
-
-		for (int i = 0; i < mosqCreateCount; i++) {
-			stageService.getBugs().add(new Mosquito());
-		}
-		
-		for (int i = 0; i < mosqCreateCount; i++) {
-			stageService.getBugs().add(new Butterfly());
-		}
-
-		
 
 		addMouseMotionListener(new MouseMotionListener() {
 
