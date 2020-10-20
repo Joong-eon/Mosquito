@@ -108,10 +108,4 @@ public class StageService {
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
 	}
-
-
-
-
-
-
 }
