@@ -34,7 +34,7 @@ public class DataService {
 		
 		allGameDatas = new TreeMap<String, TreeMap<String, String>>();
 		allUserDatas = new TreeMap<String, TreeMap<String, String>>();
-		
+
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
 		try {
@@ -76,7 +76,7 @@ public class DataService {
 				// 새로운 항목을 넣을 건데 기존 항목 데이터가 있으면 전체 데이터에 넣어줌
 				if (datas != null) {
 					// 전체 데이터에 추가
-					allDatas.put(title, datas);
+					allGameDatas.put(title, datas);
 					datas = null;
 					title = "";
 				}
@@ -96,7 +96,7 @@ public class DataService {
 
 		// 다음줄이 없거나, 타이틀이 바뀌면
 		if (false == title.equals("") || null != datas) {
-			allDatas.put(title, datas);
+			allGameDatas.put(title, datas);
 			datas = null;
 			title = "";
 		}
@@ -135,6 +135,9 @@ public class DataService {
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
+			
+			String killScore = datas.get("killScore");
+
 
 			// 값 넣기
 			stage.mosqCreateCount = Integer.parseInt(mosqCreateCount);
@@ -145,6 +148,8 @@ public class DataService {
 			stage.buttMaxCount = Integer.parseInt(buttMaxCount);
 			stage.buttCreateCount = Integer.parseInt(buttCreateCount);
 			stage.buttCreateTime = Integer.parseInt(buttCreateTime);
+			
+			stage.killScore = Integer.parseInt(killScore);
 		}
 		
 		return stage;
@@ -159,7 +164,6 @@ public class DataService {
 		}
 		return value;
 	}
-	
 	
 	public String getGameStringValue(String key, String attribute) {
 		String result = allGameDatas.get(key).get(attribute);

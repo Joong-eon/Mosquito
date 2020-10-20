@@ -26,10 +26,10 @@ public class Button {
 	private int height;
 	
 	// 이미지 파일에서 버튼에 적용할 이미지의 좌표 (source 좌표)
-	private Image img;
-	private String imgPath;
-	private double imgSx;
-	private double imgSy;
+	private Image currentImg;					// 현재 버튼에서 전시되고 있는 이미지 파일
+	
+	private Image imgNormal;			// 평상시 버튼 이미지 파일
+	private Image imgPressed;			// 평상시 버튼 이미지 파일
 	
 	// 이미지의 크기
 	private int imgWidth;
@@ -38,19 +38,39 @@ public class Button {
 	// 버튼을 사용할 곳에서 해당 리스너의 메소드를 오버라이드 해야 "버튼이 클릭 되었을 떄" 처리가 가능함
 	private ButtonClickedListener clickListener;
 	
-	public Button(String name, Image img, double x, double y, int width, int height, double imgSx, double imgSy) {
+	public Button(String name, Image img, double x, double y, int width, int height) {
 		super();
 		this.name = name;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.img = img;
-		this.imgSx = imgSx;
-		this.imgSy = imgSy;
 		
-		this.imgWidth = img.getWidth(null);
-		this.imgHeight = img.getHeight(null);
+		// 따로 pressed, normal 구분해서 안받았으면 일단 Img로 셋팅
+		this.currentImg = img;
+		this.imgNormal = img;
+		this.imgPressed = img;
+		
+		this.imgWidth = currentImg.getWidth(null);
+		this.imgHeight = currentImg.getHeight(null);
+		
+		clickListener = null;
+	}
+	
+	public Button(String name, Image normalImg, Image pressedImg, double x, double y, int width, int height) {
+		super();
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		
+		this.currentImg = normalImg;		// 현재 이미지는 normal로 설정. pressed 되면 pressedImg로 변경됨
+		this.imgNormal = normalImg;
+		this.imgPressed = pressedImg;
+		
+		this.imgWidth = currentImg.getWidth(null);
+		this.imgHeight = currentImg.getHeight(null);
 		
 		clickListener = null;
 	}
@@ -66,9 +86,8 @@ public class Button {
 		int y2 = (int)y1 + h;
 		
 		
-		g.drawImage(img, (int)x, (int)y, (int)x+width , (int)y+height, 
-				(int)imgSx, (int)imgSy, (int)imgSx+imgWidth, (int)imgSy+imgHeight, MenuCanvas.instance);
-				
+		g.drawImage(currentImg, (int)x, (int)y, (int)x+width , (int)y+height, 
+				(int)0, (int)0, (int)imgWidth, (int)imgHeight, MenuCanvas.instance);				
 	}
 	
 	public boolean contains(double x, double y) {
@@ -132,16 +151,40 @@ public class Button {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	
+	public Image getCurrentImg() {
+		return currentImg;
+	}
+
+	public void setCurrentImg(Image currentImg) {
+		this.currentImg = currentImg;
+		
+		// 이미지가 바뀌면 이미지 사이즈도 같이 바꿔줘야함
+		this.imgWidth = currentImg.getWidth(null);
+		this.imgHeight = currentImg.getHeight(null);		
+	}
 
 	
-	public Image getImg() {
-		return img;
+	public Image getImgNormal() {
+		return imgNormal;
 	}
 
-	public void setImg(Image img) {
-		this.img = img;
+	public void setImgNormal(Image imgNormal) {
+		this.imgNormal = imgNormal;
+	}
+	
+
+	public void setImgPressed(Image imgPressed) {
+		this.imgPressed = imgPressed;
 	}
 
+	public Image getImgPressed() {
+		// TODO Auto-generated method stub
+		return imgPressed;
+	}
+	
+	
 	public ButtonClickedListener getClickListener() {
 		return clickListener;
 	}
@@ -149,6 +192,7 @@ public class Button {
 	public void addClickListener(ButtonClickedListener clickListener) {
 		this.clickListener = clickListener;
 	}
+
 	
 
 }

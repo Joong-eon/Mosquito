@@ -12,7 +12,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import com.newlecture.mosquito.entity.Bug;
 import com.newlecture.mosquito.entity.Butterfly;
@@ -21,20 +25,28 @@ import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.WeaponButton;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
 import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas {
+	
+	private Image weapon1;
+	private Image weapon2;
+
 	// ��ü ����
 	public static Canvas instance;
 	Thread th;// ������
+	
+	
+	///여기서 보유무기 이미지 stageService에서 받아오고,
 
 	private StageService stageService;
 	private Timer timer;
 	private Player p1;
-	private Button weaponBtn;
+	private WeaponButton[] weapons;
 
 	private int count = 1;
 
@@ -45,8 +57,23 @@ public class StageCanvas extends Canvas {
 		timer = new Timer();
 		p1 = new Player();
 		
+		try {
+			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 
+			weapon2 = ImageIO.read(new File("res/flyswatter.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		weapons = new WeaponButton[2];
+		weapons[0] = new WeaponButton("창",weapon1, 800,700,148,204);
+		weapons[1] = new WeaponButton("파리채",weapon2, 1050,700,112,217);
+		//이벤트 발생시 웨폰버튼에서 이름 가져오고
+		//p1.current 정보변경
+		
+		
 		//p1.getCurrentWp()
-		//weaponBtn = new Button(, null, 700, 500, 72, 52, 0, 0);//
+		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
 
 		addMouseMotionListener(new MouseMotionListener() {
 
@@ -117,6 +144,9 @@ public class StageCanvas extends Canvas {
 		int bugSize = stageService.getBugs().size();
 		for (int i = 0; i<bugSize ; i++) {
 			stageService.getBugs().get(i).paint(bg);
+		}
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i].paint(bg);
 		}
 		
 		p1.getCurrentWp().paint(bg);

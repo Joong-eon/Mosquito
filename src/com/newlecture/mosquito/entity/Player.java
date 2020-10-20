@@ -24,6 +24,7 @@ public class Player {
 		
 		currentWp = new Weapon();
 		weapons = new Weapon[3];
+		//setImg;
 	}
 	
 	

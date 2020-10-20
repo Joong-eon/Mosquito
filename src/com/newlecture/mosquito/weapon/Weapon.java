@@ -18,7 +18,7 @@ public class Weapon {// 추상클래스 구현
 	private String type;
 	private int damage;
 	private double prob;
-	private Image img;
+	private Image img;//img
 	private boolean isClicked;
 	private int range = 3;
 
@@ -30,6 +30,8 @@ public class Weapon {// 추상클래스 구현
 	private int moveTempo = 6;
 	private int moveIndex = 1;
 	private int mouseIndex = 0;
+	
+	//img 초기화
 
 	public Weapon() {
 		isClicked = false;
