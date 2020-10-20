@@ -31,7 +31,6 @@ public class MenuCanvas extends Canvas {
 	private Button exitButton;
 
 	private Image menuBtnNormal;
-	private Image menuBtnHover;
 	private Image menuBtnPressed;
 	private Image menuBackground;
 	
@@ -50,14 +49,13 @@ public class MenuCanvas extends Canvas {
 
 		// 메뉴 버튼의 이미지를 받아옴
 		menuBtnNormal = ImageLoader.menuBtnNormal;
-		menuBtnHover = ImageLoader.menuBtnHover;
 		menuBtnPressed = ImageLoader.menuBtnPressed;
 		menuBackground = ImageLoader.menuBackground;
 		
 		// 메뉴 버튼 생성
-		stageButton = new Button("stage", menuBtnNormal, sx, sy, btnWidth, btnHeight);
-		freeButton = new Button("free", menuBtnNormal, sx, sy + btnHeight, btnWidth, btnHeight);
-		exitButton = new Button("exit", menuBtnNormal, sx, sy + btnHeight * 2, btnWidth, btnHeight);
+		stageButton = new Button("stage", menuBtnNormal, menuBtnPressed, sx, sy, btnWidth, btnHeight);
+		freeButton = new Button("free", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight, btnWidth, btnHeight);
+		exitButton = new Button("exit", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight * 2, btnWidth, btnHeight);
 
 		// 버튼 배열에 넣음
 		buttons = new Button[3];
