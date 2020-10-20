@@ -17,21 +17,21 @@ public class DataService {
 
 	// [default] : 
 	// [stageN] : N번째 스테이지의 기본 정보를 저장.
-	
 	private String gameFileName;
 	private String userFileName;
 	
 	
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
 	// TreeMap<[defalut], TreeMap<playerLevel,1>> 
-	private TreeMap<String, TreeMap<String, String>> allDatas;
+	private TreeMap<String, TreeMap<String, String>> allGameDatas;
 	private static DataService instance;
 	
+
 	public DataService() {
 		super();
 		instance = this;
 		
-		allDatas = new TreeMap<String, TreeMap<String, String>>();
+		allGameDatas = new TreeMap<String, TreeMap<String, String>>();
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
 		try {
@@ -65,7 +65,7 @@ public class DataService {
 				// 새로운 항목을 넣을 건데 기존 항목 데이터가 있으면 전체 데이터에 넣어줌
 				if (datas != null) {
 					// 전체 데이터에 추가
-					allDatas.put(title, datas);
+					allGameDatas.put(title, datas);
 					datas = null;
 					title = "";
 				}
@@ -85,7 +85,7 @@ public class DataService {
 
 		// 다음줄이 없거나, 타이틀이 바뀌면
 		if (false == title.equals("") || null != datas) {
-			allDatas.put(title, datas);
+			allGameDatas.put(title, datas);
 			datas = null;
 			title = "";
 		}
@@ -123,7 +123,7 @@ public class DataService {
 		Stage stage = new Stage();
 		
 		String key = "stage"+stageIndex;
-		TreeMap<String, String> datas = allDatas.get(key);
+		TreeMap<String, String> datas = allGameDatas.get(key);
 		if(null != datas) {
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
@@ -149,7 +149,7 @@ public class DataService {
 	
 	
 	public int getIntValue(String key, String attribute) {
-		String data =  allDatas.get(key).get(attribute);
+		String data = allGameDatas.get(key).get(attribute);
 		int value = 0;
 		if(false == data.equals("")) {
 			value = Integer.parseInt(data);
@@ -159,7 +159,7 @@ public class DataService {
 	
 	
 	public String getStringValue(String key, String attribute) {
-		String result =  allDatas.get(key).get(attribute);
+		String result = allGameDatas.get(key).get(attribute);
 		return result;
 	}	
 	
