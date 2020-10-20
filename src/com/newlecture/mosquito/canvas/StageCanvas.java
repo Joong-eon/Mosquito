@@ -80,11 +80,13 @@ public class StageCanvas extends Canvas {
 						Bug bug = stageService.getBugs().get(i);
 						boolean isWeaponRange = p1.getCurrentWp().isAttackRange(bug);
 						if (true == isWeaponRange) {
+							System.out.println("여긴타니");
 							selectedBug = bug;
 						}
 					}
 
 					if (selectedBug != null) { // null이 아니면 찾은거임
+						
 						p1.attack(selectedBug);
 							if(selectedBug.getHp()<=0) {
 								String stageName = "stage" + stageService.getStageIndex() ;
@@ -121,6 +123,7 @@ public class StageCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 
 		timer.paint(bg);
+		score.paint(bg);
 
 		int bugSize = stageService.getBugs().size();
 		for (int i = 0; i<bugSize ; i++) {

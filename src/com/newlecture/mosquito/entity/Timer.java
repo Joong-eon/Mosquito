@@ -44,7 +44,7 @@ public class Timer {
 			tenCount--;
 			oneCount = 10;
 		}*/
-		System.out.println("지금 남은시간 : "+(tenCount*10+oneCount)+"."+(decimalCount%10));
+		//System.out.println("지금 남은시간 : "+(tenCount*10+oneCount)+"."+(decimalCount%10));
 		g.drawImage(img, 100-w, 100, 100-w+w, 100+h, (tenCount)*w, y, (tenCount)*w+w, y+h, StageCanvas.instance);
 		g.drawImage(img, 100, 100, 100+w, 100+h, (oneCount)*w, y, (oneCount)*w+w, y+h, StageCanvas.instance);
 		g.drawImage(dot, (100+w), 100, (100+w)+15, 100+h, 0, 0, 0+15, 0+h, StageCanvas.instance);
