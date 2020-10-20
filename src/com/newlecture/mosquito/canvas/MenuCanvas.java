@@ -55,9 +55,9 @@ public class MenuCanvas extends Canvas {
 		menuBackground = ImageLoader.menuBackground;
 		
 		// 메뉴 버튼 생성
-		stageButton = new Button("stage", menuBtnNormal, sx, sy, btnWidth, btnHeight, 0, 0);
-		freeButton = new Button("free", menuBtnNormal, sx, sy + btnHeight, btnWidth, btnHeight, 0, 0);
-		exitButton = new Button("exit", menuBtnNormal, sx, sy + btnHeight * 2, btnWidth, btnHeight, 0, 0);
+		stageButton = new Button("stage", menuBtnNormal, sx, sy, btnWidth, btnHeight);
+		freeButton = new Button("free", menuBtnNormal, sx, sy + btnHeight, btnWidth, btnHeight);
+		exitButton = new Button("exit", menuBtnNormal, sx, sy + btnHeight * 2, btnWidth, btnHeight);
 
 		// 버튼 배열에 넣음
 		buttons = new Button[3];

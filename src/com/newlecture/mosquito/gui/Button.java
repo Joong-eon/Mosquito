@@ -27,9 +27,6 @@ public class Button {
 	
 	// 이미지 파일에서 버튼에 적용할 이미지의 좌표 (source 좌표)
 	private Image img;
-	private String imgPath;
-	private double imgSx;
-	private double imgSy;
 	
 	// 이미지의 크기
 	private int imgWidth;
@@ -38,7 +35,7 @@ public class Button {
 	// 버튼을 사용할 곳에서 해당 리스너의 메소드를 오버라이드 해야 "버튼이 클릭 되었을 떄" 처리가 가능함
 	private ButtonClickedListener clickListener;
 	
-	public Button(String name, Image img, double x, double y, int width, int height, double imgSx, double imgSy) {
+	public Button(String name, Image img, double x, double y, int width, int height) {
 		super();
 		this.name = name;
 		this.x = x;
@@ -46,8 +43,6 @@ public class Button {
 		this.width = width;
 		this.height = height;
 		this.img = img;
-		this.imgSx = imgSx;
-		this.imgSy = imgSy;
 		this.imgWidth = img.getWidth(null);
 		this.imgHeight = img.getHeight(null);
 		
@@ -66,8 +61,7 @@ public class Button {
 		
 		
 		g.drawImage(img, (int)x, (int)y, (int)x+width , (int)y+height, 
-				(int)imgSx, (int)imgSy, (int)imgSx+imgWidth, (int)imgSy+imgHeight, MenuCanvas.instance);
-				
+				(int)0, (int)0, (int)imgWidth, (int)imgHeight, MenuCanvas.instance);				
 	}
 	
 	public boolean contains(double x, double y) {
