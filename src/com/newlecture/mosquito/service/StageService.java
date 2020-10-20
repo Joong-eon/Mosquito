@@ -2,64 +2,87 @@ package com.newlecture.mosquito.service;
 
 import java.util.ArrayList;
 
-import com.newlecture.mosquito.entity.Bug;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
+import com.newlecture.mosquito.entity.Timer;
 
 public class StageService {
-	private ArrayList<Bug> bugs;		// 스테이지에 생성되는 모든 모기와 나비
+	private ArrayList<Mosquito> mosqs;
+	private ArrayList<Butterfly> butts;		// 스테이지에 생성되는 모든 모기와 나비
 	private Stage stage;
 	private int stageIndex;
+	private Timer timer;
 	private int totalScore=0;
-	
-	
+
+
 	public StageService() {
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
+		mosqs = new ArrayList<Mosquito>();
+		butts = new ArrayList<Butterfly>();
 	}
-	
+
 	public void changeStage(int stageIndex) {
 		this.stageIndex = stageIndex;		// 현재 스테이지 바꾸고
-		
-		if(bugs == null) {
-			bugs = new ArrayList<Bug>();	
+
+		if(mosqs == null) {
+			mosqs = new ArrayList<Mosquito>();	
+			butts = new ArrayList<Butterfly>();	
 		} else {
-			bugs.clear();
+			mosqs.clear();
+			butts.clear();
 		}
-		
+
 		// 새로운 스테이지 정보 가져오기
 		stage = DataService.getInstance().getStageValue(stageIndex);
-		
+
 		//모기 & 나비 생성
 		int mosqCreateCount = stage.getMosqCreateCount();
 		int buttCreateCount = stage.getButtCreateCount();
 
 		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
-			bugs.add(new Mosquito());
+			mosqs.add(new Mosquito());
 		}
-		
+
 		for (int i = 0; i < buttCreateCount; i++) {		// 나비
-			bugs.add(new Butterfly());
+			butts.add(new Butterfly());
 		}
 	}
-	
+
 	public void setScore() {
 		int killScore = stage.getKillScore();
 		totalScore += killScore;
-		
+
 		/*스테이지 완료 및 스테이지 전환 구현하기.
 		if(totalScore >= currentStage.getWinScore()) {
 			currentStage = Dat
 		}*/
 	}
-
-	public ArrayList<Bug> getBugs() {
-		return bugs;
+	public void update() {
+		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
+		for(int i = 0; i<mosqs.size();i++) {
+			if(mosqs.get(i).getHp()<=0) {
+				this.changeStage(stageIndex++);
+			}
+		}
+		//패배조건 : 시간이 0이 되었을 때 or player의 hp가 0이 되었을 때
 	}
 
-	public void setBugs(ArrayList<Bug> bugs) {
-		this.bugs = bugs;
+	public ArrayList<Mosquito> getMosqs() {
+		return mosqs;
+	}
+
+	public void setMosqs(ArrayList<Mosquito> mosqs) {
+		this.mosqs = mosqs;
+	}
+
+	public ArrayList<Butterfly> getButts() {
+		return butts;
+	}
+
+	public void setButts(ArrayList<Butterfly> butts) {
+		this.butts = butts;
 	}
 
 	public Stage getStage() {
@@ -85,10 +108,10 @@ public class StageService {
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }

@@ -75,34 +75,46 @@ public class StageCanvas extends Canvas {
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
 					Bug selectedBug = null;
-					int size = stageService.getBugs().size();
-					for (int i = 0; i < size; i++) {
-						Bug bug = stageService.getBugs().get(i);
-						boolean isWeaponRange = p1.getCurrentWp().isAttackRange(bug);
-						if (true == isWeaponRange) {
-							System.out.println("여긴타니");
-							selectedBug = bug;
-						}
-					}
+					Mosquito selectedMosq = null;
+		            Butterfly selectedButt = null;
 
-					if (selectedBug != null) { // null이 아니면 찾은거임
-						
-						p1.attack(selectedBug);
-							if(selectedBug.getHp()<=0) {
-								String stageName = "stage" + stageService.getStageIndex() ;
-								
-								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore"); //현재 스테이지에 맞는 모기 점수 가져오기
-								int nowScore = score.getScore();
-								
-								score.setScore(nowScore+=killScore);
-							}
-						
-						System.out.println("공격");
-					} else {
-						// 선택된 bug가 없다 == miss남
-					}
+		            int mosqSize = stageService.getMosqs().size();
+		            for (int i = 0; i < mosqSize; i++) {
+		            	Mosquito mosq = stageService.getMosqs().get(i);
+		            	boolean isWeaponRange = p1.getCurrentWp().isAttackRange(mosq);
+		            	if (true == isWeaponRange) {
+		            		selectedMosq = mosq;
+		            	}
+		            }
+		            
+		            int buttSize = stageService.getButts().size();
+		               for (int i = 0; i < buttSize; i++) {
+		                  Butterfly butt = stageService.getButts().get(i);
+		                  boolean isWeaponRange = p1.getCurrentWp().isAttackRange(butt);
+		                  if (true == isWeaponRange) {
+		                     selectedButt = butt;
+		                  }
+		               }
+		               
+					
 
-				}
+		               boolean isMiss = false;      
+		               
+		               if (selectedMosq != null) { // null이 아니면 찾은거임
+		                  isMiss = p1.attack(selectedMosq);
+		                  System.out.println("공격");
+		               } 
+		               
+		               if(selectedButt != null) {
+		                  isMiss = p1.attack(selectedButt);
+		                  System.out.println("아얏!");
+		               } 
+		               
+		               if(isMiss == true) {
+		                  //miss뜨는 그림효과
+		               }
+
+		            }
 
 				super.mouseClicked(e);
 			}
@@ -125,10 +137,15 @@ public class StageCanvas extends Canvas {
 		timer.paint(bg);
 		score.paint(bg);
 
-		int bugSize = stageService.getBugs().size();
-		for (int i = 0; i<bugSize ; i++) {
-			stageService.getBugs().get(i).paint(bg);
-		}
+		int mosqSize = stageService.getMosqs().size();
+	      for (int i = 0; i<mosqSize ; i++) {
+	    	  stageService.getMosqs().get(i).paint(bg);
+	      }
+	      
+	      int buttSize = stageService.getButts().size();
+	      for (int i = 0; i<buttSize ; i++) {
+	         stageService.getButts().get(i).paint(bg);
+	      }
 		
 		p1.getCurrentWp().paint(bg);
 		
@@ -153,10 +170,14 @@ public class StageCanvas extends Canvas {
 					// weapon.update();
 					timer.update();
 					
-					int bugSize = stageService.getBugs().size();
-					for (int i = 0; i<bugSize ; i++) {
-						stageService.getBugs().get(i).update();
-					}
+					int mosqSize =  stageService.getMosqs().size();
+		               for (int i = 0; i<mosqSize ; i++) {
+		                  stageService.getMosqs().get(i).update();
+		               }
+		               int buttSize = stageService.getButts().size();
+		               for(int i = 0; i<buttSize ; i++) {
+		                  stageService.getButts().get(i).update();
+		               }
 					
 					p1.getCurrentWp().update();
 					repaint();
