@@ -24,6 +24,7 @@ public class DataService {
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
 	// TreeMap<[defalut], TreeMap<playerLevel,1>> 
 	private TreeMap<String, TreeMap<String, String>> allGameDatas;
+	private TreeMap<String, TreeMap<String, String>> allUserDatas;
 	private static DataService instance;
 	
 
@@ -32,11 +33,13 @@ public class DataService {
 		instance = this;
 		
 		allGameDatas = new TreeMap<String, TreeMap<String, String>>();
+		allUserDatas = new TreeMap<String, TreeMap<String, String>>();
+
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
 		try {
-			loadGameConfig();		// GameConfig.txt 파일 읽어옴
-			loadUserConfig();		// UserConfig.txt 파일을 읽어옴
+			loadConfig(gameFileName);		// GameConfig.txt 파일 읽어옴
+			loadConfig(userFileName);		// UserConfig.txt 파일을 읽어옴
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,10 +52,18 @@ public class DataService {
 	
 
 	// data 폴더에 존제하는 gameConfig 파일을 읽어옴
-	private void loadGameConfig() throws IOException {
-		FileInputStream fis = new FileInputStream("data/gameConfig.txt");
+	private void loadConfig(String filePath) throws IOException {
+		FileInputStream fis = new FileInputStream(filePath);
 		Scanner scan = new Scanner(fis);
-
+		
+		TreeMap<String, TreeMap<String, String>> allDatas;
+		
+		if(true == filePath.equals(userFileName)) {
+			allDatas = allUserDatas;
+		} else {
+			allDatas = allGameDatas;
+		}
+		
 		String title = "";
 		TreeMap<String, String> datas = null;
 
@@ -106,14 +117,6 @@ public class DataService {
 		fis.close();
 	}
 	
-	private void loadUserConfig() {
-		// TODO Auto-generated method stub
-		
-		// UserConfig.txt 파일을 읽어옴
-		// GameConfig 파일과 분리한 이유 : UserConfig 파일 같은 경우는 유저의 게임 결과에 따라 저장되는 값이 생길 것같아서 따로 분리함
-		// (GameConfig에 같이 하면 굳이 한번더 저장 안해도 되는걸 저장해야하는 불필요한 일이 생김)
-	}
-	
 	public static void save() throws IOException {
 		// 추후 개발 예정
 	}
@@ -132,6 +135,9 @@ public class DataService {
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
+			
+			String killScore = datas.get("killScore");
+
 
 			// 값 넣기
 			stage.mosqCreateCount = Integer.parseInt(mosqCreateCount);
@@ -142,13 +148,15 @@ public class DataService {
 			stage.buttMaxCount = Integer.parseInt(buttMaxCount);
 			stage.buttCreateCount = Integer.parseInt(buttCreateCount);
 			stage.buttCreateTime = Integer.parseInt(buttCreateTime);
+			
+			stage.killScore = Integer.parseInt(killScore);
 		}
 		
 		return stage;
 	}
 	
 	
-	public int getIntValue(String key, String attribute) {
+	public int getGameIntValue(String key, String attribute) {
 		String data = allGameDatas.get(key).get(attribute);
 		int value = 0;
 		if(false == data.equals("")) {
@@ -157,10 +165,27 @@ public class DataService {
 		return value;
 	}
 	
-	
-	public String getStringValue(String key, String attribute) {
+	public String getGameStringValue(String key, String attribute) {
 		String result = allGameDatas.get(key).get(attribute);
 		return result;
 	}	
+	
+	
+	public int getUserIntValue(String key, String attribute) {
+		String data = allUserDatas.get(key).get(attribute);
+		int value = 0;
+		if(false == data.equals("")) {
+			value = Integer.parseInt(data);
+		}
+		return value;
+	}
+	
+	
+	public String getUserStringValue(String key, String attribute) {
+		String result = allUserDatas.get(key).get(attribute);
+		return result;
+	}	
+	
+	
 	
 }
