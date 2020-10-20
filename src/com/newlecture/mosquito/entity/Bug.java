@@ -22,6 +22,7 @@ public abstract class Bug{
 	private double dy;
 	private double width;
 	private double height;
+	
 	private Image img;
 
 	private int timeoutForMoving=30;

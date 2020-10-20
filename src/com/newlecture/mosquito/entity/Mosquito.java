@@ -25,6 +25,8 @@ public class Mosquito extends Bug {
 	
 	//이미지 변수
 	Image img = ImageLoader.mosquito ;//	private int w = 320; 
+	private double mosWid = 50;
+	private double mosHei = 50;
 //	private int h = 270; 
 //	private int timeoutForMoving=30;//�ʱ�ȭ
 	private Random rand=new Random();	
@@ -39,6 +41,7 @@ public class Mosquito extends Bug {
 		this.setHeight(270);
 		setImg(ImageLoader.mosquito);
 		this.setDirection((int)this.getWidth());
+		this.setSpeed(3);
 	}	
 	
 //	//페인트 함수
@@ -46,8 +49,8 @@ public class Mosquito extends Bug {
 		int w = (int)this.getWidth();
 		int h = (int)this.getHeight();
 		
-		int x1 = (int)this.getX() - w/2;
-		int y1 = (int)this.getY() - h/2;
+		int x1 = (int)this.getX() - (int)mosWid/2;
+		int y1 = (int)this.getY() - (int)mosHei/2;
 		int x2 = x1 + 60;
 		int y2 = y1 + 60;
 		int walkTempo = getWalkTempo();

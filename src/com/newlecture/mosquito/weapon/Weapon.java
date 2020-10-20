@@ -50,7 +50,7 @@ public class Weapon {// 추상클래스 구현
 	}
 
 	public boolean isClickable() {
-		if (mouseIndex > 20) { // 1초에 60프레임 반복함. 20 = 60/3 = 약 0.3초
+		if (mouseIndex > 60) { // 1초에 60프레임 반복함. 20 = 60/3 = 약 0.3초
 			mouseIndex = 0;
 			return true;
 		} else
