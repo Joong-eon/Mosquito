@@ -19,8 +19,6 @@ public class StageService {
 	public StageService() {
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
-		mosqs = new ArrayList<Mosquito>();
-		butts = new ArrayList<Butterfly>();
 	}
 
 	public void changeStage(int stageIndex) {
@@ -59,7 +57,8 @@ public class StageService {
 			currentStage = Dat
 		}*/
 	}
-	public void update() {
+	public void update() {//스레드에서 계속 호출
+	
 		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
 		for(int i = 0; i<mosqs.size();i++) {
 			if(mosqs.get(i).getHp()<=0) {

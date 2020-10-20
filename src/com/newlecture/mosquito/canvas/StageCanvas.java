@@ -169,7 +169,8 @@ public class StageCanvas extends Canvas {
 				while (true) {
 					// weapon.update();
 					timer.update();
-
+					
+					
 					int mosqSize =  stageService.getMosqs().size();
 					for (int i = 0; i<mosqSize ; i++) {
 						stageService.getMosqs().get(i).update();

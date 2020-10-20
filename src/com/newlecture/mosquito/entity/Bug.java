@@ -11,7 +11,7 @@ public abstract class Bug{
 	
 	private double x;
 	private double y;
-	private int hp;
+	private int hp;//추후 파일에서 읽어오기(개체별)
 
 	
 
