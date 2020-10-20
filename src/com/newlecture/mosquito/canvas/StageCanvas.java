@@ -18,6 +18,7 @@ import com.newlecture.mosquito.entity.Bug;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
+import com.newlecture.mosquito.entity.Score;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.service.DataService;
@@ -33,6 +34,7 @@ public class StageCanvas extends Canvas {
 	private StageService stageService;
 	private Timer timer;
 	private Player p1;
+	private Score score;
 
 	private int count = 1;
 
@@ -42,6 +44,7 @@ public class StageCanvas extends Canvas {
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
+		score = new Score();
 
 
 		addMouseMotionListener(new MouseMotionListener() {
@@ -83,6 +86,15 @@ public class StageCanvas extends Canvas {
 
 					if (selectedBug != null) { // null이 아니면 찾은거임
 						p1.attack(selectedBug);
+							if(selectedBug.getHp()<=0) {
+								String stageName = "stage" + stageService.getStageIndex() ;
+								
+								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore"); //현재 스테이지에 맞는 모기 점수 가져오기
+								int nowScore = score.getScore();
+								
+								score.setScore(nowScore+=killScore);
+							}
+						
 						System.out.println("공격");
 					} else {
 						// 선택된 bug가 없다 == miss남
