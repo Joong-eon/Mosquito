@@ -58,7 +58,7 @@ public class StageCanvas extends Canvas {
 
 	public StageCanvas() {// ������
 		instance = this;
-		
+
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
@@ -232,8 +232,8 @@ public class StageCanvas extends Canvas {
 		}
 		weapons[0].paint(bg);
 		weapons[1].paint(bg);
+
 		p1.getCurrentWp().paint(bg);
-		
 
 		g.drawImage(buf, 0, 0, this);//
 
