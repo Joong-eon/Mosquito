@@ -43,15 +43,17 @@ public class Player {
 		
 		//무기 확률 체크
 		double prob = Math.random();//0~1 랜덤 실수
-		
 		if(prob <= currentWp.getProb()) {
+			System.out.println("모기죽이기 성공");
 			int bugHp = bug.getHp();
 			bugHp -= currentWp.getDamage();
 			bug.setHp(bugHp);
-			
-			return true;
-		}else
+			System.out.println("남은 모기 hp : " + bug.getHp());
 			return false;
+		}else {
+			System.out.println("모기 죽이기 ㄴ실패");
+			return true;
+		}
 
 		//currentwp.~~~~~~~~~();
 		//mosq.attak(30);		// 해당 모기의 체력을 30 감소시킨당

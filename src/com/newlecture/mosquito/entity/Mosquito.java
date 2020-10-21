@@ -10,22 +10,10 @@ import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Mosquito extends Bug {
-//	private double x;
-//	private double y;	
-//
-//	// 애니메이션을 위한 변수
-//	private double vx;
-//	private double vy;	
-//	private double dx;
-//	private double dy;	
-//	private int moveIndex;
-//	private int speed = 2; //�� ���� �ʿ�
-//	private int walkTempo = 10; //�� ���� �ʿ�
-
-//	private static String mosquito;
 	
-//	private int h = 270; 
-//	private int timeoutForMoving=30;//�ʱ�ȭ
+	
+	private int deleteTimer = 60;
+
 	private Random rand=new Random();	
 	//모기 스탯변수
 	private int power;
@@ -82,9 +70,12 @@ public class Mosquito extends Bug {
 		int offsetX = movIndex*imgWidth;
 		if(movIndex<5) 
 			offsetX-=1;
-		
-		g.drawImage(img, x1, y1, x2, y2, 
+		if(this.getCurrentDir() != 2)//살아 있을 때
+			g.drawImage(img, x1, y1, x2, y2, 
 				0+offsetX, this.getDirection(), imgWidth+offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
+		else//죽었을 때
+			g.drawImage(img, x1, y1, x2, y2, 
+					0+4*imgWidth, 270*2, imgWidth+4*imgWidth, 270*2 + imgHeight, StageCanvas.instance);
 	
 		setWalkTempo(walkTempo);
 		setMovIndex(movIndex);
@@ -95,6 +86,14 @@ public class Mosquito extends Bug {
 	public void attack() {
 		int power = this.power;
 		power = 1; //변수 처리
+	}
+
+	public int getDeleteTimer() {
+		return deleteTimer;
+	}
+
+	public void setDeleteTimer(int deleteTimer) {
+		this.deleteTimer = deleteTimer;
 	}
 	
 	

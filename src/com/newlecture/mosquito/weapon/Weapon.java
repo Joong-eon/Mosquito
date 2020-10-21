@@ -28,7 +28,7 @@ public abstract class Weapon {// 추상클래스 구현
 	private int y = 0;
 
 	private int moveIndex = 1;
-	private int mouseIndex = 0;
+	private int mouseIndex = 60;
 /*
 	public Weapon() {
 		isClicked = false;
@@ -62,10 +62,15 @@ public abstract class Weapon {// 추상클래스 구현
 		boolean isIntersect = false;
 		
 		// Bug의 좌표
+		/*
 		double bX1 = bug.getX();
 		double bY1 = bug.getY();
 		double bX2 = bug.getX() + bug.getWidth();
-		double bY2 = bug.getY() + bug.getHeight();
+		double bY2 = bug.getY() + bug.getHeight();*/
+		double bX1 = bug.getX()-bug.getWidth()/2;
+		double bY1 = bug.getY()-bug.getHeight()/2;
+		double bX2 = bug.getX() + bug.getWidth()/2;
+		double bY2 = bug.getY() + bug.getHeight()/2;
 
 		// weapon의 공격 범위
 		double mX1 = x - range;

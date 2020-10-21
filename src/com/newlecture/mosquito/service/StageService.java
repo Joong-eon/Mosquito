@@ -17,9 +17,7 @@ public class StageService {
 	private Timer timer;
 	private int totalScore=0;
 	private GameOver gameOver;
-
-
-
+	
 	public StageService() {
 		gameOver = new GameOver();
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
@@ -63,6 +61,23 @@ public class StageService {
 		}*/
 	}
 	public void update() {//스레드에서 계속 호출
+		int mosqCreateCount = stage.getMosqCreateCount();
+		//System.out.println(mosqCreateCount);
+		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
+			if(mosqs.get(i).getCurrentDir() == 2) {
+				int deleteTimer = mosqs.get(i).getDeleteTimer();
+				deleteTimer--;
+				mosqs.get(i).setDeleteTimer(deleteTimer);
+			}
+			
+			if(mosqs.get(i).getDeleteTimer() == 0) {
+				mosqs.remove(i);
+				stage.setMosqCreateCount(--mosqCreateCount);
+			}
+		}
+		
+		
+		
 	/*
 		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
 		for(int i = 0; i<mosqs.size();i++) {

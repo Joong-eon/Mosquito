@@ -103,10 +103,12 @@ public class StageCanvas extends Canvas {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 커서 이미지 변경
+				
 				int x = e.getX();
 				int y = e.getY();
 
 				if (true == p1.getCurrentWp().isClickable()) {
+					System.out.println("클릭됨");
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
@@ -137,8 +139,9 @@ public class StageCanvas extends Canvas {
 					boolean isMiss = false;      
 
 					if (selectedMosq != null) { // null이 아니면 찾은거임
+						System.out.println("모기 클릭 성공");
 						isMiss = p1.attack(selectedMosq);
-						System.out.println("공격");
+						//System.out.println("공격");
 					} 
 
 					if(selectedButt != null) {
@@ -146,13 +149,22 @@ public class StageCanvas extends Canvas {
 						System.out.println("아얏!");
 					} 
 
-					if(isMiss == true) {
+					if(isMiss == true) {// 빗나감
 						//miss뜨는 그림효과
-					}
+						System.out.println("빗나감");
+						
+					}else//빗나간게 아니라면
+						if(selectedMosq.getHp() <= 0) {
+							System.out.println("모기 죽음");//현재 모기 죽으면 모기 사라짐.. 왜그럴까
+							selectedMosq.setCurrentDir(2);
+							//selectedMosq.move(e.getX(), e.getY());
+							selectedMosq.setMovIndex(4);
+							System.out.println(selectedMosq.getMovIndex());
+						}
 
 				}
-
-				super.mouseClicked(e);
+				
+				//super.mouseClicked(e);
 			}
 
 			
@@ -226,26 +238,25 @@ public class StageCanvas extends Canvas {
 			stageService.getGameOver().paint(bg);
 			//토탈점수 그려주세요
 			
-		}else {
-		timer.paint(bg);
-		score.paint(bg);
+		} else {
+			timer.paint(bg);
+			score.paint(bg);
 
-		int mosqSize = stageService.getMosqs().size();
-		for (int i = 0; i<mosqSize ; i++) {
-			stageService.getMosqs().get(i).paint(bg);
-		}
+			int mosqSize = stageService.getMosqs().size();
+			for (int i = 0; i < mosqSize; i++) {
+				stageService.getMosqs().get(i).paint(bg);
+			}
 
-		int buttSize = stageService.getButts().size();
-		for (int i = 0; i<buttSize ; i++) {
-			stageService.getButts().get(i).paint(bg);
-		}
-		weapons[0].paint(bg);
-		weapons[1].paint(bg);
+			int buttSize = stageService.getButts().size();
+			for (int i = 0; i < buttSize; i++) {
+				stageService.getButts().get(i).paint(bg);
+			}
+			weapons[0].paint(bg);
+			weapons[1].paint(bg);
 
-		p1.getCurrentWp().paint(bg);
+			p1.getCurrentWp().paint(bg);
 		}
 		
-
 		g.drawImage(buf, 0, 0, this);//
 
 	}
@@ -267,7 +278,7 @@ public class StageCanvas extends Canvas {
 					// weapon.update();
 					timer.update();
 					
-					
+					stageService.update();
 					int mosqSize =  stageService.getMosqs().size();
 					for (int i = 0; i<mosqSize ; i++) {
 						stageService.getMosqs().get(i).update();
