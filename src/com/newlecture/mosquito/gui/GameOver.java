@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.gui.listener.GameOverClickedListener;
+import com.newlecture.mosquito.service.ImageLoader;
 
 public class GameOver {
 
@@ -26,12 +27,11 @@ public class GameOver {
 		private GameOverClickedListener clickListener;
 		
 		public GameOver() {
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-			
-			this.img = img;
+			//this.x = x;
+			//this.y = y;
+			this.width = 216;
+			this.height = 283;
+			img = ImageLoader.gameOver;
 			this.imgWidth = img.getWidth(null);
 			this.imgHeight = img.getHeight(null);
 			
@@ -39,12 +39,12 @@ public class GameOver {
 		}
 		
 		public void paint(Graphics g) {
-			x = 200;
-			y = 200;
+			x = 750;
+			y = 500;
 			int w = this.getWidth();
 			int h = this.getHeight();
 			
-		g.drawImage(img, x, y, x+width, y+height,
+		g.drawImage(img, x-width/2, y-height/2, x+width/2, y+height/2,
 				0, 0, imgWidth, imgHeight, MenuCanvas.instance);
 		}
 //		

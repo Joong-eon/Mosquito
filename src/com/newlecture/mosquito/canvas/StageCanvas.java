@@ -133,7 +133,15 @@ public class StageCanvas extends Canvas {
 
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
-
+		//배경 그려주세요
+		
+		//게임 실패시...
+		if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
+			//지방
+			stageService.getGameOver().paint(bg);
+			//토탈점수 그려주세요
+			
+		}else {
 		timer.paint(bg);
 		score.paint(bg);
 
@@ -148,6 +156,8 @@ public class StageCanvas extends Canvas {
 		}
 
 		p1.getCurrentWp().paint(bg);
+		}
+		
 
 		g.drawImage(buf, 0, 0, this);//
 
@@ -181,6 +191,7 @@ public class StageCanvas extends Canvas {
 					}
 
 					p1.getCurrentWp().update();
+					
 					repaint();
 
 					try {

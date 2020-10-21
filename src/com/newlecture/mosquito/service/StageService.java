@@ -1,11 +1,13 @@
 package com.newlecture.mosquito.service;
 
+import java.awt.Canvas;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.gui.GameOver;
 
 public class StageService {
 	private ArrayList<Mosquito> mosqs;
@@ -14,9 +16,12 @@ public class StageService {
 	private int stageIndex;
 	private Timer timer;
 	private int totalScore=0;
+	private GameOver gameOver;
+
 
 
 	public StageService() {
+		gameOver = new GameOver();
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
 	}
@@ -58,17 +63,26 @@ public class StageService {
 		}*/
 	}
 	public void update() {//스레드에서 계속 호출
-	
+	/*
 		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
 		for(int i = 0; i<mosqs.size();i++) {
 			if(mosqs.get(i).getHp()<=0) {
 				this.changeStage(stageIndex++);
 			}
-		}
+		}*/
 		//패배조건 : 시간이 0이 되었을 때 or player의 hp가 0이 되었을 때
+		/*if((timer.getOneCount() == 0 && timer.getTenCount() == 0) ||
+				p1.getHp <= 0 ) {
+			gameOver();
+		}*/
 		
 	}
 
+	public GameOver getGameOver() {
+		// TODO Auto-generated method stub
+		return gameOver;
+	}
+	
 	public ArrayList<Mosquito> getMosqs() {
 		return mosqs;
 	}
@@ -108,4 +122,6 @@ public class StageService {
 	public void setTotalScore(int totalScore) {
 		this.totalScore = totalScore;
 	}
+
+	
 }
