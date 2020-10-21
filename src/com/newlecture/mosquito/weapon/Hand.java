@@ -1,27 +1,27 @@
 package com.newlecture.mosquito.weapon;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.newlecture.mosquito.canvas.StageCanvas;
-
-public class Sword extends Weapon {
-
-	public Sword() {
+public class Hand extends Weapon {
+	
+	public Hand() {
+		/*
 		try {
-			this.setImg(ImageIO.read(new File("res/flyswatter.png")));
+			this.setImg(ImageIO.read(new File("")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		this.setDamage(50);
-		this.setType("sword");
-		this.setProb(1.0);
+		}*/
+		
+		this.setDamage(5);
+		this.setType("hand");
+		this.setProb(0.35);
 		this.setRange(1);
 	}
+	
+	
 }

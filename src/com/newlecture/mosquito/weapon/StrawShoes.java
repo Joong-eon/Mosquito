@@ -9,19 +9,20 @@ import javax.imageio.ImageIO;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
 
-public class Sword extends Weapon {
+public class StrawShoes extends Weapon{
 
-	public Sword() {
+	public StrawShoes() {
 		try {
-			this.setImg(ImageIO.read(new File("res/flyswatter.png")));
+			this.setImg(ImageIO.read(new File("")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		this.setDamage(50);
-		this.setType("sword");
-		this.setProb(1.0);
-		this.setRange(1);
+		this.setDamage(2);
+		this.setType("strawshoes");
+		this.setProb(0.4);
+		this.setRange(2);
 	}
+
 }

@@ -16,6 +16,7 @@ public class ImageLoader {
 	public static Image menuBackground;
 	public static Image mosquito;
 	public static Image butterfly;
+	public static Image scoreNumber;
 	
 	static {
 		try {
@@ -26,6 +27,7 @@ public class ImageLoader {
 			menuBackground = ImageIO.read(new File("res/menu_bg.jpg"));
 		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
+			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

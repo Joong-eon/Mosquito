@@ -13,32 +13,30 @@ import javax.imageio.ImageIO;
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.entity.Bug;
 
-public class Weapon {// 추상클래스 구현
+public abstract class Weapon {// 추상클래스 구현
 
 	private String type;
 	private int damage;
 	private double prob;
 	private Image img;//img
-	private boolean isClicked;
-	private int range = 3;
+	private boolean isClicked = false;
+	private int range;
 
 	private int width = 72;
 	private int height = 52;
 	private int x = 0;
 	private int y = 0;
 
-	private int moveTempo = 6;
 	private int moveIndex = 1;
 	private int mouseIndex = 0;
-	
-	//img 초기화
-
+/*
 	public Weapon() {
 		isClicked = false;
-		damage = 10;
-		type = "hand";
-		prob = 0.3;
-	}
+		this.damage = 5;
+		this.type = "hand";
+		this.prob = 0.35;
+		this.range = 1;
+	}*/
 
 	public void paint(Graphics g) {
 
@@ -159,14 +157,6 @@ public class Weapon {// 추상클래스 구현
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	public int getMoveTempo() {
-		return moveTempo;
-	}
-
-	public void setMoveTempo(int moveTempo) {
-		this.moveTempo = moveTempo;
 	}
 
 	public int getMoveIndex() {
