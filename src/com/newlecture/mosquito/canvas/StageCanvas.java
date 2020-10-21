@@ -155,6 +155,7 @@ public class StageCanvas extends Canvas {
 				super.mouseClicked(e);
 			}
 
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				for (int i = 0; i < weapons.length; i++) {
