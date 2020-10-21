@@ -66,6 +66,7 @@ public class StageService {
 			}
 		}
 		//패배조건 : 시간이 0이 되었을 때 or player의 hp가 0이 되었을 때
+		
 	}
 
 	public ArrayList<Mosquito> getMosqs() {

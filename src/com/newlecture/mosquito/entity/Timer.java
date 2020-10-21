@@ -102,5 +102,21 @@ public class Timer {
 		
 		
 	}
+
+	public int getTenCount() {
+		return tenCount;
+	}
+
+	public void setTenCount(int tenCount) {
+		this.tenCount = tenCount;
+	}
+
+	public int getOneCount() {
+		return oneCount;
+	}
+
+	public void setOneCount(int oneCount) {
+		this.oneCount = oneCount;
+	}
 	
 }
