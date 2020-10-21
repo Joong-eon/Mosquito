@@ -73,8 +73,8 @@ public class StageCanvas extends Canvas {
 		}
 		
 		weapons = new WeaponButton[2];
-		weapons[0] = new WeaponButton("spear",weapon1,weapon1, 800,700,148,204);
-		weapons[1] = new WeaponButton("flyswatter",weapon22,weapon2, 1050,700,112,217);
+		weapons[0] = new WeaponButton("spear",weapon1,weapon1, 800,700,135,188);
+		weapons[1] = new WeaponButton("flyswatter",weapon2,weapon22, 1050,700,118,141);
 		//이벤트 발생시 웨폰버튼에서 이름 가져오고
 		//p1.current 정보변경
 		
@@ -230,8 +230,10 @@ public class StageCanvas extends Canvas {
 		for (int i = 0; i<buttSize ; i++) {
 			stageService.getButts().get(i).paint(bg);
 		}
-		
+		weapons[0].paint(bg);
+		weapons[1].paint(bg);
 		p1.getCurrentWp().paint(bg);
+		
 
 		g.drawImage(buf, 0, 0, this);//
 

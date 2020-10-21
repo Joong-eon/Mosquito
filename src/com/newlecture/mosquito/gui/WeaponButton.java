@@ -1,5 +1,6 @@
 package com.newlecture.mosquito.gui;
 
+import java.awt.Graphics;
 import java.awt.Image;
 
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
@@ -10,6 +11,5 @@ public class WeaponButton extends Button {
 		super(name, normalImg, pressedImg, x, y, width, height);
 		// TODO Auto-generated constructor stub
 	}
-
 	
 }
