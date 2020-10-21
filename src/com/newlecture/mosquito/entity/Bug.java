@@ -14,22 +14,25 @@ public abstract class Bug{
 	private int hp;//추후 파일에서 읽어오기(개체별)
 
 	
-
 	// 애니메이션을 위한 변수
 	private double vx;
 	private double vy;
 	private double dx;
 	private double dy;
-	private double width;
-	private double height;
+	private double width;			// 실제 전시 되는 벌레의 width
+	private double height;			// 실제 전시 되는 벌레의 height
+	
 	private Image img;
-
+	private double imgWidth;		// 이미지 파일에서 그릴 이미지의 width
+	private double imgHeight;		// 이미지 파일에서 그릴 이미지의 height
+	
 	private int timeoutForMoving=30;
 	private int movIndex ;
 	private int speed ;
 	private int walkTempo ;
 	private int outRange ;
 	private int direction;
+	private int imgDirection;		// 방향이 바뀔때 imgDirection기준으로 그릴 이미지가 변경 됨
 	private int currentDir;
 
 	
@@ -56,9 +59,7 @@ public abstract class Bug{
 		speed = 1;
 		walkTempo = 6;
 	}
-
-	protected abstract Image getImage() ;
-		
+	
 	
 	public void move(double x, double y) {
 	    this.dx = x;
@@ -76,9 +77,12 @@ public abstract class Bug{
 	public  void update() {
 		timeoutForMoving--;
 		if (timeoutForMoving == 0) {
-			double width = (int) this.width;
-			double height = (int) this.height;
+//			double width = (int) this.width;
+//			double height = (int) this.height;
 
+			double width = (int) this.imgWidth;
+			double height = (int) this.imgHeight;
+			
 			int w = GameFrame.canvasWidth - (int) width;
 			int h = GameFrame.canvasHeight - (int) height;
 			int dx = rand.nextInt(w);
@@ -89,36 +93,25 @@ public abstract class Bug{
 			if(this.x < dx && currentDir == 0) {//모기의 방향 설정
 				currentDir = 1;
 				if(direction == 0)
-					direction = (int)width;
+					direction = imgDirection;
 				else
 					direction = 0;
 			}
 			else if(this.x >= dx && currentDir == 1) {
 				currentDir = 0;
 				if(direction == 0)
-					direction = (int)width;
+					direction = imgDirection;
 				else
 					direction = 0;
-			}
-
+			}			
+			
 			timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
 		}
 
 		x += vx;
 		y += vy;
-		
 
 	}
-	
-	public boolean isSelected(int x, int y) {
-		
-		if((x > this.x-this.width/2 && x < this.x+this.width/2)
-				&& (y > this.y-this.height/2 && x < this.y+this.height/2)) {
-			return true;
-		}else
-			return false;
-	}
-	
 	
 	
 	public abstract void paint(Graphics g);
@@ -243,6 +236,37 @@ public abstract class Bug{
 		this.hp = hp;
 	}
 
+
+	public double getImgWidth() {
+		return imgWidth;
+	}
+
+
+	public void setImgWidth(double imgWidth) {
+		this.imgWidth = imgWidth;
+	}
+
+
+	public double getImgHeight() {
+		return imgHeight;
+	}
+
+
+	public void setImgHeight(double imgHeight) {
+		this.imgHeight = imgHeight;
+	}
+
+
+	public int getImgDirection() {
+		return imgDirection;
+	}
+
+
+	public void setImgDirection(int imgDirection) {
+		this.imgDirection = imgDirection;
+	}
+
+	
 }
 
 

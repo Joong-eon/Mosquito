@@ -1,6 +1,9 @@
 package com.newlecture.mosquito;
 
+import java.awt.Cursor;
 import java.awt.Frame;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -15,7 +18,10 @@ public class Program {
 		// TODO Auto-generated method stub
 		Frame frame = new GameFrame();
 		DataService ds = new DataService();
-		
+		/*마우스 커서 숨기는 코드
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Cursor invisCursor = tk.createCustomCursor(tk.createImage(""),new Point(), null);
+		frame.setCursor(invisCursor);*/
 		
 		// 아래 코드는 DataService의 예시 입니다. 나중에 지울게요.
 		// 초기 플레이어 레벨(등급)을 가져오려고 하면 => 플레이어 레벨은 정수형(숫자)이므로 getIntValue()를 사용합니다 

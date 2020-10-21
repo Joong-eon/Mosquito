@@ -43,7 +43,7 @@ public class GameFrame extends Frame {
 	// 메뉴가 바뀌었을때 호출됨/
 	public void switchCanvas(Canvas oldCanvas, Class newCanvas) throws InstantiationException, IllegalAccessException {
 		// TODO Auto-generated method stub
-		remove(oldCanvas);
+		
 		Canvas canvas = (Canvas)newCanvas.newInstance();
 		add(canvas);
 		if(canvas instanceof StageCanvas) {
@@ -54,6 +54,7 @@ public class GameFrame extends Frame {
 			menuCanvas.start();
 		}
 		revalidate();
+		remove(oldCanvas);
 	}
 
 	public static GameFrame getInstance() {

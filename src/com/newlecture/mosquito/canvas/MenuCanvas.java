@@ -177,5 +177,6 @@ public class MenuCanvas extends Canvas {
 		th.start();
 	}
 	
+	
 
 }

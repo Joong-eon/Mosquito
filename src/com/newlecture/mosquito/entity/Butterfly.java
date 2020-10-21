@@ -1,5 +1,6 @@
 package com.newlecture.mosquito.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -13,8 +14,6 @@ import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Butterfly extends Bug {
-
-	private Image img;
 	
 	private double lifeTime;
 	private int penaltyTime = 5;
@@ -26,6 +25,15 @@ public class Butterfly extends Bug {
 		super();
 		this.setWidth(60);
 		this.setHeight(60);
+		
+		// 실제 파일에서의 이미지 크기 (ex: 모기가 가로로 10개인 이미지에서 모기 하나당 width가 320인거임)
+		this.setImgWidth(60);
+		this.setImgHeight(60);
+		
+		// 방향 전환 시 필요한 이미지 간격 
+		// (ex : imgDirection=270이면 왼쪽방향 이미지와 오른쪽 방향 이미지 위치 차이가 270인격) 
+		this.setImgDirection(60);
+				
 		setImg(ImageLoader.butterfly);
 		this.setDirection(0);
 	}
@@ -37,14 +45,20 @@ public class Butterfly extends Bug {
 		int h = (int) this.getHeight();
 		
 		//System.out.println(w + " ,,,,, 너비");
-		int x1 = (int) this.getX();
-		int y1 = (int) this.getY();
-		int x2 = x1 + w;
+//		int x1 = (int) this.getX();
+//		int y1 = (int) this.getY();
+//		int x2 = x1 + w;
+//		int y2 = y1 + h;
+		// 중심 좌표로 맞출거임
+		int x1 = (int)this.getX() - w/2;
+		int y1 = (int)this.getY() - h/2;
+		int x2 = x1 + w; 					//+ 60;
 		int y2 = y1 + h;
+				
 		int movTempo = getWalkTempo();
 		int movIndex = getMovIndex();
 		Image img = getImg();	
-//		Image img = ImageLoader.butterfly;
+		
 		double vx = getVx();
 		double vy = getVy();
 
@@ -70,19 +84,18 @@ public class Butterfly extends Bug {
 			direction = 0;
 		}*/
 		
-		int offsetX = movIndex * w;
+		
+		int imgWidth = (int)getImgWidth();
+		int imgHeight = (int)getImgHeight();
+		
+		int offsetX = movIndex * imgWidth;
 		
 		
 		
-		g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection() , 0 + w + offsetX, this.getDirection() + h, StageCanvas.instance);
+		g.drawImage(img, x1, y1, x2, y2, 
+				0 + offsetX, this.getDirection() , 0 + imgWidth + offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
 		setWalkTempo(movTempo);
 		setMovIndex(movIndex);
 	}
 
-
-	@Override
-	protected Image getImage() {
-		// TODO Auto-generated method stub
-		return img;
-	}
 }
