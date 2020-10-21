@@ -12,8 +12,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.entity.Bug;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
@@ -21,19 +27,31 @@ import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Score;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.WeaponButton;
+import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
 import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas {
+	
+	private Image weapon1;
+	private Image weapon2;
+	private Image weapon22;
+
 	// ��ü ����
 	public static Canvas instance;
 	Thread th;// ������
+	
+	
+	///여기서 보유무기 이미지 stageService에서 받아오고,
 
 	private StageService stageService;
 	private Timer timer;
 	private Player p1;
+	private WeaponButton[] weapons;
 	private Score score;
 
 	private int count = 1;
@@ -44,8 +62,26 @@ public class StageCanvas extends Canvas {
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
+		
+		try {
+			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 
+			weapon2 = ImageIO.read(new File("res/flyswatter.png"));
+			weapon22 = ImageIO.read(new File("res/flyswatter1.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		weapons = new WeaponButton[2];
+		weapons[0] = new WeaponButton("spear",weapon1,weapon1, 800,700,135,188);
+		weapons[1] = new WeaponButton("flyswatter",weapon2,weapon22, 1050,700,118,141);
+		//이벤트 발생시 웨폰버튼에서 이름 가져오고
+		//p1.current 정보변경
+		
+		
+		//p1.getCurrentWp()
+		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
 		score = new Score();
-
 
 		addMouseMotionListener(new MouseMotionListener() {
 
@@ -118,7 +154,56 @@ public class StageCanvas extends Canvas {
 
 				super.mouseClicked(e);
 			}
+
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				for (int i = 0; i < weapons.length; i++) {
+					if (true == weapons[i].contains(e.getX(), e.getY())) {
+						System.out.println("선택되었습니다");
+						weapons[i].getClickListener().onPressed(weapons[i]);
+						//weapons[i].getClickListener().onPressed(weapons[i]);
+					}
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				for (int i = 0; i < weapons.length; i++) {
+					if (true == weapons[i].contains(e.getX(), e.getY())) {
+						weapons[i].getClickListener().onReleased(weapons[i]);
+						
+						for(int j = 0;j<p1.getWeapons().length;j++) {
+							//System.out.println(p1.getWeapons()[j]);
+							if(p1.getWeapons()[j].getType().equals(weapons[i].getName())) {
+								if(weapons[i].getName().equals("flyswatter")) {
+									Weapon temp = p1.getWeapons()[j];
+									temp.setImg(weapon2);
+									p1.setCurrentWp(temp);
+								}
+								else if(weapons[i].getName().equals("spear")) {
+									Weapon temp = p1.getWeapons()[j];
+									temp.setImg(weapon1);
+									p1.setCurrentWp(temp);
+								}
+							}							
+						}
+						p1.getCurrentWp().setX(e.getX());
+						p1.getCurrentWp().setY(e.getY());
+					}
+				}
+			}			
 		});
+		
+		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i].addClickListener(new MenuButtonClickedAdapter() {
+				@Override
+				public void onClicked(Button target) {
+					
+				}
+			});
+		}
 
 	}
 
@@ -154,6 +239,8 @@ public class StageCanvas extends Canvas {
 		for (int i = 0; i<buttSize ; i++) {
 			stageService.getButts().get(i).paint(bg);
 		}
+		weapons[0].paint(bg);
+		weapons[1].paint(bg);
 
 		p1.getCurrentWp().paint(bg);
 		}
