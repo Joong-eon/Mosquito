@@ -1,6 +1,7 @@
 package com.newlecture.mosquito.service;
 
 import java.awt.Canvas;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
@@ -17,9 +18,11 @@ public class StageService {
 	private Timer timer;
 	private int totalScore=0;
 	private GameOver gameOver;
+	private Image gameOverBtn = ImageLoader.gameOverBtn;
+	
 	
 	public StageService() {
-		gameOver = new GameOver();
+		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
 	}

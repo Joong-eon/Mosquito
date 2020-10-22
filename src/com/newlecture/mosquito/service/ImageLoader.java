@@ -17,7 +17,8 @@ public class ImageLoader {
 	public static Image mosquito;
 	public static Image butterfly;
 	public static Image scoreNumber;
-	public static Image gameOver;
+	public static Image gameOverBtn;
+	public static Image gameOverBg;
 	
 	static {
 		try {
@@ -29,7 +30,8 @@ public class ImageLoader {
 		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
-			gameOver = ImageIO.read(new File("res/gameOver.png"));
+			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
+			gameOverBg =ImageIO.read(new File("res/gameOverBg.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
