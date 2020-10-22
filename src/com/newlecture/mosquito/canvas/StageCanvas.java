@@ -412,6 +412,7 @@ public class StageCanvas extends Canvas {
 
 					p1.getCurrentWp().update();
 					
+					
 					repaint();
 
 					try {
