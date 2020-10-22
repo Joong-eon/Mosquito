@@ -19,6 +19,8 @@ public class FlySwatter extends Weapon{
 				e.printStackTrace();
 			}
 			
+			
+			
 			this.setDamage(5);
 			this.setType("flyswatter");
 			this.setProb(0.7);
