@@ -28,7 +28,9 @@ import com.newlecture.mosquito.entity.Score;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.WeaponButton;
+import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
@@ -45,6 +47,13 @@ public class StageCanvas extends Canvas {
 	public static Canvas instance;
 	Thread th;// ������
 	
+    private Clip bgClip;
+	private Clip effectClip;
+	private AudioInputStream bgAis;
+	private AudioInputStream effectAis;
+	private boolean isEffect;
+	private boolean isBgm;
+	
 	
 	///여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -55,10 +64,21 @@ public class StageCanvas extends Canvas {
 	private Score score;
 
 	private int count = 1;
+	
+	private ButtonClickedListener clickListener;
 
 	public StageCanvas() {// ������
 		instance = this;
+		
+		isBgm = true;
+		isEffect = true;
+		
+		mosSound("res/sound/mos.wav");
+		
+		
 
+	
+		
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
@@ -78,6 +98,23 @@ public class StageCanvas extends Canvas {
 		//이벤트 발생시 웨폰버튼에서 이름 가져오고
 		//p1.current 정보변경
 		
+		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
+			
+			@Override
+			public void onClicked(GameOver gameOver) {
+				// TODO Auto-generated method stub
+				try {
+					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class);
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 		
 		//p1.getCurrentWp()
 		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
@@ -107,12 +144,17 @@ public class StageCanvas extends Canvas {
 				int x = e.getX();
 				int y = e.getY();
 
-				if (true == p1.getCurrentWp().isClickable()) {
+				if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
+					//게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+					if(stageService.getGameOver().contains(x, y)) {
+						stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
+					}
+					
+				}else if (true == p1.getCurrentWp().isClickable()) {
 					System.out.println("클릭됨");
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
-					Bug selectedBug = null;
 					Mosquito selectedMosq = null;
 					Butterfly selectedButt = null;
 
@@ -134,19 +176,20 @@ public class StageCanvas extends Canvas {
 						}
 					}
 
-
-
 					boolean isMiss = false;      
 
 					if (selectedMosq != null) { // null이 아니면 찾은거임
 						System.out.println("모기 클릭 성공");
 						isMiss = p1.attack(selectedMosq);
+						
+						
 						//System.out.println("공격");
 					} 
 
 					if(selectedButt != null) {
 						isMiss = p1.attack(selectedButt);
 						System.out.println("아얏!");
+						
 					} 
 
 					if(isMiss == true) {// 빗나감
@@ -160,6 +203,10 @@ public class StageCanvas extends Canvas {
 							//selectedMosq.move(e.getX(), e.getY());
 							selectedMosq.setMovIndex(4);
 							System.out.println(selectedMosq.getMovIndex());
+							//모기 죽는 사운드
+							 effect("res/sound/mosdie.wav");
+							
+							
 						}
 
 				}
@@ -218,6 +265,63 @@ public class StageCanvas extends Canvas {
 		}
 
 	}
+
+
+
+
+//모기 사운드
+	private void mosSound(String file) {
+		if (isBgm) {
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+
+				bgClip.open(bgAis);
+				bgClip.start();
+		
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}		
+	
+	public void effect(String file) {
+		if (isEffect) {
+			try {
+				effectAis = AudioSystem.getAudioInputStream(new File(file));
+				effectClip = AudioSystem.getClip();
+				effectClip.open(effectAis);
+				effectClip.start();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	 public void setEff(boolean b) {
+			isEffect = b;
+		}
+
+		public void setBgm(boolean b) {
+			isBgm = b;
+		}
+
+		public void bgmOff() {
+			bgClip.stop();
+		}
+		
+		public void effectStart() {
+			if(isEffect == true)
+				effectClip.loop(1);
+		}
+
+
+
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -304,5 +408,9 @@ public class StageCanvas extends Canvas {
 
 		th = new Thread(sub);
 		th.start();
+	
+
 	}
+	
+	
 }
