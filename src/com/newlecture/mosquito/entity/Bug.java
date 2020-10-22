@@ -54,7 +54,7 @@ public abstract class Bug{
 			y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
 		}
 		
-		
+		hp = 10;
 		movIndex = 0;
 		speed = 1;
 		walkTempo = 6;
@@ -76,7 +76,7 @@ public abstract class Bug{
 
 	public  void update() {
 		timeoutForMoving--;
-		if (timeoutForMoving == 0) {
+		if (timeoutForMoving == 0 && currentDir != 2) {
 //			double width = (int) this.width;
 //			double height = (int) this.height;
 
@@ -88,7 +88,6 @@ public abstract class Bug{
 			int dx = rand.nextInt(w);
 			int dy = rand.nextInt(h);
 			//왼쪽
-			this.move(dx, dy);
 			
 			if(this.x < dx && currentDir == 0) {//모기의 방향 설정
 				currentDir = 1;
@@ -103,13 +102,19 @@ public abstract class Bug{
 					direction = imgDirection;
 				else
 					direction = 0;
-			}			
+			}
+			this.move(dx, dy);
 			
 			timeoutForMoving = rand.nextInt(60) + 60;// 0~59+60 // 60~119
+			
 		}
-
-		x += vx;
-		y += vy;
+		
+		if(currentDir != 2) {//살아있을 때
+			
+			x += vx;
+			y += vy;
+		}
+		
 
 	}
 	
@@ -266,6 +271,16 @@ public abstract class Bug{
 		this.imgDirection = imgDirection;
 	}
 
+
+	public int getCurrentDir() {
+		return currentDir;
+	}
+
+
+	public void setCurrentDir(int currentDir) {
+		this.currentDir = currentDir;
+	}
+	
 	
 }
 

@@ -21,7 +21,7 @@ public class Timer {
 	//private int totalCount=100;
 	private int timeForTimer = 60;
 	private int timeForDecimal = 6;
-	private int limitTime = 10;
+	private int limitTime = 100;
 	private int tenCount = limitTime/10;
 	private int oneCount = limitTime%10;
 	private int decimalCount = 10;
@@ -91,7 +91,7 @@ public class Timer {
 				//System.out.println(oneCount);
 			}
 			else if(oneCount == 0 && tenCount > 0) {//십의자리가 0보다 크고, 1의자리가 0이되면 
-				System.out.println(tenCount);
+				//System.out.println(tenCount);
 				tenCount--;
 				oneCount = 9;
 			}
