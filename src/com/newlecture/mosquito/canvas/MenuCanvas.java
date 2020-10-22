@@ -30,10 +30,16 @@ public class MenuCanvas extends Canvas {
 	private Button freeButton;
 	private Button exitButton;
 
-	private Image menuBtnNormal;
-	private Image menuBtnPressed;
-	private Image menuBackground;
+	private Image stageBtnNormal;
+	private Image stageBtnPressed;
+	private Image freeBtnNormal;
+	private Image freeBtnPressed;
+	private Image exitBtnNormal;
+	private Image exitBtnPressed;
 	
+	
+	private Image menuBackground;
+	private Image menuTitle;
 
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
@@ -41,22 +47,30 @@ public class MenuCanvas extends Canvas {
 		
 		int btnWidth = 300;
 		int btnHeight = 170;
-		double sx = 100;
-		double sy = 100;
-		double space = 10;
-
-		setBackground(Color.GREEN);
+		double sx = 400;
+		double sy = 580;
+		double space = 50;
 
 		// 메뉴 버튼의 이미지를 받아옴
-		menuBtnNormal = ImageLoader.menuBtnNormal;
-		menuBtnPressed = ImageLoader.menuBtnPressed;
+		stageBtnNormal = ImageLoader.menuStageBtnNormal;
+		stageBtnPressed = ImageLoader.menuStageBtnPressed;
+		
+		freeBtnNormal = ImageLoader.menuFreeBtnNormal;
+		freeBtnPressed = ImageLoader.menuFreeBtnPressed;
+		
+		stageBtnNormal = ImageLoader.menuStageBtnNormal;
+		stageBtnPressed = ImageLoader.menuStageBtnPressed;
+		
+		
 		menuBackground = ImageLoader.menuBackground;
+		menuTitle = ImageLoader.menuTitle;
 		
 		// 메뉴 버튼 생성
-		stageButton = new Button("stage", menuBtnNormal, menuBtnPressed, sx, sy, btnWidth, btnHeight);
-		freeButton = new Button("free", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight, btnWidth, btnHeight);
-		exitButton = new Button("exit", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight * 2, btnWidth, btnHeight);
+		stageButton = new Button("stage", stageBtnNormal, stageBtnPressed, sx, sy, btnWidth, btnHeight);
+		freeButton = new Button("free",freeBtnNormal, freeBtnPressed, sx + btnWidth + space, sy, btnWidth, btnHeight);
+		exitButton = new Button("exit", stageBtnNormal, stageBtnPressed, sx + (btnWidth + space)*2, sy, btnWidth, btnHeight);
 
+		
 		// 버튼 배열에 넣음
 		buttons = new Button[3];
 		buttons[0] = stageButton;
@@ -138,6 +152,7 @@ public class MenuCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 
 		bg.drawImage(menuBackground, 0, 0, this);		//배경이미지
+		bg.drawImage(menuTitle, 0, 0, this);		 	//타이틀
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].paint(bg);
 		}
