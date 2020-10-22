@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.GameFrame;
@@ -30,33 +33,60 @@ public class MenuCanvas extends Canvas {
 	private Button freeButton;
 	private Button exitButton;
 
-	private Image menuBtnNormal;
-	private Image menuBtnPressed;
+	private Image stageBtnNormal;
+	private Image stageBtnPressed;
+	private Image freeBtnNormal;
+	private Image freeBtnPressed;
+	private Image exitBtnNormal;
+	private Image exitBtnPressed;
+	
 	private Image menuBackground;
 	
-
+	//sound
+	private Clip bgClip;
+	private Clip effectClip;
+	private AudioInputStream bgAis;
+	private AudioInputStream effectAis;
+	private boolean isEffect;
+	private boolean isBgm;
+	
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
 		instance = this;
 		
-		int btnWidth = 300;
-		int btnHeight = 170;
-		double sx = 100;
-		double sy = 100;
-		double space = 10;
+		int btnWidth = 230;
+		int btnHeight = 417;
+		double sx = 200;
+		double sy = 530;
+		double space = 180;
 
 		setBackground(Color.GREEN);
-
+		
+		//main sound
+		isEffect = true;
+		isBgm = true;
+		
+		mainSound("res/sound/main.wav" );
+		
 		// 메뉴 버튼의 이미지를 받아옴
-		menuBtnNormal = ImageLoader.menuBtnNormal;
-		menuBtnPressed = ImageLoader.menuBtnPressed;
+		stageBtnNormal = ImageLoader.menuStageBtnNormal;
+		stageBtnPressed = ImageLoader.menuStageBtnPressed;
+		
+		freeBtnNormal = ImageLoader.menuFreeBtnNormal;
+		freeBtnPressed = ImageLoader.menuFreeBtnPressed;
+		
+		exitBtnNormal = ImageLoader.menuExitBtnNormal;
+		exitBtnPressed = ImageLoader.menuExitBtnPressed;
+		
+		
 		menuBackground = ImageLoader.menuBackground;
 		
 		// 메뉴 버튼 생성
-		stageButton = new Button("stage", menuBtnNormal, menuBtnPressed, sx, sy, btnWidth, btnHeight);
-		freeButton = new Button("free", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight, btnWidth, btnHeight);
-		exitButton = new Button("exit", menuBtnNormal, menuBtnPressed, sx, sy + btnHeight * 2, btnWidth, btnHeight);
+		stageButton = new Button("stage", stageBtnNormal, stageBtnPressed, sx, sy, btnWidth, btnHeight);
+		freeButton = new Button("free",freeBtnNormal, freeBtnPressed, sx + btnWidth + space, sy, btnWidth, btnHeight);
+		exitButton = new Button("exit", exitBtnNormal, exitBtnPressed, sx + (btnWidth + space)*2, sy, btnWidth, btnHeight);
 
+		
 		// 버튼 배열에 넣음
 		buttons = new Button[3];
 		buttons[0] = stageButton;
@@ -71,6 +101,8 @@ public class MenuCanvas extends Canvas {
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
+						//버튼 클릭시 메인사운드 off
+						 bgmOff();
 					}
 				}
 			}
@@ -104,7 +136,7 @@ public class MenuCanvas extends Canvas {
 				public void onClicked(Button target) {
 					
 					switch(target.getName()) {
-					case "stage":
+					case"stage":
 						try {
 							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class);
 						} catch (InstantiationException e) {
@@ -176,7 +208,45 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
-	
+	 void mainSound(String file ) {
+		 if (isBgm) {
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+				
+				
+
+				bgClip.open(bgAis);
+				bgClip.start();
+//				bgClip.stop();
+//				if(isLoop)
+//					bgClip.loop(Clip.LOOP_CONTINUOUSLY);
+//				
+			//	bgClip.loop(Integer.MAX_VALUE);
+				System.out.println("sound good");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("err");
+			}
+		 }
+		}
+	 public void setEff(boolean b) {
+			isEffect = b;
+		}
+
+		public void setBgm(boolean b) {
+			isBgm = b;
+		}
+
+		public void bgmOff() {
+			bgClip.stop();
+		}
+		
+		public void effectStart() {
+			if(isEffect == true)
+				effectClip.loop(1);
+		}
 	
 
 }

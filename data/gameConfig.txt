@@ -1,6 +1,7 @@
 [default]
 playerLevel=1
 stageIndex=1
+stageCount=2
 mosqHP=10
 buttHP=5
 [stage1]

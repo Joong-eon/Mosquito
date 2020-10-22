@@ -161,7 +161,6 @@ public class StageCanvas extends Canvas {
 					}
 					
 				}else if (true == p1.getCurrentWp().isClickable()) {
-					//System.out.println("클릭됨");
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
@@ -206,18 +205,8 @@ public class StageCanvas extends Canvas {
 						//miss뜨는 그림효과
 						System.out.println("빗나감");
 						
-					}else{//빗나간게 아니라면
-						if (selectedMosq != null) {
-							/*
-							System.out.println(p1.getCurrentWp().getType());
-							if (selectedMosq.getHp() <= 0) {
-								System.out.println("모기 죽음");// 현재 모기 죽으면 모기 사라짐.. 왜그럴까
-								selectedMosq.setCurrentDir(2);
-								// selectedMosq.move(e.getX(), e.getY());
-								selectedMosq.setMovIndex(4);
-								System.out.println(selectedMosq.getMovIndex());
-								stageService.setScore();
-							}*/
+					} else {//빗나간게 아니라면
+						if (selectedMosq != null) {			
 							if (selectedMosq.getHp() <= 0) {
 								String stageName = "stage" + stageService.getStageIndex();
 
@@ -229,9 +218,7 @@ public class StageCanvas extends Canvas {
 								selectedMosq.setMovIndex(4);
 							}
 							//모기 죽는 사운드
-							 effect("res/sound/mosdie.wav");
-							
-							
+							 effect("res/sound/mosdie.wav");							
 						}
 						else if(selectedButt != null) {
 
@@ -242,9 +229,7 @@ public class StageCanvas extends Canvas {
 								selectedButt.setMovIndex(4);
 								timer.setTenCount(timer.getTenCount()-1);
 							}
-
-		                    System.out.println("공격");
-		                    
+		                    System.out.println("공격");		                    
 						}
 					}
 				}

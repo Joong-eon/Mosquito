@@ -175,5 +175,7 @@ public abstract class Weapon {// 추상클래스 구현
 	public boolean getIsClicked() {
 		return isClicked;
 	}
+	
+	
 
 }

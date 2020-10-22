@@ -21,7 +21,7 @@ public class Timer {
 	//private int totalCount=100;
 	private int timeForTimer = 60;
 	private int timeForDecimal = 6;
-	private int limitTime = 100;
+	private int limitTime = 10;
 	private int tenCount = limitTime/10;
 	private int oneCount = limitTime%10;
 	private int decimalCount = 10;
