@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 public class Hand extends Weapon {
 	
 	public Hand() {
+		
+		
 		/*
 		try {
 			this.setImg(ImageIO.read(new File("")));
@@ -16,6 +18,10 @@ public class Hand extends Weapon {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		
+		
+		
+		
 		
 		this.setDamage(5);
 		this.setType("hand");

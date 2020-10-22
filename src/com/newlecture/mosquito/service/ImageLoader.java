@@ -21,6 +21,9 @@ public class ImageLoader {
 	public static Image butterfly;
 	public static Image scoreNumber;
 	public static Image gameOver;
+	public static Image gameOverBtn;
+	public static Image gameOverBg;
+
 	public static Image[] stageBackgrounds;
 	
 	static {
@@ -37,8 +40,11 @@ public class ImageLoader {
 		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
-			gameOver = ImageIO.read(new File("res/gameOver.png"));
 			
+			gameOver = ImageIO.read(new File("res/gameOver.png"));
+			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
+			gameOverBg =ImageIO.read(new File("res/gameOverBg.png"));
+
 			int stageCount = DataService.getInstance().getGameIntValue("default", "stageCount");
 			stageBackgrounds = new Image[stageCount];
 			for(int i=0 ; i<stageCount ; i++) {

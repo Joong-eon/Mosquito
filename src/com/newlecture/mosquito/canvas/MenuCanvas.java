@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.GameFrame;
@@ -37,9 +40,16 @@ public class MenuCanvas extends Canvas {
 	private Image exitBtnNormal;
 	private Image exitBtnPressed;
 	
-	
 	private Image menuBackground;
-
+	
+	//sound
+	private Clip bgClip;
+	private Clip effectClip;
+	private AudioInputStream bgAis;
+	private AudioInputStream effectAis;
+	private boolean isEffect;
+	private boolean isBgm;
+	
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
 		instance = this;
@@ -50,6 +60,14 @@ public class MenuCanvas extends Canvas {
 		double sy = 530;
 		double space = 180;
 
+		setBackground(Color.GREEN);
+		
+		//main sound
+		isEffect = true;
+		isBgm = true;
+		
+		mainSound("res/sound/main.wav" );
+		
 		// 메뉴 버튼의 이미지를 받아옴
 		stageBtnNormal = ImageLoader.menuStageBtnNormal;
 		stageBtnPressed = ImageLoader.menuStageBtnPressed;
@@ -83,6 +101,8 @@ public class MenuCanvas extends Canvas {
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
+						//버튼 클릭시 메인사운드 off
+						 bgmOff();
 					}
 				}
 			}
@@ -116,7 +136,7 @@ public class MenuCanvas extends Canvas {
 				public void onClicked(Button target) {
 					
 					switch(target.getName()) {
-					case "stage":
+					case"stage":
 						try {
 							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class);
 						} catch (InstantiationException e) {
@@ -188,7 +208,45 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
-	
+	 void mainSound(String file ) {
+		 if (isBgm) {
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+				
+				
+
+				bgClip.open(bgAis);
+				bgClip.start();
+//				bgClip.stop();
+//				if(isLoop)
+//					bgClip.loop(Clip.LOOP_CONTINUOUSLY);
+//				
+			//	bgClip.loop(Integer.MAX_VALUE);
+				System.out.println("sound good");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("err");
+			}
+		 }
+		}
+	 public void setEff(boolean b) {
+			isEffect = b;
+		}
+
+		public void setBgm(boolean b) {
+			isBgm = b;
+		}
+
+		public void bgmOff() {
+			bgClip.stop();
+		}
+		
+		public void effectStart() {
+			if(isEffect == true)
+				effectClip.loop(1);
+		}
 	
 
 }

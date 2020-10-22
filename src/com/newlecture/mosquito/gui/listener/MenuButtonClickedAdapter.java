@@ -4,6 +4,7 @@ import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class MenuButtonClickedAdapter implements ButtonClickedListener{
@@ -24,6 +25,12 @@ public class MenuButtonClickedAdapter implements ButtonClickedListener{
 	public void onReleased(Button target) {
 		// TODO Auto-generated method stub
 		target.setCurrentImg(target.getImgNormal());
+	}
+
+	@Override
+	public void onClicked(GameOver gameOver) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
