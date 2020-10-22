@@ -17,11 +17,11 @@ public class ImageLoader {
 	public static Image menuExitBtnNormal;
 	public static Image menuExitBtnPressed;
 	public static Image menuBackground;
-	public static Image menuTitle;
 	public static Image mosquito;
 	public static Image butterfly;
 	public static Image scoreNumber;
 	public static Image gameOver;
+	public static Image[] stageBackgrounds;
 	
 	static {
 		try {
@@ -34,11 +34,17 @@ public class ImageLoader {
 			menuExitBtnPressed = ImageIO.read(new File("res/menu_exit_pressed.png"));
 
 			menuBackground = ImageIO.read(new File("res/menu_bg.jpg"));
-			menuTitle = ImageIO.read(new File("res/title.png"));
 		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
 			gameOver = ImageIO.read(new File("res/gameOver.png"));
+			
+			int stageCount = DataService.getInstance().getGameIntValue("default", "stageCount");
+			stageBackgrounds = new Image[stageCount];
+			for(int i=0 ; i<stageCount ; i++) {
+				stageBackgrounds[i] = ImageIO.read(new File("res/stage"+(i+1)+"_bg.jpg"));
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -53,6 +53,8 @@ public class StageCanvas extends Canvas {
 	private Player p1;
 	private WeaponButton[] weapons;
 	private Score score;
+	
+	private Image background;
 
 	private int count = 1;
 
@@ -62,6 +64,11 @@ public class StageCanvas extends Canvas {
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
+		
+		// 현재 스테이지에 맞는 백그라운드를 가져옴
+		int stageIndex = stageService.getStageIndex();
+		background = ImageLoader.stageBackgrounds[stageIndex-1];
+		
 		
 		try {
 			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 
@@ -148,12 +155,12 @@ public class StageCanvas extends Canvas {
 						isMiss = p1.attack(selectedButt);
 						System.out.println("아얏!");
 					} 
-
+					
 					if(isMiss == true) {// 빗나감
 						//miss뜨는 그림효과
 						System.out.println("빗나감");
 						
-					}else//빗나간게 아니라면
+					}else //빗나간게 아니라면
 						if(selectedMosq.getHp() <= 0) {
 							System.out.println("모기 죽음");//현재 모기 죽으면 모기 사라짐.. 왜그럴까
 							selectedMosq.setCurrentDir(2);
@@ -231,6 +238,7 @@ public class StageCanvas extends Canvas {
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
 		//배경 그려주세요
+		bg.drawImage(background, 0, 0, null);
 		
 		//게임 실패시...
 		if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
