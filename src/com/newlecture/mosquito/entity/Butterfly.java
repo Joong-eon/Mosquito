@@ -17,6 +17,7 @@ public class Butterfly extends Bug {
 	
 	private double lifeTime;
 	private int penaltyTime = 5;
+	private int deleteTimer = 60;
 	
 	private Random rand = new Random();
 
@@ -91,11 +92,23 @@ public class Butterfly extends Bug {
 		int offsetX = movIndex * imgWidth;
 		
 		
-		
-		g.drawImage(img, x1, y1, x2, y2, 
-				0 + offsetX, this.getDirection() , 0 + imgWidth + offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
+		if(this.getCurrentDir() != 2)
+			g.drawImage(img, x1, y1, x2, y2, 
+					0 + offsetX, this.getDirection() , 0 + imgWidth + offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
+		else
+			g.drawImage(img, x1, y1, x2, y2, 
+					0, imgHeight*2 , 0 + imgWidth, 3*imgHeight, StageCanvas.instance);
+			
 		setWalkTempo(movTempo);
 		setMovIndex(movIndex);
+	}
+	
+	public int getDeleteTimer() {
+		return deleteTimer;
+	}
+
+	public void setDeleteTimer(int deleteTimer) {
+		this.deleteTimer = deleteTimer;
 	}
 
 }

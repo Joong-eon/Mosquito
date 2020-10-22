@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.GameFrame;
@@ -28,7 +31,9 @@ import com.newlecture.mosquito.entity.Score;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.WeaponButton;
+import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
@@ -45,6 +50,13 @@ public class StageCanvas extends Canvas {
 	public static Canvas instance;
 	Thread th;// ������
 	
+    private Clip bgClip;
+	private Clip effectClip;
+	private AudioInputStream bgAis;
+	private AudioInputStream effectAis;
+	private boolean isEffect;
+	private boolean isBgm;
+	
 	
 	///여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -53,15 +65,33 @@ public class StageCanvas extends Canvas {
 	private Player p1;
 	private WeaponButton[] weapons;
 	private Score score;
+	
+	private Image background;
 
 	private int count = 1;
+	
+	private ButtonClickedListener clickListener;
 
 	public StageCanvas() {// ������
 		instance = this;
+		
+		isBgm = true;
+		isEffect = true;
+		
+		mosSound("res/sound/mos.wav");
+		
+		
 
+	
+		
 		stageService = new StageService();
 		timer = new Timer();
 		p1 = new Player();
+		
+		// 현재 스테이지에 맞는 백그라운드를 가져옴
+		int stageIndex = stageService.getStageIndex();
+		background = ImageLoader.stageBackgrounds[stageIndex-1];
+		
 		
 		try {
 			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 
@@ -78,6 +108,23 @@ public class StageCanvas extends Canvas {
 		//이벤트 발생시 웨폰버튼에서 이름 가져오고
 		//p1.current 정보변경
 		
+		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
+			
+			@Override
+			public void onClicked(GameOver gameOver) {
+				// TODO Auto-generated method stub
+				try {
+					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class);
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 		
 		//p1.getCurrentWp()
 		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
@@ -107,12 +154,17 @@ public class StageCanvas extends Canvas {
 				int x = e.getX();
 				int y = e.getY();
 
-				if (true == p1.getCurrentWp().isClickable()) {
-					System.out.println("클릭됨");
+				if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
+					//게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+					if(stageService.getGameOver().contains(x, y)) {
+						stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
+					}
+					
+				}else if (true == p1.getCurrentWp().isClickable()) {
+					//System.out.println("클릭됨");
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
-					Bug selectedBug = null;
 					Mosquito selectedMosq = null;
 					Butterfly selectedButt = null;
 
@@ -134,34 +186,67 @@ public class StageCanvas extends Canvas {
 						}
 					}
 
-
-
 					boolean isMiss = false;      
 
 					if (selectedMosq != null) { // null이 아니면 찾은거임
 						System.out.println("모기 클릭 성공");
 						isMiss = p1.attack(selectedMosq);
+						
+						
 						//System.out.println("공격");
 					} 
 
 					if(selectedButt != null) {
 						isMiss = p1.attack(selectedButt);
 						System.out.println("아얏!");
+						
 					} 
-
+					
 					if(isMiss == true) {// 빗나감
 						//miss뜨는 그림효과
 						System.out.println("빗나감");
 						
-					}else//빗나간게 아니라면
-						if(selectedMosq.getHp() <= 0) {
-							System.out.println("모기 죽음");//현재 모기 죽으면 모기 사라짐.. 왜그럴까
-							selectedMosq.setCurrentDir(2);
-							//selectedMosq.move(e.getX(), e.getY());
-							selectedMosq.setMovIndex(4);
-							System.out.println(selectedMosq.getMovIndex());
-						}
+					}else{//빗나간게 아니라면
+						if (selectedMosq != null) {
+							/*
+							System.out.println(p1.getCurrentWp().getType());
+							if (selectedMosq.getHp() <= 0) {
+								System.out.println("모기 죽음");// 현재 모기 죽으면 모기 사라짐.. 왜그럴까
+								selectedMosq.setCurrentDir(2);
+								// selectedMosq.move(e.getX(), e.getY());
+								selectedMosq.setMovIndex(4);
+								System.out.println(selectedMosq.getMovIndex());
+								stageService.setScore();
+							}*/
+							if (selectedMosq.getHp() <= 0) {
+								String stageName = "stage" + stageService.getStageIndex();
 
+								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
+								int nowScore = score.getScore();
+								score.setScore(nowScore += killScore);
+
+								selectedMosq.setCurrentDir(2);
+								selectedMosq.setMovIndex(4);
+							}
+							//모기 죽는 사운드
+							 effect("res/sound/mosdie.wav");
+							
+							
+						}
+						else if(selectedButt != null) {
+
+							if(selectedButt.getHp() <= 0) {
+								System.out.println("나비 사망");
+								System.out.println("10초 감소");
+								selectedButt.setCurrentDir(2);
+								selectedButt.setMovIndex(4);
+								timer.setTenCount(timer.getTenCount()-1);
+							}
+
+		                    System.out.println("공격");
+		                    
+						}
+					}
 				}
 				
 				//super.mouseClicked(e);
@@ -188,16 +273,10 @@ public class StageCanvas extends Canvas {
 						for(int j = 0;j<p1.getWeapons().length;j++) {
 							//System.out.println(p1.getWeapons()[j]);
 							if(p1.getWeapons()[j].getType().equals(weapons[i].getName())) {
-								if(weapons[i].getName().equals("flyswatter")) {
-									Weapon temp = p1.getWeapons()[j];
-									temp.setImg(weapon2);
-									p1.setCurrentWp(temp);
-								}
-								else if(weapons[i].getName().equals("spear")) {
-									Weapon temp = p1.getWeapons()[j];
-									temp.setImg(weapon1);
-									p1.setCurrentWp(temp);
-								}
+								if(weapons[i].getName().equals("flyswatter"))
+									p1.setCurrentWp(p1.getWeapons()[j]);
+								else if(weapons[i].getName().equals("spear"))
+									p1.setCurrentWp(p1.getWeapons()[j]);
 							}							
 						}
 						p1.getCurrentWp().setX(e.getX());
@@ -219,6 +298,63 @@ public class StageCanvas extends Canvas {
 
 	}
 
+
+
+
+//모기 사운드
+	private void mosSound(String file) {
+		if (isBgm) {
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+
+				bgClip.open(bgAis);
+				bgClip.start();
+		
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}		
+	
+	public void effect(String file) {
+		if (isEffect) {
+			try {
+				effectAis = AudioSystem.getAudioInputStream(new File(file));
+				effectClip = AudioSystem.getClip();
+				effectClip.open(effectAis);
+				effectClip.start();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	 public void setEff(boolean b) {
+			isEffect = b;
+		}
+
+		public void setBgm(boolean b) {
+			isBgm = b;
+		}
+
+		public void bgmOff() {
+			bgClip.stop();
+		}
+		
+		public void effectStart() {
+			if(isEffect == true)
+				effectClip.loop(1);
+		}
+
+
+
+
+
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
@@ -231,6 +367,7 @@ public class StageCanvas extends Canvas {
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
 		//배경 그려주세요
+		bg.drawImage(background, 0, 0, null);
 		
 		//게임 실패시...
 		if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
@@ -304,5 +441,9 @@ public class StageCanvas extends Canvas {
 
 		th = new Thread(sub);
 		th.start();
+	
+
 	}
+	
+	
 }

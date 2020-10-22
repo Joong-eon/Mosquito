@@ -1,6 +1,7 @@
 package com.newlecture.mosquito.service;
 
 import java.awt.Canvas;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
@@ -17,9 +18,11 @@ public class StageService {
 	private Timer timer;
 	private int totalScore=0;
 	private GameOver gameOver;
+	private Image gameOverBtn = ImageLoader.gameOverBtn;
+	
 	
 	public StageService() {
-		gameOver = new GameOver();
+		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
 	}
@@ -62,6 +65,7 @@ public class StageService {
 	}
 	public void update() {//스레드에서 계속 호출
 		int mosqCreateCount = stage.getMosqCreateCount();
+		int buttCreateCount = stage.getButtCreateCount();
 		//System.out.println(mosqCreateCount);
 		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
 			if(mosqs.get(i).getCurrentDir() == 2) {
@@ -73,6 +77,19 @@ public class StageService {
 			if(mosqs.get(i).getDeleteTimer() == 0) {
 				mosqs.remove(i);
 				stage.setMosqCreateCount(--mosqCreateCount);
+			}
+		}
+		System.out.println(buttCreateCount);
+		for (int i = 0; i < buttCreateCount; i++) {		// 모기
+			if(butts.get(i).getCurrentDir() == 2) {
+				int deleteTimer = butts.get(i).getDeleteTimer();
+				deleteTimer--;
+				butts.get(i).setDeleteTimer(deleteTimer);
+			}
+			
+			if(butts.get(i).getDeleteTimer() == 0) {
+				butts.remove(i);
+				stage.setButtCreateCount(--buttCreateCount);
 			}
 		}
 		

@@ -31,15 +31,14 @@ public class Score {
 		scoreNum[1] = (score % 1000) / 100;
 		scoreNum[2] = (score % 100) / 10;
 		scoreNum[3] = score % 10;
-
 		for (int i = 0; i < 4; i++) {
-			g.drawImage(img, x + width * i, y, x + width * i + width, y + height, scoreNum[0] * width, 0,
-					scoreNum[0] * width + width, 0 + height, StageCanvas.instance);
+			g.drawImage(img, x + width * i, y, x + width * i + width, y + height, scoreNum[i] * width, 0,
+					scoreNum[i] * width + width, 0 + height, StageCanvas.instance);
 		}
 	}
 
 	public void update() {
-
+		
 	}
 
 	public void setImg(Image img) {
