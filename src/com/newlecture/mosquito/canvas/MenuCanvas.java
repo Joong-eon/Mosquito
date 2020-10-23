@@ -27,7 +27,7 @@ import com.newlecture.mosquito.service.ImageLoader;
 public class MenuCanvas extends Canvas {
 	public static Canvas instance;
 
-	private Thread th;					// 메뉴 화면이 사라지면 메뉴화면용 스레드도 종료할것이기 때문에 스레드를 멤버변수로 갖고 있을것
+	private Thread th; // 메뉴 화면이 사라지면 메뉴화면용 스레드도 종료할것이기 때문에 스레드를 멤버변수로 갖고 있을것
 	private Button[] buttons;
 	private Button stageButton;
 	private Button freeButton;
@@ -39,21 +39,21 @@ public class MenuCanvas extends Canvas {
 	private Image freeBtnPressed;
 	private Image exitBtnNormal;
 	private Image exitBtnPressed;
-	
+
 	private Image menuBackground;
-	
-	//sound
+
+	// sound
 	private Clip bgClip;
 	private Clip effectClip;
 	private AudioInputStream bgAis;
 	private AudioInputStream effectAis;
 	private boolean isEffect;
 	private boolean isBgm;
-	
+
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
 		instance = this;
-		
+
 		int btnWidth = 230;
 		int btnHeight = 417;
 		double sx = 200;
@@ -61,32 +61,32 @@ public class MenuCanvas extends Canvas {
 		double space = 180;
 
 		setBackground(Color.GREEN);
-		
-		//main sound
+
+		// main sound
 		isEffect = true;
 		isBgm = true;
-		
-		mainSound("res/sound/main.wav" );
-		
+
+		// wave 파일이 없어 잠깐 주석 처리
+		//////////////////////// mainSound("res/sound/main.wav" );
+
 		// 메뉴 버튼의 이미지를 받아옴
 		stageBtnNormal = ImageLoader.menuStageBtnNormal;
 		stageBtnPressed = ImageLoader.menuStageBtnPressed;
-		
+
 		freeBtnNormal = ImageLoader.menuFreeBtnNormal;
 		freeBtnPressed = ImageLoader.menuFreeBtnPressed;
-		
+
 		exitBtnNormal = ImageLoader.menuExitBtnNormal;
 		exitBtnPressed = ImageLoader.menuExitBtnPressed;
-		
-		
+
 		menuBackground = ImageLoader.menuBackground;
-		
+
 		// 메뉴 버튼 생성
 		stageButton = new Button("stage", stageBtnNormal, stageBtnPressed, sx, sy, btnWidth, btnHeight);
-		freeButton = new Button("free",freeBtnNormal, freeBtnPressed, sx + btnWidth + space, sy, btnWidth, btnHeight);
-		exitButton = new Button("exit", exitBtnNormal, exitBtnPressed, sx + (btnWidth + space)*2, sy, btnWidth, btnHeight);
+		freeButton = new Button("free", freeBtnNormal, freeBtnPressed, sx + btnWidth + space, sy, btnWidth, btnHeight);
+		exitButton = new Button("exit", exitBtnNormal, exitBtnPressed, sx + (btnWidth + space) * 2, sy, btnWidth,
+				btnHeight);
 
-		
 		// 버튼 배열에 넣음
 		buttons = new Button[3];
 		buttons[0] = stageButton;
@@ -101,8 +101,8 @@ public class MenuCanvas extends Canvas {
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
-						//버튼 클릭시 메인사운드 off
-						 bgmOff();
+						// 버튼 클릭시 메인사운드 off
+						//////////////////////bgmOff();
 					}
 				}
 			}
@@ -134,9 +134,9 @@ public class MenuCanvas extends Canvas {
 			buttons[i].addClickListener(new MenuButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
-					
-					switch(target.getName()) {
-					case"stage":
+
+					switch (target.getName()) {
+					case "stage":
 						try {
 							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class);
 						} catch (InstantiationException e) {
@@ -147,17 +147,18 @@ public class MenuCanvas extends Canvas {
 							e.printStackTrace();
 						}
 						break;
-					case "free" : 
+					case "free":
 						break;
 					case "exit":
-						int result = JOptionPane.showConfirmDialog(MenuCanvas.this, "게임을 종료하시겠습니까?", "게임종료", JOptionPane.OK_CANCEL_OPTION);
-						if(0 == result) {		//사용자가 '예'를 눌렀으면 
+						int result = JOptionPane.showConfirmDialog(MenuCanvas.this, "게임을 종료하시겠습니까?", "게임종료",
+								JOptionPane.OK_CANCEL_OPTION);
+						if (0 == result) { // 사용자가 '예'를 눌렀으면
 							System.out.println(result);
 							System.exit(0);
 						}
 						break;
 					}
-					
+
 				}
 			});
 		}
@@ -169,23 +170,21 @@ public class MenuCanvas extends Canvas {
 		Image buf = this.createImage(this.getWidth(), getHeight());
 		Graphics bg = buf.getGraphics();
 
-		bg.drawImage(menuBackground, 0, 0, this);		//배경이미지
+		bg.drawImage(menuBackground, 0, 0, this); // 배경이미지
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].paint(bg);
 		}
-		
+
 		g.drawImage(buf, 0, 0, this);
 	}
-	
-	
 
 	@Override
 	public void update(Graphics g) {
 		// TODO Auto-generated method stub
-		//super.update(g);
+		// super.update(g);
 		paint(g);
 	}
-	
+
 	public void start() {
 
 		Runnable sub = new Runnable() {
@@ -193,7 +192,7 @@ public class MenuCanvas extends Canvas {
 			public void run() {
 				// TODO Auto-generated method stub
 				while (true) {
-					
+
 					repaint();
 					try {
 						Thread.sleep(17);
@@ -208,45 +207,44 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
-	 void mainSound(String file ) {
-		 if (isBgm) {
+
+	void mainSound(String file) {
+		if (isBgm) {
 			try {
 				bgAis = AudioSystem.getAudioInputStream(new File(file));
 				bgClip = AudioSystem.getClip();
-				
-				
 
 				bgClip.open(bgAis);
 				bgClip.start();
-//				bgClip.stop();
-//				if(isLoop)
-//					bgClip.loop(Clip.LOOP_CONTINUOUSLY);
-//				
-			//	bgClip.loop(Integer.MAX_VALUE);
+				// bgClip.stop();
+				// if(isLoop)
+				// bgClip.loop(Clip.LOOP_CONTINUOUSLY);
+				//
+				// bgClip.loop(Integer.MAX_VALUE);
 				System.out.println("sound good");
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("err");
 			}
-		 }
 		}
-	 public void setEff(boolean b) {
-			isEffect = b;
-		}
+	}
 
-		public void setBgm(boolean b) {
-			isBgm = b;
-		}
+	public void setEff(boolean b) {
+		isEffect = b;
+	}
 
-		public void bgmOff() {
-			bgClip.stop();
-		}
-		
-		public void effectStart() {
-			if(isEffect == true)
-				effectClip.loop(1);
-		}
-	
+	public void setBgm(boolean b) {
+		isBgm = b;
+	}
+
+	public void bgmOff() {
+		bgClip.stop();
+	}
+
+	public void effectStart() {
+		if (isEffect == true)
+			effectClip.loop(1);
+	}
 
 }

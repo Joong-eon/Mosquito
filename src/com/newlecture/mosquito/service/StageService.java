@@ -79,7 +79,7 @@ public class StageService {
 				stage.setMosqCreateCount(--mosqCreateCount);
 			}
 		}
-		System.out.println(buttCreateCount);
+
 		for (int i = 0; i < buttCreateCount; i++) {		// 모기
 			if(butts.get(i).getCurrentDir() == 2) {
 				int deleteTimer = butts.get(i).getDeleteTimer();

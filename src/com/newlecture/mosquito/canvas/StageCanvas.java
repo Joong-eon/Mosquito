@@ -78,7 +78,8 @@ public class StageCanvas extends Canvas {
 		isBgm = true;
 		isEffect = true;
 		
-		mosSound("res/sound/mos.wav");
+		// 파일이 없어 잠깐 주석
+		/////////////////mosSound("res/sound/mos.wav");
 		
 		
 
@@ -218,7 +219,7 @@ public class StageCanvas extends Canvas {
 								selectedMosq.setMovIndex(4);
 							}
 							//모기 죽는 사운드
-							 effect("res/sound/mosdie.wav");							
+							////////////////// effect("res/sound/mosdie.wav");							
 						}
 						else if(selectedButt != null) {
 

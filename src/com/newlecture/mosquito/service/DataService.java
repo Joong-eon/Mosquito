@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -23,8 +24,10 @@ public class DataService {
 	
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
 	// TreeMap<[defalut], TreeMap<playerLevel,1>> 
-	private TreeMap<String, TreeMap<String, String>> allGameDatas;
-	private TreeMap<String, TreeMap<String, String>> allUserDatas;
+	// HashMap : 데이터 정렬이 없음. vs TreeMap : 키 값 기준으로 정렬
+	// HashMap을 써도 되지만 혹시 모르니 file의 순서를 유지하고 싶어서  LinkedHashMap 사용
+	private LinkedHashMap<String, LinkedHashMap<String, String>> allGameDatas;
+	private LinkedHashMap<String, LinkedHashMap<String, String>> allUserDatas;
 	private static DataService instance;
 	
 
@@ -32,8 +35,8 @@ public class DataService {
 		super();
 		instance = this;
 		
-		allGameDatas = new TreeMap<String, TreeMap<String, String>>();
-		allUserDatas = new TreeMap<String, TreeMap<String, String>>();
+		allGameDatas = new LinkedHashMap<String, LinkedHashMap<String, String>>();
+		allUserDatas = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
@@ -56,7 +59,7 @@ public class DataService {
 		FileInputStream fis = new FileInputStream(filePath);
 		Scanner scan = new Scanner(fis);
 		
-		TreeMap<String, TreeMap<String, String>> allDatas;
+		LinkedHashMap<String, LinkedHashMap<String, String>> allDatas;
 		
 		if(true == filePath.equals(userFileName)) {
 			allDatas = allUserDatas;
@@ -65,7 +68,7 @@ public class DataService {
 		}
 		
 		String title = "";
-		TreeMap<String, String> datas = null;
+		LinkedHashMap<String, String> datas = null;
 
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
@@ -86,7 +89,7 @@ public class DataService {
 
 			} else if (false == title.equals("")) {
 				if (datas == null) { // 세부 항목 읽어올거라 담을 공간 만들어놓음
-					datas = new TreeMap<String, String>();
+					datas = new LinkedHashMap<String, String>();
 				}
 				String[] contents = line.split("=");
 				datas.put(contents[0], contents[1]);
@@ -126,7 +129,7 @@ public class DataService {
 		Stage stage = new Stage();
 		
 		String key = "stage"+stageIndex;
-		TreeMap<String, String> datas = allGameDatas.get(key);
+		LinkedHashMap<String, String> datas = allGameDatas.get(key);
 		if(null != datas) {
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
