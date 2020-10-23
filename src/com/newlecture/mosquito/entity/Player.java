@@ -1,3 +1,4 @@
+
 package com.newlecture.mosquito.entity;
 
 import com.newlecture.mosquito.weapon.FlySwatter;
@@ -133,6 +134,4 @@ public class Player {
 	public void setWp(Weapon wp) {
 		this.wp = wp;
 	}
-	
-	
 }
