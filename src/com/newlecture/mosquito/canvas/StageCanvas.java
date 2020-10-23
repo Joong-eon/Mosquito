@@ -31,6 +31,7 @@ import com.newlecture.mosquito.entity.Score;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.WeaponButton;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
@@ -41,7 +42,7 @@ import com.newlecture.mosquito.service.StageService;
 import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas {
-	
+
 	private Image weapon1;
 	private Image weapon2;
 	private Image weapon22;
@@ -49,15 +50,15 @@ public class StageCanvas extends Canvas {
 	// ��ü ����
 	public static Canvas instance;
 	Thread th;// ������
-	
-    private Clip bgClip;
+
+	private Clip bgClip;
 	private Clip effectClip;
 	private AudioInputStream bgAis;
 	private AudioInputStream effectAis;
 	private boolean isEffect;
 	private boolean isBgm;
-	
-	
+
+
 	///여기서 보유무기 이미지 stageService에서 받아오고,
 
 	private StageService stageService;
@@ -65,31 +66,34 @@ public class StageCanvas extends Canvas {
 	private Player p1;
 	private WeaponButton[] weapons;
 	private Score score;
-	
+	private int stageStep;
+
 	private Image background;
 
 	private int count = 1;
-	
+
 	private ButtonClickedListener clickListener;
 
 	public StageCanvas() {// ������
 		instance = this;
 		
+		stageStep = 1;
+
 		isBgm = true;
 		isEffect = true;
-		
+
 		// 파일이 없어 잠깐 주석
 		/////////////////mosSound("res/sound/mos.wav");
-		
+
 		stageService = new StageService();
 		timer = new Timer(stageService.getStageIndex());
 		System.out.println(timer.getLimitTime()); 
 		p1 = new Player();
-		
+
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
 		background = ImageLoader.stageBackgrounds[stageIndex-1];
-		
+
 		try {
 			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 
 			weapon2 = ImageIO.read(new File("res/flyswatter.png"));
@@ -98,15 +102,15 @@ public class StageCanvas extends Canvas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		weapons = new WeaponButton[2];
 		weapons[0] = new WeaponButton("spear",weapon1,weapon1, 800,700,135,188);
 		weapons[1] = new WeaponButton("flyswatter",weapon2,weapon22, 1050,700,118,141);
 		//이벤트 발생시 웨폰버튼에서 이름 가져오고
 		//p1.current 정보변경
-		
+
 		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
-			
+
 			@Override
 			public void onClicked(GameOver gameOver) {
 				// TODO Auto-generated method stub
@@ -120,9 +124,20 @@ public class StageCanvas extends Canvas {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
+		stageService.getGameClear().addClickListener(new MenuButtonClickedAdapter() {
+
+			@Override
+			public void onClicked(GameClear gameClear) {
+				stageStep++;
+				stageService.changeStage(stageStep);
+			}
+
+		});
+
+
 		//p1.getCurrentWp()
 		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
 		score = new Score();
@@ -147,16 +162,23 @@ public class StageCanvas extends Canvas {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 커서 이미지 변경
-				
+
 				int x = e.getX();
 				int y = e.getY();
-
+				System.out.println(stageService.getMosqs().size());
 				if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
 					//게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if(stageService.getGameOver().contains(x, y)) {
 						stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
 					}
-					
+
+				}else if(stageService.getMosqs().size() == 0) {
+					//게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
+					if(stageService.getGameClear().contains(x,y)) {
+						System.out.println("게임 클리어");
+						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
+					}
+
 				}else if (true == p1.getCurrentWp().isClickable()) {
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
@@ -187,21 +209,21 @@ public class StageCanvas extends Canvas {
 					if (selectedMosq != null) { // null이 아니면 찾은거임
 						System.out.println("모기 클릭 성공");
 						isMiss = p1.attack(selectedMosq);
-						
-						
+
+
 						//System.out.println("공격");
 					} 
 
 					if(selectedButt != null) {
 						isMiss = p1.attack(selectedButt);
 						System.out.println("아얏!");
-						
+
 					} 
-					
+
 					if(isMiss == true) {// 빗나감
 						//miss뜨는 그림효과
 						System.out.println("빗나감");
-						
+
 					} else {//빗나간게 아니라면
 						if (selectedMosq != null) {			
 							if (selectedMosq.getHp() <= 0) {
@@ -226,15 +248,15 @@ public class StageCanvas extends Canvas {
 								selectedButt.setMovIndex(4);
 								timer.setTenCount(timer.getTenCount()-1);
 							}
-		                    System.out.println("공격");		                    
+							System.out.println("공격");		                    
 						}
 					}
 				}
-				
+
 				//super.mouseClicked(e);
 			}
 
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				for (int i = 0; i < weapons.length; i++) {
@@ -251,7 +273,7 @@ public class StageCanvas extends Canvas {
 				for (int i = 0; i < weapons.length; i++) {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						weapons[i].getClickListener().onReleased(weapons[i]);
-						
+
 						for(int j = 0;j<p1.getWeapons().length;j++) {
 							//System.out.println(p1.getWeapons()[j]);
 							if(p1.getWeapons()[j].getType().equals(weapons[i].getName())) {
@@ -267,13 +289,13 @@ public class StageCanvas extends Canvas {
 				}
 			}			
 		});
-		
+
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i].addClickListener(new MenuButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
-					
+
 				}
 			});
 		}
@@ -283,7 +305,7 @@ public class StageCanvas extends Canvas {
 
 
 
-//모기 사운드
+	//모기 사운드
 	private void mosSound(String file) {
 		if (isBgm) {
 			try {
@@ -292,14 +314,14 @@ public class StageCanvas extends Canvas {
 
 				bgClip.open(bgAis);
 				bgClip.start();
-		
+
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}		
-	
+
 	public void effect(String file) {
 		if (isEffect) {
 			try {
@@ -313,25 +335,25 @@ public class StageCanvas extends Canvas {
 			}
 		}
 	}
-	
-	
-	
-	 public void setEff(boolean b) {
-			isEffect = b;
-		}
 
-		public void setBgm(boolean b) {
-			isBgm = b;
-		}
 
-		public void bgmOff() {
-			bgClip.stop();
-		}
-		
-		public void effectStart() {
-			if(isEffect == true)
-				effectClip.loop(1);
-		}
+
+	public void setEff(boolean b) {
+		isEffect = b;
+	}
+
+	public void setBgm(boolean b) {
+		isBgm = b;
+	}
+
+	public void bgmOff() {
+		bgClip.stop();
+	}
+
+	public void effectStart() {
+		if(isEffect == true)
+			effectClip.loop(1);
+	}
 
 
 
@@ -350,14 +372,18 @@ public class StageCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 		//배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-		
+
 		//게임 실패시...
 		if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
 			//지방
 			stageService.getGameOver().paint(bg);
 			//토탈점수 그려주세요
-			
-		} else {
+
+		}
+		else if(stageService.getMosqs().size() == 0) {
+			stageService.getGameClear().paint(bg);
+		}
+		else {
 			timer.paint(bg);
 			score.paint(bg);
 
@@ -375,7 +401,7 @@ public class StageCanvas extends Canvas {
 
 			p1.getCurrentWp().paint(bg);
 		}
-		
+
 		g.drawImage(buf, 0, 0, this);//
 
 	}
@@ -396,7 +422,7 @@ public class StageCanvas extends Canvas {
 				while (true) {
 					// weapon.update();
 					timer.update();
-					
+
 					stageService.update();
 					int mosqSize =  stageService.getMosqs().size();
 					for (int i = 0; i<mosqSize ; i++) {
@@ -408,8 +434,8 @@ public class StageCanvas extends Canvas {
 					}
 
 					p1.getCurrentWp().update();
-					
-					
+
+
 					repaint();
 
 					try {
@@ -424,9 +450,9 @@ public class StageCanvas extends Canvas {
 
 		th = new Thread(sub);
 		th.start();
-	
+
 
 	}
-	
-	
+
+
 }

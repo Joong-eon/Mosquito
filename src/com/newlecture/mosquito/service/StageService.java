@@ -8,6 +8,7 @@ import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 
 public class StageService {
@@ -18,13 +19,20 @@ public class StageService {
 	private Timer timer;
 	private int totalScore=0;
 	private GameOver gameOver;
+	private GameClear gameClear;
 	private Image gameOverBtn = ImageLoader.gameOverBtn;
+	private Image gameClearBtn = ImageLoader.gameClearBtn;
 	
 	
 	public StageService() {
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
+		gameClear = new GameClear("gameOver",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
 		changeStage(startIndex);
+	}
+
+	public GameClear getGameClear() {
+		return gameClear;
 	}
 
 	public void changeStage(int stageIndex) {
@@ -95,18 +103,7 @@ public class StageService {
 		
 		
 		
-	/*
-		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
-		for(int i = 0; i<mosqs.size();i++) {
-			if(mosqs.get(i).getHp()<=0) {
-				this.changeStage(stageIndex++);
-			}
-		}*/
-		//패배조건 : 시간이 0이 되었을 때 or player의 hp가 0이 되었을 때
-		/*if((timer.getOneCount() == 0 && timer.getTenCount() == 0) ||
-				p1.getHp <= 0 ) {
-			gameOver();
-		}*/
+
 		
 	}
 
