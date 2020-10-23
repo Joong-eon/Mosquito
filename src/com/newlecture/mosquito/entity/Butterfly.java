@@ -91,13 +91,23 @@ public class Butterfly extends Bug {
 		
 		int offsetX = movIndex * imgWidth;
 		
-		
-		if(this.getCurrentDir() != 2)
-			g.drawImage(img, x1, y1, x2, y2, 
-					0 + offsetX, this.getDirection() , 0 + imgWidth + offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
-		else
-			g.drawImage(img, x1, y1, x2, y2, 
-					0, imgHeight*2 , 0 + imgWidth, 3*imgHeight, StageCanvas.instance);
+		if( true == isAttacked() ) {		// 공격 당했을 경우		
+			if (this.getCurrentDir() == 0) {					// 왼쪽 방향	
+				g.drawImage(img, x1, y1, x2, y2, 
+						imgWidth*2, imgHeight*2 , imgWidth*3, imgHeight*3, StageCanvas.instance);			
+			} else {											// 오른쪽 방향
+				g.drawImage(img, x1, y1, x2, y2, 
+						imgWidth, imgHeight*2 , imgWidth*2, imgHeight*3, StageCanvas.instance);
+			}
+		} else {		// 평상시
+			if(this.getCurrentDir() != 2)
+				g.drawImage(img, x1, y1, x2, y2, 
+						0 + offsetX, this.getDirection() , 0 + imgWidth + offsetX, this.getDirection() + imgHeight, StageCanvas.instance);
+			else
+				g.drawImage(img, x1, y1, x2, y2, 
+						0, imgHeight*2 , 0 + imgWidth, 3*imgHeight, StageCanvas.instance);
+		}
+	
 			
 		setWalkTempo(movTempo);
 		setMovIndex(movIndex);

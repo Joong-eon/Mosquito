@@ -26,7 +26,8 @@ public abstract class Bug{
 	private double imgWidth;		// 이미지 파일에서 그릴 이미지의 width
 	private double imgHeight;		// 이미지 파일에서 그릴 이미지의 height
 	
-	private int timeoutForMoving=30;
+	private int timeoutForMoving = 30;
+	private int timeoutForAttack = 20;		//공격 이미지 변경 시 시간 체크를 위함
 	private int movIndex ;
 	private int speed ;
 	private int walkTempo ;
@@ -35,6 +36,7 @@ public abstract class Bug{
 	private int imgDirection;		// 방향이 바뀔때 imgDirection기준으로 그릴 이미지가 변경 됨
 	private int currentDir;
 
+	private boolean isAttacked;		// 공격 당했을 때 일정 시간동안 잠깐 이미지를 바꾸기 때문에 상태 변수가 필요함 
 	
 	private Random rand = new Random();
 	
@@ -115,12 +117,24 @@ public abstract class Bug{
 			y += vy;
 		}
 		
+		if(true == isAttacked) {
+			timeoutForAttack--;
+			if (timeoutForAttack == 0) {
+				isAttacked = false;
+				timeoutForAttack = 30;
+			}
+		}
 
 	}
 	
 	
 	public abstract void paint(Graphics g);
 	
+
+	public void chageAttackImg() {
+		// TODO Auto-generated method stub
+		isAttacked = true;
+	}
 	
 
 	public double getX() {
@@ -280,7 +294,11 @@ public abstract class Bug{
 	public void setCurrentDir(int currentDir) {
 		this.currentDir = currentDir;
 	}
-	
+
+
+	public boolean isAttacked() {
+		return isAttacked;
+	}
 	
 }
 
