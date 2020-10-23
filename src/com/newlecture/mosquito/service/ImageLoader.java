@@ -23,6 +23,7 @@ public class ImageLoader {
 	public static Image gameOver;
 	public static Image gameOverBtn;
 	public static Image gameOverBg;
+	public static Image gameClearBtn;
 	
 	public static Image timerNumber;
 	public static Image timerDot;
@@ -47,6 +48,7 @@ public class ImageLoader {
 			gameOver = ImageIO.read(new File("res/gameOver.png"));
 			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
 			gameOverBg =ImageIO.read(new File("res/gameOverBg.png"));
+			gameClearBtn = ImageIO.read(new File("res/gameClear.jpg"));
 
 			timerNumber = ImageIO.read(new File("res/timer_final.png"));
 			timerDot = ImageIO.read(new File("res/timer_dot.png"));
