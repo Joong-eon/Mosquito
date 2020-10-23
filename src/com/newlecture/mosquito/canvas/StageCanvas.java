@@ -67,6 +67,8 @@ public class StageCanvas extends Canvas {
 	private WeaponButton[] weapons;
 	private Score score;
 	private int stageStep;
+	private int userLevel;
+	private int userScore;
 
 	private Image background;
 
@@ -75,6 +77,7 @@ public class StageCanvas extends Canvas {
 	private ButtonClickedListener clickListener;
 
 	public StageCanvas() {// ������
+		
 		instance = this;
 		
 		stageStep = 1;
@@ -108,7 +111,9 @@ public class StageCanvas extends Canvas {
 		weapons[1] = new WeaponButton("flyswatter",weapon2,weapon22, 1050,700,118,141);
 		//이벤트 발생시 웨폰버튼에서 이름 가져오고
 		//p1.current 정보변경
-
+		score = new Score();
+		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
+		userScore = p1.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
 
 			@Override
@@ -131,8 +136,21 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void onClicked(GameClear gameClear) {
+				System.out.println("저장중");
+				
+				try {
+					DataService.save(userLevel, p1.getUserTotalScore());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println("저장 완료");
 				stageStep++;
-				stageService.changeStage(stageStep);
+				//stageService.changeStage(stageStep);
+				stageService = new StageService(stageStep);
+				System.out.println("stageIndex : "+ stageService.getStageIndex());
+				timer = new Timer(stageService.getStageIndex());
+				System.out.println(timer.getLimitTime());
 			}
 
 		});
@@ -140,7 +158,7 @@ public class StageCanvas extends Canvas {
 
 		//p1.getCurrentWp()
 		//weaponBtn = new Button(, null, 700, 500, 72, 52);//
-		score = new Score();
+		
 
 		addMouseMotionListener(new MouseMotionListener() {
 
@@ -174,10 +192,9 @@ public class StageCanvas extends Canvas {
 
 				}else if(stageService.getMosqs().size() == 0) {
 					//게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
-					if(stageService.getGameClear().contains(x,y)) {
-						System.out.println("게임 클리어");
+					if(stageService.getGameClear().contains(x,y))
 						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
-					}
+					
 
 				}else if (true == p1.getCurrentWp().isClickable()) {
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
@@ -232,18 +249,9 @@ public class StageCanvas extends Canvas {
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
-								int playerLevel = DataService.getInstance().getPlayerIntValue("player", "level");
-								int playerScore = DataService.getInstance().getPlayerIntValue("player", "totalScore");
-								System.out.println(playerScore);
-								try {
-									if(playerScore >= 100)
-										DataService.save(++playerLevel, score.getScore());
-									else
-										DataService.save(playerLevel, score.getScore());
-								} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
+								p1.setUserTotalScore(p1.getUserTotalScore() + killScore);
+								if(p1.getUserTotalScore()%100 == 0 && p1.getUserTotalScore()/100 != 0)
+									System.out.println("레벨 업! 현재 레벨 : "+ (++userLevel));
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
 							}
@@ -385,7 +393,7 @@ public class StageCanvas extends Canvas {
 		bg.drawImage(background, 0, 0, null);
 
 		//게임 실패시...
-		if(timer.getOneCount() == 0 && timer.getTenCount() ==0) {
+		if((timer.getOneCount() == 0 && timer.getTenCount() ==0) && stageService.getGameClear() == null) {
 			//지방
 			stageService.getGameOver().paint(bg);
 			//토탈점수 그려주세요

@@ -15,7 +15,7 @@ buttCreateTime=0
 killScore=10
 winScore=300
 [stage2]
-limitTime=40
+limitTime=20
 mosqMaxCount=50
 mosqCreateCount=10
 mosqCreateTime=3

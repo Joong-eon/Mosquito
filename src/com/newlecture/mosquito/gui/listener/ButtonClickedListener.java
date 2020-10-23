@@ -1,6 +1,7 @@
 package com.newlecture.mosquito.gui.listener;
 
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 
 public interface ButtonClickedListener {
@@ -9,5 +10,6 @@ public interface ButtonClickedListener {
 	void onPressed(Button target);
 	void onReleased(Button target);
 	void onClicked(GameOver gameOver);
+	void onClicked(GameClear gameClear);
 	
 }

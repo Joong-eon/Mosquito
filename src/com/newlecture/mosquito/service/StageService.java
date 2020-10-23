@@ -25,10 +25,15 @@ public class StageService {
 	
 	
 	public StageService() {
+		//int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
+		this(1);
+	}
+	
+	public StageService(int stageStep) {
+		stageIndex = stageStep;
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
-		gameClear = new GameClear("gameOver",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
-		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
-		changeStage(startIndex);
+		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
+		changeStage(stageStep);
 	}
 
 	public GameClear getGameClear() {
@@ -88,7 +93,7 @@ public class StageService {
 				stage.setMosqCreateCount(--mosqCreateCount);
 			}
 		}
-
+		
 		for (int i = 0; i < buttCreateCount; i++) {		// 모기
 			if(butts.get(i).getCurrentDir() == 2) {
 				int deleteTimer = butts.get(i).getDeleteTimer();

@@ -33,7 +33,7 @@ public class MenuButtonClickedAdapter implements ButtonClickedListener{
 		// TODO Auto-generated method stub
 		
 	}
-
+	@Override
 	public void onClicked(GameClear gameClear) {
 		// TODO Auto-generated method stub
 		

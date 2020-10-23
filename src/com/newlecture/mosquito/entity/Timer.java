@@ -28,6 +28,9 @@ public class Timer {
 	private int oneCount;
 	private int decimalCount = 10;
 	
+	public Timer() {
+		this(0);
+	}
 	
 	public Timer(int stageIndex) {
 		// TODO Auto-generated constructor stub

@@ -1,6 +1,7 @@
 
 package com.newlecture.mosquito.entity;
 
+import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.weapon.FlySwatter;
 import com.newlecture.mosquito.weapon.Hand;
 import com.newlecture.mosquito.weapon.Spear;
@@ -16,6 +17,7 @@ public class Player {
 	private int hp;
 	private int score;
 	private Weapon[] weapons;
+	private int userTotalScore;
 	
 	
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
@@ -32,6 +34,8 @@ public class Player {
 		weapons[0] = currentWp;
 		weapons[1] = new Spear();
 		weapons[2] = new FlySwatter();
+		
+		userTotalScore=DataService.getInstance().getPlayerIntValue("player", "totalScore");
 		//setImg;
 		
 		//나중에 정리해야함 일단 기능만 확인
@@ -133,5 +137,13 @@ public class Player {
 
 	public void setWp(Weapon wp) {
 		this.wp = wp;
+	}
+	
+	public int getUserTotalScore() {
+		return userTotalScore;
+	}
+
+	public void setUserTotalScore(int userTotalScore) {
+		this.userTotalScore = userTotalScore;
 	}
 }
