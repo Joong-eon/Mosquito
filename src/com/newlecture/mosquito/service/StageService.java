@@ -46,6 +46,7 @@ public class StageService {
 			butts.clear();
 		}
 
+		
 		// 새로운 스테이지 정보 가져오기
 		stage = DataService.getInstance().getStageValue(stageIndex);
 
