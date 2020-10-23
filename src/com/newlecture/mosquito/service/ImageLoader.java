@@ -23,6 +23,9 @@ public class ImageLoader {
 	public static Image gameOver;
 	public static Image gameOverBtn;
 	public static Image gameOverBg;
+	
+	public static Image timerNumber;
+	public static Image timerDot;
 
 	public static Image[] stageBackgrounds;
 	
@@ -45,6 +48,9 @@ public class ImageLoader {
 			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
 			gameOverBg =ImageIO.read(new File("res/gameOverBg.png"));
 
+			timerNumber = ImageIO.read(new File("res/timer_final.png"));
+			timerDot = ImageIO.read(new File("res/timer_dot.png"));
+					
 			int stageCount = DataService.getInstance().getGameIntValue("default", "stageCount");
 			stageBackgrounds = new Image[stageCount];
 			for(int i=0 ; i<stageCount ; i++) {

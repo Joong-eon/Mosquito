@@ -8,6 +8,7 @@ import com.newlecture.mosquito.service.DataService;
 
 public class Stage {
 	public int stageIndex;			// 현재 스테이지 인덱스
+	public int limitTime;			// 스테이지 시간
 	
 	public int mosqCreateCount;		// 스테이지 당 최대 생성 가능한 모기 수
 	public int mosqMaxCount;		// 생성 주기에 따라 생성되는 모기 수

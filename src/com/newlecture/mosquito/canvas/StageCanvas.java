@@ -81,18 +81,14 @@ public class StageCanvas extends Canvas {
 		// 파일이 없어 잠깐 주석
 		/////////////////mosSound("res/sound/mos.wav");
 		
-		
-
-	
-		
 		stageService = new StageService();
-		timer = new Timer();
+		timer = new Timer(stageService.getStageIndex());
+		System.out.println(timer.getLimitTime()); 
 		p1 = new Player();
 		
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
 		background = ImageLoader.stageBackgrounds[stageIndex-1];
-		
 		
 		try {
 			weapon1 = ImageIO.read(new File("res/spear.png"));//파일이름 

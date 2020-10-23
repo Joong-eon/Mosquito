@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.service.DataService;
+import com.newlecture.mosquito.service.ImageLoader;
 
 public class Timer {
 	
@@ -21,24 +23,22 @@ public class Timer {
 	//private int totalCount=100;
 	private int timeForTimer = 60;
 	private int timeForDecimal = 6;
-	private int limitTime = 10;
-	private int tenCount = limitTime/10;
-	private int oneCount = limitTime%10;
+	private int limitTime;
+	private int tenCount;
+	private int oneCount;
 	private int decimalCount = 10;
 	
 	
-	public Timer() {
-		try {
-			img = ImageIO.read(new File("res/timer_final.png"));//파일이름 
-			dot = ImageIO.read(new File("res/timer_dot.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Timer(int stageIndex) {
+		// TODO Auto-generated constructor stub
+		img = ImageLoader.timerNumber;  
+		dot = ImageLoader.timerDot;
 		
-		
+		limitTime = DataService.getInstance().getGameIntValue("stage"+stageIndex, "limitTime");
+		tenCount = limitTime/10;
+		oneCount = limitTime%10;
 	}
-	
+
 	public void paint(Graphics g) {
 		/*if(oneCount == 0) {
 			tenCount--;
@@ -117,6 +117,14 @@ public class Timer {
 
 	public void setOneCount(int oneCount) {
 		this.oneCount = oneCount;
+	}
+
+	public int getLimitTime() {
+		return limitTime;
+	}
+
+	public void setLimitTime(int limitTime) {
+		this.limitTime = limitTime;
 	}
 	
 }

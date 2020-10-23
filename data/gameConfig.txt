@@ -5,8 +5,9 @@ stageCount=2
 mosqHP=10
 buttHP=5
 [stage1]
+limitTime=60
+mosqMaxCount=10
 mosqCreateCount=5
-mosqMaxCount=50
 mosqCreateTime=5
 buttMaxCount=0
 buttCreateCount=3
@@ -14,8 +15,9 @@ buttCreateTime=0
 killScore=10
 winScore=300
 [stage2]
-mosqCreateCount=10
+limitTime=40
 mosqMaxCount=50
+mosqCreateCount=10
 mosqCreateTime=3
 buttMaxCount=3
 buttCreateCount=2

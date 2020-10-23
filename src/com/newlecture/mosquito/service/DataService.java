@@ -131,6 +131,7 @@ public class DataService {
 		String key = "stage"+stageIndex;
 		LinkedHashMap<String, String> datas = allGameDatas.get(key);
 		if(null != datas) {
+			String limitTime = datas.get("limitTime");
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
 			String mosqCreateTime = datas.get("mosqCreateTime");
@@ -143,6 +144,7 @@ public class DataService {
 
 
 			// 값 넣기
+			stage.limitTime = Integer.parseInt(limitTime);
 			stage.mosqCreateCount = Integer.parseInt(mosqCreateCount);
 			stage.mosqMaxCount = Integer.parseInt(mosqMaxCount);
 			stage.mosqCreateTime = Integer.parseInt(mosqCreateTime);
