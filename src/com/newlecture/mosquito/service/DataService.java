@@ -1,8 +1,10 @@
 package com.newlecture.mosquito.service;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,8 +20,8 @@ public class DataService {
 
 	// [default] : 
 	// [stageN] : N번째 스테이지의 기본 정보를 저장.
-	private String gameFileName;
-	private String userFileName;
+	private static String gameFileName;
+	private static String userFileName;
 	
 	
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
@@ -79,7 +81,7 @@ public class DataService {
 				// 새로운 항목을 넣을 건데 기존 항목 데이터가 있으면 전체 데이터에 넣어줌
 				if (datas != null) {
 					// 전체 데이터에 추가
-					allGameDatas.put(title, datas);
+					allDatas.put(title, datas);
 					datas = null;
 					title = "";
 				}
@@ -99,29 +101,36 @@ public class DataService {
 
 		// 다음줄이 없거나, 타이틀이 바뀌면
 		if (false == title.equals("") || null != datas) {
-			allGameDatas.put(title, datas);
+			allDatas.put(title, datas);
 			datas = null;
 			title = "";
 		}
 
 		// 출력 확인용
-//		for (String key : allDatas.keySet()) {
-//			System.out.println("[" + key + "]");
-//			TreeMap<String, String> contents = allDatas.get(key);
-//			
-//			for (String key2 : contents.keySet()) {
-//				String value = contents.get(key2);
-//				System.out.printf("%s = %s\n", key2, value);
-//			}
-//			
-//		}
+		for (String key : allUserDatas.keySet()) {
+			
+			System.out.println("[" + key + "]");
+			LinkedHashMap<String, String> contents = allUserDatas.get(key);
+			
+			for (String key2 : contents.keySet()) {
+				System.out.println("유저 정보");
+				String value = contents.get(key2);
+				System.out.printf("%s = %s\n", key2, value);
+			}
+			
+		}
 
 		scan.close();
 		fis.close();
 	}
 	
-	public static void save() throws IOException {
+	public static void save(int level, int totalScore) throws IOException {
 		// 추후 개발 예정
+		PrintWriter pw = new PrintWriter(userFileName);
+		pw.println("[player]");
+		pw.println("level="+level);
+		pw.println("totalScore="+totalScore);
+		pw.close();
 	}
 	
 	
@@ -163,6 +172,15 @@ public class DataService {
 	
 	public int getGameIntValue(String key, String attribute) {
 		String data = allGameDatas.get(key).get(attribute);
+		int value = 0;
+		if(false == data.equals("")) {
+			value = Integer.parseInt(data);
+		}
+		return value;
+	}
+	
+	public int getPlayerIntValue(String key, String attribute) {
+		String data = allUserDatas.get(key).get(attribute);
 		int value = 0;
 		if(false == data.equals("")) {
 			value = Integer.parseInt(data);
