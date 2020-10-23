@@ -63,6 +63,7 @@ public class StageService {
 			currentStage = Dat
 		}*/
 	}
+	
 	public void update() {//스레드에서 계속 호출
 		int mosqCreateCount = stage.getMosqCreateCount();
 		int buttCreateCount = stage.getButtCreateCount();
