@@ -71,6 +71,7 @@ public class StageCanvas extends Canvas {
 	private PlayerHpBar hpBar;
 	private WeaponButton[] weapons;
 	private ArrayList missList;
+	private	Miss miss;
 	private Score score;
 	private int stageStep;
 	private int userLevel;
@@ -99,7 +100,7 @@ public class StageCanvas extends Canvas {
 		player = stageService.getP1();
 		hpBar = new PlayerHpBar(player.getHp());
 		
-		missList.add(new Miss(100,100));
+//		missList.add(new Miss(100,100));
 		
 		//timer = new Timer(stageService.getStageIndex());
 		

@@ -20,8 +20,8 @@ public class Miss {
 	      
 	      this.x = x; 
 	      this.y = y;
-	      width = 60;
-	      height = 41;
+	      width = 65;
+	      height = 35;
 	            
 	   }
 

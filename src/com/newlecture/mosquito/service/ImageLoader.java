@@ -20,6 +20,7 @@ public class ImageLoader {
 	public static Image mosquito;
 	public static Image butterfly;
 	public static Image scoreNumber;
+	public static Image miss;
 	public static Image gameOver;
 	public static Image gameOverBtn;
 	public static Image gameOverBg;
@@ -29,7 +30,7 @@ public class ImageLoader {
 	public static Image timerDot;
 
 	public static Image[] stageBackgrounds;
-	public static Image miss;
+	
 	
 	static {
 		try {
