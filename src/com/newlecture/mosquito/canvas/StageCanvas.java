@@ -63,7 +63,7 @@ public class StageCanvas extends Canvas {
 
 	private StageService stageService;
 	private Timer timer;
-	private Player p1;
+	private Player player;
 	private WeaponButton[] weapons;
 	private Score score;
 	private int stageStep;
@@ -89,9 +89,11 @@ public class StageCanvas extends Canvas {
 		/////////////////mosSound("res/sound/mos.wav");
 
 		stageService = new StageService();
-		timer = new Timer(stageService.getStageIndex());
-		System.out.println(timer.getLimitTime()); 
-		p1 = new Player();
+		timer = stageService.getTimer();
+		player = stageService.getP1();
+		//timer = new Timer(stageService.getStageIndex());
+		
+		//p1 = new Player();
 
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
@@ -113,7 +115,7 @@ public class StageCanvas extends Canvas {
 		//p1.current 정보변경
 		score = new Score();
 		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
-		userScore = p1.getUserTotalScore();
+		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
 
 			@Override
@@ -139,7 +141,7 @@ public class StageCanvas extends Canvas {
 				System.out.println("저장중");
 				
 				try {
-					DataService.save(userLevel, p1.getUserTotalScore());
+					DataService.save(userLevel, player.getUserTotalScore());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -149,7 +151,7 @@ public class StageCanvas extends Canvas {
 				//stageService.changeStage(stageStep);
 				stageService = new StageService(stageStep);
 				System.out.println("stageIndex : "+ stageService.getStageIndex());
-				timer = new Timer(stageService.getStageIndex());
+				stageService.setTimer(new Timer(stageService.getStageIndex()));
 				System.out.println(timer.getLimitTime());
 			}
 
@@ -164,8 +166,8 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				p1.getCurrentWp().setX(e.getX());
-				p1.getCurrentWp().setY(e.getY());
+				player.getCurrentWp().setX(e.getX());
+				player.getCurrentWp().setY(e.getY());
 			}
 
 			@Override
@@ -196,7 +198,7 @@ public class StageCanvas extends Canvas {
 						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
 					
 
-				}else if (true == p1.getCurrentWp().isClickable()) {
+				}else if (true == player.getCurrentWp().isClickable()) {
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
@@ -206,7 +208,7 @@ public class StageCanvas extends Canvas {
 					int mosqSize = stageService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						Mosquito mosq = stageService.getMosqs().get(i);
-						boolean isWeaponRange = p1.getCurrentWp().isAttackRange(mosq);
+						boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
 						if (true == isWeaponRange) {
 							selectedMosq = mosq;
 						}
@@ -215,7 +217,7 @@ public class StageCanvas extends Canvas {
 					int buttSize = stageService.getButts().size();
 					for (int i = 0; i < buttSize; i++) {
 						Butterfly butt = stageService.getButts().get(i);
-						boolean isWeaponRange = p1.getCurrentWp().isAttackRange(butt);
+						boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
 						if (true == isWeaponRange) {
 							selectedButt = butt;
 						}
@@ -225,14 +227,14 @@ public class StageCanvas extends Canvas {
 
 					if (selectedMosq != null) { // null이 아니면 찾은거임
 						System.out.println("모기 클릭 성공");
-						isMiss = p1.attack(selectedMosq);
+						isMiss = player.attack(selectedMosq);
 
 
 						//System.out.println("공격");
 					} 
 
 					if(selectedButt != null) {
-						isMiss = p1.attack(selectedButt);
+						isMiss = player.attack(selectedButt);
 						System.out.println("아얏!");
 
 					} 
@@ -249,8 +251,8 @@ public class StageCanvas extends Canvas {
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
-								p1.setUserTotalScore(p1.getUserTotalScore() + killScore);
-								if(p1.getUserTotalScore()%100 == 0 && p1.getUserTotalScore()/100 != 0)
+								player.setUserTotalScore(player.getUserTotalScore() + killScore);
+								if(player.getUserTotalScore()%100 == 0 && player.getUserTotalScore()/100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : "+ (++userLevel));
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
@@ -293,17 +295,17 @@ public class StageCanvas extends Canvas {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						weapons[i].getClickListener().onReleased(weapons[i]);
 
-						for(int j = 0;j<p1.getWeapons().length;j++) {
+						for(int j = 0;j<player.getWeapons().length;j++) {
 							//System.out.println(p1.getWeapons()[j]);
-							if(p1.getWeapons()[j].getType().equals(weapons[i].getName())) {
+							if(player.getWeapons()[j].getType().equals(weapons[i].getName())) {
 								if(weapons[i].getName().equals("flyswatter"))
-									p1.setCurrentWp(p1.getWeapons()[j]);
+									player.setCurrentWp(player.getWeapons()[j]);
 								else if(weapons[i].getName().equals("spear"))
-									p1.setCurrentWp(p1.getWeapons()[j]);
+									player.setCurrentWp(player.getWeapons()[j]);
 							}							
 						}
-						p1.getCurrentWp().setX(e.getX());
-						p1.getCurrentWp().setY(e.getY());
+						player.getCurrentWp().setX(e.getX());
+						player.getCurrentWp().setY(e.getY());
 					}
 				}
 			}			
@@ -418,7 +420,7 @@ public class StageCanvas extends Canvas {
 			weapons[0].paint(bg);
 			weapons[1].paint(bg);
 
-			p1.getCurrentWp().paint(bg);
+			player.getCurrentWp().paint(bg);
 		}
 
 		g.drawImage(buf, 0, 0, this);//
@@ -452,7 +454,7 @@ public class StageCanvas extends Canvas {
 						stageService.getButts().get(i).update();
 					}
 
-					p1.getCurrentWp().update();
+					player.getCurrentWp().update();
 
 
 					repaint();

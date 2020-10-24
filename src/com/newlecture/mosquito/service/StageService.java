@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Mosquito;
+import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.GameClear;
@@ -17,6 +18,7 @@ public class StageService {
 	private Stage stage;
 	private int stageIndex;
 	private Timer timer;
+	private Player p1;
 	private int totalScore=0;
 	private GameOver gameOver;
 	private GameClear gameClear;
@@ -30,7 +32,12 @@ public class StageService {
 	}
 	
 	public StageService(int stageStep) {
+		
 		stageIndex = stageStep;
+		timer = new Timer(this.getStageIndex());
+		p1 = new Player();
+		
+		
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 		changeStage(stageStep);
@@ -111,6 +118,24 @@ public class StageService {
 		
 
 		
+	}
+	
+	
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public Player getP1() {
+		return p1;
+	}
+
+	public void setP1(Player p1) {
+		this.p1 = p1;
 	}
 
 	public GameOver getGameOver() {
