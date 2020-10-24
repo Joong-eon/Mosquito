@@ -29,6 +29,7 @@ public class ImageLoader {
 	public static Image timerDot;
 
 	public static Image[] stageBackgrounds;
+	public static Image miss;
 	
 	static {
 		try {
@@ -44,6 +45,7 @@ public class ImageLoader {
 		    mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
+			miss = ImageIO.read(new File("res/miss.png"));
 			
 			gameOver = ImageIO.read(new File("res/gameOver.png"));
 			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
