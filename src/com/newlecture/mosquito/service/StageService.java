@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Miss;
+import com.newlecture.mosquito.entity.MosqAttackListener;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
@@ -69,6 +70,13 @@ public class StageService {
 
 		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
 			mosqs.add(new Mosquito());
+			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+				
+				@Override
+				public void attackListener(int damage) {
+					p1.setHp(p1.getHp()-damage);
+				}
+			});
 		}
 
 		for (int i = 0; i < buttCreateCount; i++) {		// 나비

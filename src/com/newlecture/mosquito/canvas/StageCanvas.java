@@ -43,6 +43,7 @@ import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
+import com.newlecture.mosquito.weapon.RiceStraw;
 import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas {
@@ -74,6 +75,7 @@ public class StageCanvas extends Canvas {
 	private int stageStep;
 	private int userLevel;
 	private int userScore;
+	private RiceStraw rice;
 
 	private Image background;
 
@@ -92,7 +94,7 @@ public class StageCanvas extends Canvas {
 
 		// 파일이 없어 잠깐 주석
 		///////////////// mosSound("res/sound/mos.wav");
-
+		rice = new RiceStraw();//볏짚
 		stageService = new StageService();
 		timer = stageService.getTimer();
 		player = stageService.getP1();
@@ -114,7 +116,7 @@ public class StageCanvas extends Canvas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		//해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
 		weapons = new WeaponButton[2];
 		weapons[0] = new WeaponButton("spear", weapon1, weapon1, 800, 700, 135, 188);
 		weapons[1] = new WeaponButton("flyswatter", weapon2, weapon22, 1050, 700, 118, 141);
@@ -173,6 +175,8 @@ public class StageCanvas extends Canvas {
 			public void mouseMoved(MouseEvent e) {
 				player.getCurrentWp().setX(e.getX());
 				player.getCurrentWp().setY(e.getY());
+				rice.setX(e.getX());//볏짚
+				rice.setY(e.getY());//볏짚
 			}
 
 			@Override
@@ -187,7 +191,7 @@ public class StageCanvas extends Canvas {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 커서 이미지 변경
-
+				
 				int x = e.getX();
 				int y = e.getY();
 				System.out.println(stageService.getMosqs().size());
@@ -282,6 +286,7 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				rice.setClick(true);//볏짚
 				for (int i = 0; i < weapons.length; i++) {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						System.out.println("선택되었습니다");
@@ -398,7 +403,7 @@ public class StageCanvas extends Canvas {
 			timer.paint(bg);
 			score.paint(bg);
 			
-
+			
 			int mosqSize = stageService.getMosqs().size();
 			for (int i = 0; i < mosqSize; i++) {
 				stageService.getMosqs().get(i).paint(bg);
@@ -415,6 +420,7 @@ public class StageCanvas extends Canvas {
 					missList.get(i).paint(bg);
 				}
 			}
+			rice.paint(bg);
 			weapons[0].paint(bg);
 			weapons[1].paint(bg);
 
@@ -423,7 +429,7 @@ public class StageCanvas extends Canvas {
 			hpBar.paint(bg);
 		}
 
-		g.drawImage(buf, 0, 0, this);//
+		g.drawImage(buf, 0, 0, this);
 	}
 
 	@Override
@@ -445,7 +451,7 @@ public class StageCanvas extends Canvas {
 
 					stageService.update();
 
-					
+					rice.update();//볏짚
 					int mosqSize = stageService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						stageService.getMosqs().get(i).update();
