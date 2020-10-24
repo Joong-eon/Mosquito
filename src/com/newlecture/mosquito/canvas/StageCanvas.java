@@ -1,7 +1,9 @@
 package com.newlecture.mosquito.canvas;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -33,6 +35,7 @@ import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.Button;
 import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
+import com.newlecture.mosquito.gui.PlayerHpBar;
 import com.newlecture.mosquito.gui.WeaponButton;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
@@ -64,6 +67,7 @@ public class StageCanvas extends Canvas {
 	private StageService stageService;
 	private Timer timer;
 	private Player player;
+	private PlayerHpBar hpBar;
 	private WeaponButton[] weapons;
 	private Score score;
 	private int stageStep;
@@ -91,6 +95,8 @@ public class StageCanvas extends Canvas {
 		stageService = new StageService();
 		timer = stageService.getTimer();
 		player = stageService.getP1();
+		hpBar = new PlayerHpBar(player.getHp());
+		
 		//timer = new Timer(stageService.getStageIndex());
 		
 		//p1 = new Player();
@@ -421,10 +427,11 @@ public class StageCanvas extends Canvas {
 			weapons[1].paint(bg);
 
 			player.getCurrentWp().paint(bg);
+			
+			hpBar.paint(bg);
 		}
 
 		g.drawImage(buf, 0, 0, this);//
-
 	}
 
 	@Override

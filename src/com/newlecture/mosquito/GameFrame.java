@@ -1,12 +1,14 @@
 package com.newlecture.mosquito;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.gui.PlayerHpBar;
 
 public class GameFrame extends Frame {
 	
@@ -22,7 +24,7 @@ public class GameFrame extends Frame {
 	public GameFrame() {
 		instance = this;
 		MenuCanvas menuCanvas = new MenuCanvas();
-
+		
 		add(menuCanvas);
 		menuCanvas.start();
 		
