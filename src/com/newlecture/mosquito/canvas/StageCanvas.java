@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.entity.Bug;
 import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Miss;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Score;
@@ -69,6 +70,7 @@ public class StageCanvas extends Canvas {
 	private Player player;
 	private PlayerHpBar hpBar;
 	private WeaponButton[] weapons;
+	private ArrayList missList;
 	private Score score;
 	private int stageStep;
 	private int userLevel;
@@ -96,6 +98,8 @@ public class StageCanvas extends Canvas {
 		timer = stageService.getTimer();
 		player = stageService.getP1();
 		hpBar = new PlayerHpBar(player.getHp());
+		
+		missList.add(new Miss(100,100));
 		
 		//timer = new Timer(stageService.getStageIndex());
 		
