@@ -25,13 +25,14 @@ public class ImageLoader {
 	public static Image gameOverBtn;
 	public static Image gameOverBg;
 	public static Image gameClearBtn;
-	
+
 	public static Image timerNumber;
 	public static Image timerDot;
 
 	public static Image[] stageBackgrounds;
-	
-	
+
+	public static Image riceStraw;
+
 	static {
 		try {
 			// 동기 방식 이미지 로드.
@@ -43,25 +44,32 @@ public class ImageLoader {
 			menuExitBtnPressed = ImageIO.read(new File("res/menu_exit_pressed.png"));
 
 			menuBackground = ImageIO.read(new File("res/menu_bg.jpg"));
-		    mosquito = ImageIO.read(new File("res/mosquito.png"));
+			mosquito = ImageIO.read(new File("res/mosquito.png"));
 			butterfly = ImageIO.read(new File("res/butterfly.png"));
 			scoreNumber = ImageIO.read(new File("res/scoreNumber.png"));
 			miss = ImageIO.read(new File("res/miss.png"));
-			
+
 			gameOver = ImageIO.read(new File("res/gameOver.png"));
 			gameOverBtn = ImageIO.read(new File("res/gameOver.png"));
-			gameOverBg =ImageIO.read(new File("res/gameOverBg.png"));
+			gameOverBg = ImageIO.read(new File("res/gameOverBg.png"));
 			gameClearBtn = ImageIO.read(new File("res/gameClear.jpg"));
 
 			timerNumber = ImageIO.read(new File("res/timer_final.png"));
 			timerDot = ImageIO.read(new File("res/timer_dot.png"));
-					
+			
+			
+			
+			
+
 			int stageCount = DataService.getInstance().getGameIntValue("default", "stageCount");
 			stageBackgrounds = new Image[stageCount];
-			for(int i=0 ; i<stageCount ; i++) {
-				stageBackgrounds[i] = ImageIO.read(new File("res/stage"+(i+1)+"_bg.jpg"));
+			for (int i = 0; i < stageCount; i++) {
+				stageBackgrounds[i] = ImageIO.read(new File("res/stage" + (i + 1) + "_bg.jpg"));
 			}
 			
+			//여기부터 무기이미지
+			riceStraw = ImageIO.read(new File("res/riceStraw.png"));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
