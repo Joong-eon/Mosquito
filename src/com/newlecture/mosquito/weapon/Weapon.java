@@ -22,8 +22,8 @@ public abstract class Weapon {// 추상클래스 구현
 	private boolean isClicked = false;
 	private int range;
 
-	private int width = 72;
-	private int height = 52;
+	private int width;
+	private int height;
 	private int x = 0;
 	private int y = 0;
 
