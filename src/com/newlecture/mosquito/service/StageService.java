@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Miss;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
