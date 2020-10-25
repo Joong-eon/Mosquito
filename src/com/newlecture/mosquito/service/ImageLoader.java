@@ -32,6 +32,10 @@ public class ImageLoader {
 	public static Image[] stageBackgrounds;
 
 	public static Image riceStraw;
+	public static Image spear;
+	public static Image strawShoes;
+	public static Image rightHand;
+	public static Image leftHand;
 
 	static {
 		try {
@@ -69,7 +73,10 @@ public class ImageLoader {
 			
 			//여기부터 무기이미지
 			riceStraw = ImageIO.read(new File("res/riceStraw.png"));
-
+			spear = ImageIO.read(new File("res/spear.png"));
+			strawShoes = ImageIO.read(new File("res/strawShoes.png"));
+			rightHand = ImageIO.read(new File("res/rightHand.png"));
+			leftHand = ImageIO.read(new File("res/leftHand.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
