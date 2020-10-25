@@ -9,7 +9,9 @@ public class WeaponButton extends Button {
 
 	public WeaponButton(String name, Image normalImg, Image pressedImg, double x, double y, int width, int height) {
 		super(name, normalImg, pressedImg, x, y, width, height);
-		// TODO Auto-generated constructor stub
+		
+		this.setImgWidth(this.getWidth());
+		this.setImgHeight(this.getWidth());
 	}
 	
 }

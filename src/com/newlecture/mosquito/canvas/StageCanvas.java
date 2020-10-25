@@ -51,6 +51,7 @@ public class StageCanvas extends Canvas {
 	private Image weapon1;
 	private Image weapon2;
 	private Image weapon22;
+	private Image[] weaponImg;
 
 	// ��ü ����
 	public static Canvas instance;
@@ -107,19 +108,32 @@ public class StageCanvas extends Canvas {
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
 		background = ImageLoader.stageBackgrounds[stageIndex - 1];
-
-		try {
-			weapon1 = ImageIO.read(new File("res/spear.png"));// 파일이름
-			weapon2 = ImageIO.read(new File("res/flyswatter.png"));
-			weapon22 = ImageIO.read(new File("res/flyswatter1.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		ArrayList wpDir = player.getArrWpDir();
+		ArrayList wp = player.getArrWp();
+		weaponImg = new Image[wpDir.size()];
+		
+		for(int i=0;i<wpDir.size();i++) {
+			try {
+				weaponImg[i] = ImageIO.read(new File((String)wpDir.get(i)));
+				
+				//weapon1 = ImageIO.read(new File("res/spear.png"));// 파일이름
+				//weapon2 = ImageIO.read(new File("res/flyswatter.png"));
+				//weapon22 = ImageIO.read(new File("res/flyswatter1.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 		//해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
-		weapons = new WeaponButton[2];
-		weapons[0] = new WeaponButton("spear", weapon1, weapon1, 800, 700, 135, 188);
-		weapons[1] = new WeaponButton("flyswatter", weapon2, weapon22, 1050, 700, 118, 141);
+		weapons = new WeaponButton[wpDir.size()];
+		
+		for(int i=0;i<wpDir.size();i++) {
+			weapons[i] = new WeaponButton((String)wp.get(i),weaponImg[i],weaponImg[i],800+350*i,700,135,188);
+		}
+		//weapons[0] = new WeaponButton("spear", weapon1, weapon1, 800, 700, 135, 188);
+		//weapons[1] = new WeaponButton("flyswatter", weapon2, weapon22, 1050, 700, 118, 141);
 		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
 		// p1.current 정보변경
 		score = new Score();
@@ -175,8 +189,8 @@ public class StageCanvas extends Canvas {
 			public void mouseMoved(MouseEvent e) {
 				player.getCurrentWp().setX(e.getX());
 				player.getCurrentWp().setY(e.getY());
-				rice.setX(e.getX());//볏짚
-				rice.setY(e.getY());//볏짚
+				//rice.setX(e.getX());//볏짚
+				//rice.setY(e.getY());//볏짚
 			}
 
 			@Override

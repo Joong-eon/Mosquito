@@ -22,6 +22,7 @@ public class DataService {
 	// [stageN] : N번째 스테이지의 기본 정보를 저장.
 	private static String gameFileName;
 	private static String userFileName;
+	private static String weaponFileName;
 	
 	
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
@@ -30,6 +31,7 @@ public class DataService {
 	// HashMap을 써도 되지만 혹시 모르니 file의 순서를 유지하고 싶어서  LinkedHashMap 사용
 	private LinkedHashMap<String, LinkedHashMap<String, String>> allGameDatas;
 	private LinkedHashMap<String, LinkedHashMap<String, String>> allUserDatas;
+	private LinkedHashMap<String, LinkedHashMap<String, String>> allWeaponDatas;
 	private static DataService instance;
 	
 
@@ -39,12 +41,15 @@ public class DataService {
 		
 		allGameDatas = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 		allUserDatas = new LinkedHashMap<String, LinkedHashMap<String, String>>();
-
+		allWeaponDatas = new LinkedHashMap<String, LinkedHashMap<String, String>>();
+		
 		gameFileName = "data/gameConfig.txt";
 		userFileName = "data/userConfig.txt";
+		weaponFileName = "data/weaponConfig.txt";
 		try {
 			loadConfig(gameFileName);		// GameConfig.txt 파일 읽어옴
 			loadConfig(userFileName);		// UserConfig.txt 파일을 읽어옴
+			loadConfig(weaponFileName);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,9 +70,10 @@ public class DataService {
 		
 		if(true == filePath.equals(userFileName)) {
 			allDatas = allUserDatas;
-		} else {
+		} else if(true == filePath.equals(gameFileName)){
 			allDatas = allGameDatas;
-		}
+		} else
+			allDatas = allWeaponDatas;
 		
 		String title = "";
 		LinkedHashMap<String, String> datas = null;
@@ -107,10 +113,10 @@ public class DataService {
 		}
 
 		// 출력 확인용
-		for (String key : allUserDatas.keySet()) {
+		for (String key : allWeaponDatas.keySet()) {
 			
 			System.out.println("[" + key + "]");
-			LinkedHashMap<String, String> contents = allUserDatas.get(key);
+			LinkedHashMap<String, String> contents = allWeaponDatas.get(key);
 			
 			for (String key2 : contents.keySet()) {
 				System.out.println("유저 정보");
@@ -131,6 +137,31 @@ public class DataService {
 		pw.println("level="+level);
 		pw.println("totalScore="+totalScore);
 		pw.close();
+	}
+	
+	public ArrayList getWeaponList(int level) {
+		
+		ArrayList list = new ArrayList();
+		String key = "";
+		if(level < 10)
+			key = "level"+1;
+		else 
+			key = "level"+(level/10*10);
+		
+		LinkedHashMap<String, String> datas = allWeaponDatas.get(key);
+		if(null != datas) {
+			for(String s : datas.keySet()) {
+				list.add(s);
+			}
+		}
+		
+		return list;
+	}
+	
+	public ArrayList getWeaponImg(String key) {
+		ArrayList list = new ArrayList();
+		
+		return list;
 	}
 	
 	
@@ -190,6 +221,10 @@ public class DataService {
 	
 	public String getGameStringValue(String key, String attribute) {
 		String result = allGameDatas.get(key).get(attribute);
+		return result;
+	}
+	public String getWeaponStringValue(String key, String attribute) {
+		String result = allWeaponDatas.get(key).get(attribute);
 		return result;
 	}	
 	

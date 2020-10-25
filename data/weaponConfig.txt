@@ -1,0 +1,5 @@
+[level1]
+Hand=res/hand2.jpg
+[level10]
+Hand=res/hand2.jpg
+RiceStraw=res/riceStraw.png
