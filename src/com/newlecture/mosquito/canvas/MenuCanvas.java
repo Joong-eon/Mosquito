@@ -23,6 +23,7 @@ import com.newlecture.mosquito.gui.Button;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.ImageLoader;
+import com.newlecture.mosquito.service.SoundLoader;
 
 public class MenuCanvas extends Canvas {
 	public static Canvas instance;
@@ -43,12 +44,16 @@ public class MenuCanvas extends Canvas {
 	private Image menuBackground;
 
 	// sound
-	private Clip bgClip;
-	private Clip effectClip;
-	private AudioInputStream bgAis;
-	private AudioInputStream effectAis;
-	private boolean isEffect;
-	private boolean isBgm;
+//	private Clip bgClip;
+//	private Clip effectClip;
+//	private AudioInputStream bgAis;
+//	private AudioInputStream effectAis;
+//	private boolean isEffect;
+//	private boolean isBgm;
+	
+	private AudioInputStream mainSound;
+	private Clip mainSoundoff;
+
 
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
@@ -63,11 +68,14 @@ public class MenuCanvas extends Canvas {
 		setBackground(Color.GREEN);
 
 		// main sound
-		isEffect = true;
-		isBgm = true;
+//		isEffect = true;
+//		isBgm = true;
 
 		// wave 파일이 없어 잠깐 주석 처리
-		//////////////////////// mainSound("res/sound/main.wav" );
+//		mainSound("res/sound/mainBgm.wav" );
+		mainSound = SoundLoader.mainBg;
+		mainSoundoff= SoundLoader. mainClip;
+
 
 		// 메뉴 버튼의 이미지를 받아옴
 		stageBtnNormal = ImageLoader.menuStageBtnNormal;
@@ -102,7 +110,9 @@ public class MenuCanvas extends Canvas {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
 						// 버튼 클릭시 메인사운드 off
-						//////////////////////bgmOff();
+						//bgmOff();
+						mainSoundoff.stop();
+						
 					}
 				}
 			}
@@ -208,43 +218,43 @@ public class MenuCanvas extends Canvas {
 		th.start();
 	}
 
-	void mainSound(String file) {
-		if (isBgm) {
-			try {
-				bgAis = AudioSystem.getAudioInputStream(new File(file));
-				bgClip = AudioSystem.getClip();
-
-				bgClip.open(bgAis);
-				bgClip.start();
-				// bgClip.stop();
-				// if(isLoop)
-				// bgClip.loop(Clip.LOOP_CONTINUOUSLY);
-				//
-				// bgClip.loop(Integer.MAX_VALUE);
-				System.out.println("sound good");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("err");
-			}
-		}
-	}
-
-	public void setEff(boolean b) {
-		isEffect = b;
-	}
-
-	public void setBgm(boolean b) {
-		isBgm = b;
-	}
-
-	public void bgmOff() {
-		bgClip.stop();
-	}
-
-	public void effectStart() {
-		if (isEffect == true)
-			effectClip.loop(1);
-	}
-
+//	void mainSound(String file) {
+//		if (isBgm) {
+//			try {
+//				bgAis = AudioSystem.getAudioInputStream(new File(file));
+//				bgClip = AudioSystem.getClip();
+//
+//				bgClip.open(bgAis);
+//				bgClip.start();
+//				// bgClip.stop();
+//				// if(isLoop)
+//				// bgClip.loop(Clip.LOOP_CONTINUOUSLY);
+//				//
+//				// bgClip.loop(Integer.MAX_VALUE);
+//				System.out.println("sound good");
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				System.out.println("err");
+//			}
+//		}
+//	}
+//
+//	public void setEff(boolean b) {
+//		isEffect = b;
+//	}
+//
+//	public void setBgm(boolean b) {
+//		isBgm = b;
+//	}
+//
+//	public void bgmOff() {
+//		bgClip.stop();
+//	}
+//
+//	public void effectStart() {
+//		if (isEffect == true)
+//			effectClip.loop(1);
+//	}`
+//
 }
