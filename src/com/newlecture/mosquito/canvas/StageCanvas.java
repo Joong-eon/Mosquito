@@ -283,7 +283,7 @@ public class StageCanvas extends Canvas {
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
-								if (player.getUserTotalScore() % 100 == 0 && player.getUserTotalScore() / 100 != 0)
+								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);

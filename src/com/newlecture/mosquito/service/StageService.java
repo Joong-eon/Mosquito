@@ -22,6 +22,20 @@ public class StageService {
 	private Timer timer;
 	private Player p1;
 	private int totalScore=0;
+	
+	private int currentMosqCount;		// 현재 생성 된 모기 수
+	private int mosqDeltaTime;
+	private int mosqMaxCount;
+	private int mosqCreateCount;
+	private int mosqCreateTime;
+	
+	private int currentButtCount;		// 현재 생성 된 나비 수
+	private int buttDeltaTime;
+	private int buttMaxCount;
+	private int buttCreateCount;
+	private int buttCreateTime;
+
+			
 	private GameOver gameOver;
 	private GameClear gameClear;
 	private Image gameOverBtn = ImageLoader.gameOverBtn;
@@ -50,11 +64,7 @@ public class StageService {
 
 	public void changeStage(int stageIndex) {
 		this.stageIndex = stageIndex;		// 현재 스테이지 바꾸고
-
-		if(stageIndex > 0) {
-			
-		}
-		
+	
 		if(mosqs == null) {
 			mosqs = new ArrayList<Mosquito>();	
 			butts = new ArrayList<Butterfly>();	
@@ -67,24 +77,35 @@ public class StageService {
 		// 새로운 스테이지 정보 가져오기
 		stage = DataService.getInstance().getStageValue(stageIndex);
 
-		//모기 & 나비 생성
-		int mosqCreateCount = stage.getMosqCreateCount();
-		int buttCreateCount = stage.getButtCreateCount();
-
-		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
-			mosqs.add(new Mosquito());
-			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-				
-				@Override
-				public void attackListener(int damage) {
-					p1.setHp(p1.getHp()-damage);
-				}
-			});
-		}
-
-		for (int i = 0; i < buttCreateCount; i++) {		// 나비
-			butts.add(new Butterfly());
-		}
+		//모기 & 나비 생성		
+		currentMosqCount = 0;		// 현재 생성 된 모기 수
+		mosqDeltaTime = 0;
+		mosqMaxCount = stage.getMosqMaxCount();
+		mosqCreateCount = stage.getMosqCreateCount();
+		mosqCreateTime = stage.getMosqCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createMosquito();		
+		
+		currentButtCount = 0;		// 현재 생성 된 나비 수
+		buttDeltaTime = 0;
+		buttMaxCount = stage.getButtMaxCount();
+		buttCreateCount = stage.getButtCreateCount();
+		buttCreateTime = stage.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createButterfly();
+		
+//		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
+//			mosqs.add(new Mosquito());
+//			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+//				
+//				@Override
+//				public void attackListener(int damage) {
+//					p1.setHp(p1.getHp()-damage);
+//				}
+//			});
+//		}
+//
+//		for (int i = 0; i < buttCreateCount; i++) {		// 나비
+//			butts.add(new Butterfly());
+//		}
 	}
 
 	public void setScore() {
@@ -96,40 +117,84 @@ public class StageService {
 			currentStage = Dat
 		}*/
 	}
-	public void update() {//스레드에서 계속 호출
-		int mosqCreateCount = stage.getMosqCreateCount();
-		int buttCreateCount = stage.getButtCreateCount();
-		//System.out.println(mosqCreateCount);
-		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
-			if(mosqs.get(i).getCurrentDir() == 2) {
-				int deleteTimer = mosqs.get(i).getDeleteTimer();
-				deleteTimer--;
-				mosqs.get(i).setDeleteTimer(deleteTimer);
-			}
+	
+	public void createMosquito() {
+		
+		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
+			mosqDeltaTime = 0;
+			currentMosqCount += mosqCreateCount;
 			
-			if(mosqs.get(i).getDeleteTimer() == 0) {
-				mosqs.remove(i);
-				stage.setMosqCreateCount(--mosqCreateCount);
+			for (int i = 0 ;i < mosqCreateCount; i++) {		// 모기
+				mosqs.add(new Mosquito());
+				mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+					
+					@Override
+					public void attackListener(int damage) {
+						p1.setHp(p1.getHp()-damage);
+					}
+				});
 			}
 		}
 		
-		for (int i = 0; i < buttCreateCount; i++) {		// 모기
-			if(butts.get(i).getCurrentDir() == 2) {
-				int deleteTimer = butts.get(i).getDeleteTimer();
-				deleteTimer--;
-				butts.get(i).setDeleteTimer(deleteTimer);
-			}
-			
-			if(butts.get(i).getDeleteTimer() == 0) {
-				butts.remove(i);
-				stage.setButtCreateCount(--buttCreateCount);
-			}
-		}
-		
-		
-		
+	}
+	
+	public void createButterfly() {
+		if( (currentButtCount+buttCreateCount) < buttMaxCount) {
+			buttDeltaTime = 0;
 
+			currentButtCount += buttCreateCount;
+			
+			for (int i = 0; i < buttCreateCount; i++) {		// 나비
+				butts.add(new Butterfly());
+			}
+		}
+	}
+	
+	public void update() {//스레드에서 계속 호출
 		
+		if(mosqDeltaTime >= mosqCreateTime) {
+			createMosquito();
+		} else {
+			mosqDeltaTime++;
+		}
+		
+		if(buttDeltaTime >= buttCreateTime) {
+			createButterfly();
+		} else {
+			buttDeltaTime++;
+		}
+
+		if(mosqs.size() > 0) {
+			/// 모기 죽을 때 처리			
+			for (int i = 0; i < mosqs.size(); i++) {		// 모기
+				if(mosqs.get(i).getCurrentDir() == 2) {
+					int deleteTimer = mosqs.get(i).getDeleteTimer();
+					deleteTimer--;
+					mosqs.get(i).setDeleteTimer(deleteTimer);
+				}
+				
+				if(mosqs.get(i).getDeleteTimer() == 0) {
+					mosqs.remove(i);
+					stage.setMosqCreateCount(--mosqCreateCount);
+				}
+			}
+		}
+		
+		
+		if(butts.size() > 0) {
+			for (int i = 0; i < butts.size(); i++) {		// 모기
+				if(butts.get(i).getCurrentDir() == 2) {
+					int deleteTimer = butts.get(i).getDeleteTimer();
+					deleteTimer--;
+					butts.get(i).setDeleteTimer(deleteTimer);
+				}
+				
+				if(butts.get(i).getDeleteTimer() == 0) {
+					butts.remove(i);
+					stage.setButtCreateCount(--buttCreateCount);
+				}
+			}
+		}
 	}
 	
 	

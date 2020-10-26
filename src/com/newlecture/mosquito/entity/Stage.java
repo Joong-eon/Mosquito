@@ -19,7 +19,6 @@ public class Stage {
 	public int buttCreateTime; 		// 나비 생성 주기
 	
 	public int killScore;
-	public int winScore;
 	
 	
 	public Stage() {
@@ -114,15 +113,4 @@ public class Stage {
 		this.killScore = killScore;
 	}
 
-
-	public int getWinScore() {
-		return winScore;
-	}
-
-
-	public void setWinScore(int winScore) {
-		this.winScore = winScore;
-	}
-	
-	
 }
