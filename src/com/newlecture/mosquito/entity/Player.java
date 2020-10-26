@@ -1,5 +1,9 @@
+
 package com.newlecture.mosquito.entity;
 
+import java.util.ArrayList;
+
+import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.weapon.FlySwatter;
 import com.newlecture.mosquito.weapon.Hand;
 import com.newlecture.mosquito.weapon.Spear;
@@ -15,6 +19,10 @@ public class Player {
 	private int hp;
 	private int score;
 	private Weapon[] weapons;
+	private int userTotalScore;
+	private int userLevel;
+	private ArrayList arrWp;
+	private ArrayList arrWpDir;
 	
 	
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
@@ -25,12 +33,62 @@ public class Player {
 		//weapon = new Weapon[100];
 		hp = 100;
 		
-		wp = new Hand();
-		currentWp = wp;
-		weapons = new Weapon[3];
-		weapons[0] = currentWp;
-		weapons[1] = new Spear();
-		weapons[2] = new FlySwatter();
+		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
+		arrWp = DataService.getInstance().getWeaponList(userLevel);
+		/*
+		for(int i=0;i<arrWp.size();i++) {
+			System.out.println(arrWp.get(i));
+		}
+		*/
+		
+		arrWpDir = new ArrayList();
+		
+		for(int i=0;i<arrWp.size();i++) {
+			arrWpDir.add(DataService.getInstance().getWeaponStringValue("level"+userLevel, (String)arrWp.get(i)));
+		}
+		/*
+		for(int i=0;i<arrWp.size();i++) {
+			System.out.println(arrWpDir.get(i));
+		}*/
+		
+		weapons = new Weapon[arrWp.size()];
+		
+		for(int i=0;i<arrWp.size();i++) {
+			String weaponName = "com.newlecture.mosquito.weapon."+arrWp.get(i);
+			Class t=null;
+			
+			try {
+				t = Class.forName(weaponName);
+				try {
+					Object newObj = t.newInstance();
+					weapons[i] = (Weapon)newObj;
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		currentWp = weapons[0];
+		
+		if(currentWp instanceof Hand) {
+			System.out.println("현재 무기는 손입니다.");
+		}
+		
+		
+		//wp = new Hand();
+		//currentWp = wp;
+//		weapons = new Weapon[3];
+//		weapons[0] = currentWp;
+//		weapons[1] = new Spear();
+//		weapons[2] = new FlySwatter();
+//		
+		userTotalScore=DataService.getInstance().getPlayerIntValue("player", "totalScore");
 		//setImg;
 		
 		//나중에 정리해야함 일단 기능만 확인
@@ -134,5 +192,32 @@ public class Player {
 		this.wp = wp;
 	}
 	
+	public int getUserTotalScore() {
+		return userTotalScore;
+	}
+
+	public void setUserTotalScore(int userTotalScore) {
+		this.userTotalScore = userTotalScore;
+	}
+
+	
+	public ArrayList getArrWp() {
+		return arrWp;
+	}
+
+
+	public void setArrWp(ArrayList arrWp) {
+		this.arrWp = arrWp;
+	}
+
+
+	public void setArrWpDir(ArrayList arrWpDir) {
+		this.arrWpDir = arrWpDir;
+	}
+
+
+	public ArrayList getArrWpDir() {
+		return arrWpDir;
+	}
 	
 }

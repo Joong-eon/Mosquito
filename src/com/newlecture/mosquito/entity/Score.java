@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Score {
@@ -14,6 +15,7 @@ public class Score {
 	private int width;
 	private int height;
 	private int score;
+	
 
 	public Score() {
 		setImg(ImageLoader.scoreNumber);
@@ -22,6 +24,7 @@ public class Score {
 		width = 56;
 		height = 72;
 		score = 0;
+		
 	}
 
 	public void paint(Graphics g) {
@@ -52,5 +55,8 @@ public class Score {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+	
+	
 
 }

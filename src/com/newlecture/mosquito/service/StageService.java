@@ -5,9 +5,13 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Miss;
+import com.newlecture.mosquito.entity.MosqAttackListener;
 import com.newlecture.mosquito.entity.Mosquito;
+import com.newlecture.mosquito.entity.Player;
 import com.newlecture.mosquito.entity.Stage;
 import com.newlecture.mosquito.entity.Timer;
+import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 
 public class StageService {
@@ -16,15 +20,33 @@ public class StageService {
 	private Stage stage;
 	private int stageIndex;
 	private Timer timer;
+	private Player p1;
 	private int totalScore=0;
 	private GameOver gameOver;
+	private GameClear gameClear;
 	private Image gameOverBtn = ImageLoader.gameOverBtn;
+	private Image gameClearBtn = ImageLoader.gameClearBtn;
 	
 	
 	public StageService() {
+		//int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
+		this(1);
+	}
+	
+	public StageService(int stageStep) {
+		
+		stageIndex = stageStep;
+		timer = new Timer(this.getStageIndex());
+		p1 = new Player();
+		
+		
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
-		int startIndex = DataService.getInstance().getGameIntValue("default", "stageIndex");	
-		changeStage(startIndex);
+		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
+		changeStage(stageStep);
+	}
+
+	public GameClear getGameClear() {
+		return gameClear;
 	}
 
 	public void changeStage(int stageIndex) {
@@ -38,6 +60,7 @@ public class StageService {
 			butts.clear();
 		}
 
+		
 		// 새로운 스테이지 정보 가져오기
 		stage = DataService.getInstance().getStageValue(stageIndex);
 
@@ -45,8 +68,15 @@ public class StageService {
 		int mosqCreateCount = stage.getMosqCreateCount();
 		int buttCreateCount = stage.getButtCreateCount();
 
-		for (int i = 0; i < mosqCreateCount; i++) {		// 모기
+		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
 			mosqs.add(new Mosquito());
+			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+				
+				@Override
+				public void attackListener(int damage) {
+					p1.setHp(p1.getHp()-damage);
+				}
+			});
 		}
 
 		for (int i = 0; i < buttCreateCount; i++) {		// 나비
@@ -63,7 +93,6 @@ public class StageService {
 			currentStage = Dat
 		}*/
 	}
-	
 	public void update() {//스레드에서 계속 호출
 		int mosqCreateCount = stage.getMosqCreateCount();
 		int buttCreateCount = stage.getButtCreateCount();
@@ -80,7 +109,7 @@ public class StageService {
 				stage.setMosqCreateCount(--mosqCreateCount);
 			}
 		}
-
+		
 		for (int i = 0; i < buttCreateCount; i++) {		// 모기
 			if(butts.get(i).getCurrentDir() == 2) {
 				int deleteTimer = butts.get(i).getDeleteTimer();
@@ -96,19 +125,26 @@ public class StageService {
 		
 		
 		
-	/*
-		//승리조건 : ArrayList<Mosquito>에 모든 객체들의 hp가 0일때
-		for(int i = 0; i<mosqs.size();i++) {
-			if(mosqs.get(i).getHp()<=0) {
-				this.changeStage(stageIndex++);
-			}
-		}*/
-		//패배조건 : 시간이 0이 되었을 때 or player의 hp가 0이 되었을 때
-		/*if((timer.getOneCount() == 0 && timer.getTenCount() == 0) ||
-				p1.getHp <= 0 ) {
-			gameOver();
-		}*/
+
 		
+	}
+	
+	
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public Player getP1() {
+		return p1;
+	}
+
+	public void setP1(Player p1) {
+		this.p1 = p1;
 	}
 
 	public GameOver getGameOver() {
