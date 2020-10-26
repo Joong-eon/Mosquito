@@ -1,3 +1,3 @@
 [player]
 level=10
-totalScore=450
+totalScore=540
