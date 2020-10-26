@@ -38,8 +38,8 @@ import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.PlayerHpBar;
 import com.newlecture.mosquito.gui.WeaponButton;
+import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
-import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
@@ -143,7 +143,7 @@ public class StageCanvas extends Canvas {
 		score = new Score();
 		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
 		userScore = player.getUserTotalScore();
-		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
+		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 
 			@Override
 			public void onClicked(GameOver gameOver) {
@@ -161,7 +161,7 @@ public class StageCanvas extends Canvas {
 
 		});
 
-		stageService.getGameClear().addClickListener(new MenuButtonClickedAdapter() {
+		stageService.getGameClear().addClickListener(new ButtonClickedAdapter() {
 
 			@Override
 			public void onClicked(GameClear gameClear) {
@@ -339,7 +339,7 @@ public class StageCanvas extends Canvas {
 
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i].addClickListener(new MenuButtonClickedAdapter() {
+			weapons[i].addClickListener(new ButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
 

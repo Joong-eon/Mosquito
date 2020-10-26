@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
-import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.SoundLoader;
 
@@ -141,10 +141,11 @@ public class MenuCanvas extends Canvas {
 
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].addClickListener(new MenuButtonClickedAdapter() {
+			buttons[i].addClickListener(new ButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
 
+					System.out.println("클릭됨 " + target.getName());
 					switch (target.getName()) {
 					case "stage":
 						try {
