@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
@@ -192,20 +193,13 @@ public class StageCanvas extends Canvas {
 		// p1.getCurrentWp()
 		// weaponBtn = new Button(, null, 700, 500, 72, 52);//
 
-		addMouseMotionListener(new MouseMotionListener() {
-
+		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				player.getCurrentWp().setX(e.getX());
 				player.getCurrentWp().setY(e.getY());
 //				spear.setX(e.getX());// 볏짚
 //				spear.setY(e.getY());// 볏짚
-
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
