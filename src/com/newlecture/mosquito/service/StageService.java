@@ -39,7 +39,6 @@ public class StageService {
 		timer = new Timer(this.getStageIndex());
 		p1 = new Player();
 		
-		
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 		changeStage(stageStep);
@@ -52,6 +51,10 @@ public class StageService {
 	public void changeStage(int stageIndex) {
 		this.stageIndex = stageIndex;		// 현재 스테이지 바꾸고
 
+		if(stageIndex > 0) {
+			
+		}
+		
 		if(mosqs == null) {
 			mosqs = new ArrayList<Mosquito>();	
 			butts = new ArrayList<Butterfly>();	

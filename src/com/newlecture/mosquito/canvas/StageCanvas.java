@@ -78,8 +78,11 @@ public class StageCanvas extends Canvas {
 	private int userLevel;
 	private int userScore;
 
-
+	// 스테이지별 배경
 	private Image background;
+	// 현재 스테이지를 표시하는 텍스트 이미지
+	private Image stageText;
+	private Image stageNumber;
 
 	private int count = 1;
 
@@ -109,7 +112,10 @@ public class StageCanvas extends Canvas {
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
 		background = ImageLoader.stageBackgrounds[stageIndex - 1];
-
+		stageText = ImageLoader.stageText;
+		stageNumber = ImageLoader.stageNumber;
+		
+		
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
 		weaponImg = new Image[wpDir.size()];
@@ -282,8 +288,7 @@ public class StageCanvas extends Canvas {
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
 							}
-							// 모기 죽는 사운드
-							////////////////// effect("res/sound/mosdie.wav");
+						
 						} else if (selectedButt != null) {
 
 							if (selectedButt.getHp() <= 0) {
@@ -363,37 +368,7 @@ public class StageCanvas extends Canvas {
 		}
 	}
 
-	public void effect(String file) {
-		if (isEffect) {
-			try {
-				effectAis = AudioSystem.getAudioInputStream(new File(file));
-				effectClip = AudioSystem.getClip();
-				effectClip.open(effectAis);
-				effectClip.start();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void setEff(boolean b) {
-		isEffect = b;
-	}
-
-	public void setBgm(boolean b) {
-		isBgm = b;
-	}
-
-	public void bgmOff() {
-		bgClip.stop();
-	}
-
-	public void effectStart() {
-		if (isEffect == true)
-			effectClip.loop(1);
-	}
-
+	
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
@@ -407,7 +382,19 @@ public class StageCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 		// 배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-
+		
+		// 스테이지 텍스트 전시
+		{
+			bg.drawImage(stageText, 30, 30, null);
+			int index = stageService.getStageIndex() - 1;
+			int sX1 = 70*index;
+			int sY1 = 70*(index/5);
+			int sX2 = sX1 + 70;
+			int sY2 = sY1 + 70;
+			bg.drawImage(stageNumber, 20+stageText.getWidth(null), 30, 90+stageText.getWidth(null), 100, 
+					sX1, sY1, sX2, sY2, null);
+		}
+		
 		// 게임 실패시...
 		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0) && stageService.getGameClear() == null) {
 			// 지방

@@ -43,13 +43,7 @@ public class MenuCanvas extends Canvas {
 
 	private Image menuBackground;
 
-	// sound
-//	private Clip bgClip;
-//	private Clip effectClip;
-//	private AudioInputStream bgAis;
-//	private AudioInputStream effectAis;
-//	private boolean isEffect;
-//	private boolean isBgm;
+
 	
 	private AudioInputStream mainSound;
 	private Clip mainSoundoff;
@@ -67,12 +61,7 @@ public class MenuCanvas extends Canvas {
 
 		setBackground(Color.GREEN);
 
-		// main sound
-//		isEffect = true;
-//		isBgm = true;
-
-		// wave 파일이 없어 잠깐 주석 처리
-//		mainSound("res/sound/mainBgm.wav" );
+	
 		mainSound = SoundLoader.mainBg;
 		mainSoundoff= SoundLoader. mainClip;
 
@@ -135,7 +124,6 @@ public class MenuCanvas extends Canvas {
 				@Override
 				public void onClicked(Button target) {
 
-					System.out.println("클릭됨 " + target.getName());
 					switch (target.getName()) {
 					case "stage":
 						try {
@@ -208,44 +196,4 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
-
-//	void mainSound(String file) {
-//		if (isBgm) {
-//			try {
-//				bgAis = AudioSystem.getAudioInputStream(new File(file));
-//				bgClip = AudioSystem.getClip();
-//
-//				bgClip.open(bgAis);
-//				bgClip.start();
-//				// bgClip.stop();
-//				// if(isLoop)
-//				// bgClip.loop(Clip.LOOP_CONTINUOUSLY);
-//				//
-//				// bgClip.loop(Integer.MAX_VALUE);
-//				System.out.println("sound good");
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				System.out.println("err");
-//			}
-//		}
-//	}
-//
-//	public void setEff(boolean b) {
-//		isEffect = b;
-//	}
-//
-//	public void setBgm(boolean b) {
-//		isBgm = b;
-//	}
-//
-//	public void bgmOff() {
-//		bgClip.stop();
-//	}
-//
-//	public void effectStart() {
-//		if (isEffect == true)
-//			effectClip.loop(1);
-//	}`
-//
 }
