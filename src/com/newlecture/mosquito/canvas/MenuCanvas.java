@@ -9,7 +9,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -42,11 +44,16 @@ public class MenuCanvas extends Canvas {
 	private Image exitBtnPressed;
 
 	private Image menuBackground;
+	
+	private Clip bgClip;
+//	private Clip effectClip;
+	private AudioInputStream bgAis;
+//	private AudioInputStream effectAis;
 
 
 	
-	private AudioInputStream mainSound;
-	private Clip mainSoundoff;
+
+	
 
 
 	public MenuCanvas() {
@@ -61,9 +68,8 @@ public class MenuCanvas extends Canvas {
 
 		setBackground(Color.GREEN);
 
-	
-		mainSound = SoundLoader.mainBg;
-		mainSoundoff= SoundLoader. mainClip;
+	   mainSound("res/sound/mainBgm.wav");
+
 
 
 		// 메뉴 버튼의 이미지를 받아옴
@@ -100,8 +106,8 @@ public class MenuCanvas extends Canvas {
 						buttons[i].getClickListener().onReleased(buttons[i]);
 						buttons[i].getClickListener().onClicked(buttons[i]);		// 메뉴버튼 안눌리는 현상이 있어서 메뉴버튼은 Release 쪽으로 넘김
 						// 버튼 클릭시 메인사운드 off
-						//bgmOff();
-						//mainSoundoff.stop();
+					
+						mainSoundOff();
 						
 					}
 				}
@@ -137,6 +143,15 @@ public class MenuCanvas extends Canvas {
 						}
 						break;
 					case "free":
+//						try {
+//							GameFrame.getInstance().switchCanvas(MenuCanvas.this, FreeCanvas.class);
+//						} catch (InstantiationException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (IllegalAccessException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 						break;
 					case "exit":
 						int result = JOptionPane.showConfirmDialog(MenuCanvas.this, "게임을 종료하시겠습니까?", "게임종료",
@@ -196,4 +211,23 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
+	
+	public void mainSound(String file) {
+	
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+
+				bgClip.open(bgAis);
+				bgClip.start();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	}
+	public void mainSoundOff() {
+		bgClip.stop();
+	}
+
 }

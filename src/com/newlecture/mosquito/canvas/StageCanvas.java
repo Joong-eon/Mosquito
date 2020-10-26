@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
@@ -62,8 +63,6 @@ public class StageCanvas extends Canvas {
 	private Clip effectClip;
 	private AudioInputStream bgAis;
 	private AudioInputStream effectAis;
-	private boolean isEffect;
-	private boolean isBgm;
 
 	/// 여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -95,11 +94,10 @@ public class StageCanvas extends Canvas {
 
 		stageStep = 1;
 
-		isBgm = true;
-		isEffect = true;
+
 
 		// 파일이 없어 잠깐 주석
-		///////////////// mosSound("res/sound/mos.wav");
+		mosSound("res/sound/mos.wav");
 
 		stageService = new StageService();
 		timer = stageService.getTimer();
@@ -192,20 +190,15 @@ public class StageCanvas extends Canvas {
 		// p1.getCurrentWp()
 		// weaponBtn = new Button(, null, 700, 500, 72, 52);//
 
-		addMouseMotionListener(new MouseMotionListener() {
+		addMouseMotionListener(new MouseMotionAdapter() {
 
+	
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				player.getCurrentWp().setX(e.getX());
 				player.getCurrentWp().setY(e.getY());
 //				spear.setX(e.getX());// 볏짚
 //				spear.setY(e.getY());// 볏짚
-
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -355,22 +348,7 @@ public class StageCanvas extends Canvas {
 
 	}
 
-	// 모기 사운드
-	private void mosSound(String file) {
-		if (isBgm) {
-			try {
-				bgAis = AudioSystem.getAudioInputStream(new File(file));
-				bgClip = AudioSystem.getClip();
-
-				bgClip.open(bgAis);
-				bgClip.start();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
+	
 	
 	@Override
 	public void paint(Graphics g) {
@@ -500,5 +478,36 @@ public class StageCanvas extends Canvas {
 		th.start();
 
 	}
+	public void mosSound(String file) {
+		
+		try {
+			bgAis = AudioSystem.getAudioInputStream(new File(file));
+			bgClip = AudioSystem.getClip();
+
+			bgClip.open(bgAis);
+			bgClip.start();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+}
+public void mosSoundOff() {
+	bgClip.stop();
+}
+public void effectSound(String file) {
+	
+	try {
+		effectAis = AudioSystem.getAudioInputStream(new File(file));
+		effectClip = AudioSystem.getClip();
+
+		effectClip.open(effectAis);
+		effectClip.start();
+
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+}
 
 }
