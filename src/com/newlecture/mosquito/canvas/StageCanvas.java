@@ -284,8 +284,7 @@ public class StageCanvas extends Canvas {
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
 							}
-							// 모기 죽는 사운드
-							////////////////// effect("res/sound/mosdie.wav");
+						
 						} else if (selectedButt != null) {
 
 							if (selectedButt.getHp() <= 0) {
@@ -365,37 +364,7 @@ public class StageCanvas extends Canvas {
 		}
 	}
 
-	public void effect(String file) {
-		if (isEffect) {
-			try {
-				effectAis = AudioSystem.getAudioInputStream(new File(file));
-				effectClip = AudioSystem.getClip();
-				effectClip.open(effectAis);
-				effectClip.start();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void setEff(boolean b) {
-		isEffect = b;
-	}
-
-	public void setBgm(boolean b) {
-		isBgm = b;
-	}
-
-	public void bgmOff() {
-		bgClip.stop();
-	}
-
-	public void effectStart() {
-		if (isEffect == true)
-			effectClip.loop(1);
-	}
-
+	
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
