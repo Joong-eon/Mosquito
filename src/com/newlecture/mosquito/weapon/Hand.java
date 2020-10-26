@@ -25,7 +25,7 @@ public class Hand extends Weapon {
 		
 		this.setDamage(5);
 		this.setType("hand");
-		this.setProb(0.5);
+		this.setProb(0.7);
 		this.setRange(1);
 	}
 	

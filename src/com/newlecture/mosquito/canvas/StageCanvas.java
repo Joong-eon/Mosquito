@@ -13,10 +13,12 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -85,8 +87,8 @@ public class StageCanvas extends Canvas {
 	private Image stageText;
 	private Image stageNumber;
 
-	private int count = 1;
-
+	private int killCount = 0;
+	
 	private ButtonClickedListener clickListener;
 
 	public StageCanvas() {// ������
@@ -149,9 +151,11 @@ public class StageCanvas extends Canvas {
 		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
 		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
-
+			//이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
+			//생성한 stageService에서는 객체 생성을 안하고 있음... 그래서 문제
 			@Override
 			public void onClicked(GameOver gameOver) {
+				System.out.println("onClicked 실행");
 				// TODO Auto-generated method stub
 				try {
 					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class);
@@ -181,9 +185,20 @@ public class StageCanvas extends Canvas {
 				System.out.println("저장 완료");
 				stageStep++;
 				// stageService.changeStage(stageStep);
+				ButtonClickedListener gameOverListener = stageService.getGameOver().getClickListener();
+				ButtonClickedListener gameClearListener = stageService.getGameClear().getClickListener();
+				int hp = hpBar.getHp();
 				stageService = new StageService(stageStep);
 				System.out.println("stageIndex : " + stageService.getStageIndex());
 				stageService.setTimer(new Timer(stageService.getStageIndex()));
+				timer = stageService.getTimer();
+				player = stageService.getP1();
+				hpBar = stageService.getHpBar();
+				hpBar.setHp(hp);
+				stageService.getGameOver().addClickListener(gameOverListener);
+				stageService.getGameClear().addClickListener(gameClearListener);
+				
+				
 				System.out.println(timer.getLimitTime());
 			}
 
@@ -192,20 +207,13 @@ public class StageCanvas extends Canvas {
 		// p1.getCurrentWp()
 		// weaponBtn = new Button(, null, 700, 500, 72, 52);//
 
-		addMouseMotionListener(new MouseMotionListener() {
-
+		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				player.getCurrentWp().setX(e.getX());
 				player.getCurrentWp().setY(e.getY());
 //				spear.setX(e.getX());// 볏짚
 //				spear.setY(e.getY());// 볏짚
-
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -215,17 +223,21 @@ public class StageCanvas extends Canvas {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 커서 이미지 변경
-
+				//System.out.println("킬 : "+killCount);
+				//System.out.println(stageService.getMosqMaxCount());
 				int x = e.getX();
 				int y = e.getY();
-				System.out.println(stageService.getMosqs().size());
-				if (timer.getOneCount() == 0 && timer.getTenCount() == 0) {
+				//System.out.println(stageService.getMosqs().size());
+				//System.out.println("ten : "+timer.getTenCount());
+				//System.out.println("one : "+timer.getOneCount());
+				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && killCount != stageService.getMosqMaxCount()) {
 					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (stageService.getGameOver().contains(x, y)) {
+						stageService.setGameOver(false);
 						stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
 					}
 
-				} else if (stageService.getMosqs().size() == 0) {
+				} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
 					// 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
 					if (stageService.getGameClear().contains(x, y)) {
 						stageService.setGameClear(false);
@@ -279,7 +291,8 @@ public class StageCanvas extends Canvas {
 
 					} else {// 빗나간게 아니라면
 						if (selectedMosq != null) {
-							if (selectedMosq.getHp() <= 0) {
+							if (selectedMosq.getHp() <= 0 && selectedMosq.getCurrentDir() != 2) {
+								killCount++;
 								String stageName = "stage" + stageService.getStageIndex();
 
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
@@ -288,8 +301,9 @@ public class StageCanvas extends Canvas {
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
 								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
-								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
+								selectedMosq.setCurrentDir(2);
+								System.out.println(killCount);
 							}
 						
 						} else if (selectedButt != null) {
@@ -385,7 +399,7 @@ public class StageCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 		// 배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-		
+		//Iterator<Mosquito> it = stageService.getMosqs().iterator();
 		// 스테이지 텍스트 전시
 		{
 			bg.drawImage(stageText, 30, 30, null);
@@ -401,20 +415,28 @@ public class StageCanvas extends Canvas {
 		// 게임 실패시...
 		if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && stageService.isGameClear()==false) {
 			// 지방
+			stageService.setGameOver(true);
 			stageService.getGameOver().paint(bg);
 			// 토탈점수 그려주세요
 
-		} else if (stageService.getMosqs().size() == 0) {
+		} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
+			
 			stageService.setGameClear(true);
 			stageService.getGameClear().paint(bg);
 		} else {
 			timer.paint(bg);
 			score.paint(bg);
 
+			
 			int mosqSize = stageService.getMosqs().size();
 			for (int i = 0; i < mosqSize; i++) {
 				stageService.getMosqs().get(i).paint(bg);
 			}
+			/*
+			while(it.hasNext()) {
+				Mosquito m = it.next();
+				m.paint(bg);
+			}*/
 
 			int buttSize = stageService.getButts().size();
 			for (int i = 0; i < buttSize; i++) {
