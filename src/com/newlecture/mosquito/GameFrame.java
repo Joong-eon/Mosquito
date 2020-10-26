@@ -51,6 +51,8 @@ public class GameFrame extends Frame {
 		if(canvas instanceof StageCanvas) {
 			StageCanvas stageCanvas = (StageCanvas) canvas;
 			stageCanvas.start();
+
+			
 		} else if(canvas instanceof MenuCanvas) {			
 			MenuCanvas menuCanvas = (MenuCanvas) canvas;
 			menuCanvas.start();
