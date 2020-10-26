@@ -118,7 +118,6 @@ public class StageCanvas extends Canvas {
 		stageText = ImageLoader.stageText;
 		stageNumber = ImageLoader.stageNumber;
 		
-		
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
 		weaponImg = new Image[wpDir.size()];
