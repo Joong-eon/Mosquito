@@ -77,8 +77,7 @@ public class StageCanvas extends Canvas {
 	private int stageStep;
 	private int userLevel;
 	private int userScore;
-	private RiceStraw rice;
-	private Spear spear;
+
 
 	private Image background;
 
@@ -97,8 +96,7 @@ public class StageCanvas extends Canvas {
 
 		// 파일이 없어 잠깐 주석
 		///////////////// mosSound("res/sound/mos.wav");
-		rice = new RiceStraw();// 볏짚
-		spear = new Spear();
+
 		stageService = new StageService();
 		timer = stageService.getTimer();
 		player = stageService.getP1();
@@ -191,10 +189,10 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-//				player.getCurrentWp().setX(e.getX());
-//				player.getCurrentWp().setY(e.getY());
-				spear.setX(e.getX());// 볏짚
-				spear.setY(e.getY());// 볏짚
+				player.getCurrentWp().setX(e.getX());
+				player.getCurrentWp().setY(e.getY());
+//				spear.setX(e.getX());// 볏짚
+//				spear.setY(e.getY());// 볏짚
 
 			}
 
@@ -305,7 +303,7 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				spear.setImgLoading(true);
+
 				for (int i = 0; i < weapons.length; i++) {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						System.out.println("선택되었습니다");
@@ -438,7 +436,7 @@ public class StageCanvas extends Canvas {
 					missList.get(i).paint(bg);
 				}
 			}
-			spear.paint(bg);
+
 			weapons[0].paint(bg);
 			weapons[1].paint(bg);
 
@@ -469,7 +467,6 @@ public class StageCanvas extends Canvas {
 
 					stageService.update();
 
-					spear.update();// 볏짚
 					int mosqSize = stageService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						stageService.getMosqs().get(i).update();
@@ -480,13 +477,13 @@ public class StageCanvas extends Canvas {
 					}
 
 					if (missList != null) {
-						int missSize = missList.size();
-						for (int i = 0; i < missSize; i++) {
+
+						for (int i = 0; i < missList.size(); i++) {
 
 							missList.get(i).update();
 							
 						}
-						for (int i = 0; i < missSize; i++) {
+						for (int i = 0; i < missList.size(); i++) {
 							if (missList.get(i).getDelTime() < 0) {
 								missList.remove(i);
 							}
