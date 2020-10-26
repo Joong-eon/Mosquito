@@ -58,7 +58,7 @@ public class StageService {
 		p1 = new Player();
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
-		
+	
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 		changeStage(stageStep);
@@ -83,14 +83,16 @@ public class StageService {
 		// 새로운 스테이지 정보 가져오기
 		stage = DataService.getInstance().getStageValue(stageIndex);
 
-		//모기 & 나비 생성
-		int mosqCreateCount = stage.getMosqCreateCount();
-		int buttCreateCount = stage.getButtCreateCount();
-
-		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
-			mosqs.add(new Mosquito());
+		//모기 & 나비 생성		
+		currentMosqCount = 0;		// 현재 생성 된 모기 수
+		mosqDeltaTime = 0;
+		mosqMaxCount = stage.getMosqMaxCount();
+		mosqCreateCount = stage.getMosqCreateCount();
+		mosqCreateTime = stage.getMosqCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createMosquito();
+		for(int i=0;i<currentMosqCount;i++) {
 			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-				
+				int count = 0;
 				@Override
 				public void attackListener(int damage) {
 					p1.setHp(p1.getHp()-damage);
@@ -98,10 +100,29 @@ public class StageService {
 				}
 			});
 		}
-
-		for (int i = 0; i < buttCreateCount; i++) {		// 나비
-			butts.add(new Butterfly());
-		}
+		
+		
+		currentButtCount = 0;		// 현재 생성 된 나비 수
+		buttDeltaTime = 0;
+		buttMaxCount = stage.getButtMaxCount();
+		buttCreateCount = stage.getButtCreateCount();
+		buttCreateTime = stage.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createButterfly();
+		
+//		for (int i = 0;i < mosqCreateCount; i++) {		// 모기
+//			mosqs.add(new Mosquito());
+//			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+//				
+//				@Override
+//				public void attackListener(int damage) {
+//					p1.setHp(p1.getHp()-damage);
+//				}
+//			});
+//		}
+//
+//		for (int i = 0; i < buttCreateCount; i++) {		// 나비
+//			butts.add(new Butterfly());
+//		}
 	}
 
 	public void setScore() {
@@ -115,20 +136,12 @@ public class StageService {
 	}
 	
 	public void createMosquito() {
-		
 		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
 			mosqDeltaTime = 0;
 			currentMosqCount += mosqCreateCount;
-			
-			for (int i = 0 ;i < mosqCreateCount; i++) {		// 모기
+			for (int i = 0 ;i < mosqCreateCount; i++) {
+				// 모기
 				mosqs.add(new Mosquito());
-				mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-					
-					@Override
-					public void attackListener(int damage) {
-						p1.setHp(p1.getHp()-damage);
-					}
-				});
 			}
 		}
 		

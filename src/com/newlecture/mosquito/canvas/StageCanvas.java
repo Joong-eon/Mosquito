@@ -456,7 +456,7 @@ public class StageCanvas extends Canvas {
 					// weapon.update();
 					timer.update();
 
-					stageService.update();
+					
 
 					int mosqSize = stageService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
@@ -491,6 +491,7 @@ public class StageCanvas extends Canvas {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					stageService.update();
 				}
 			}
 		};

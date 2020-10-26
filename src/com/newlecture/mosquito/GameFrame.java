@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import com.newlecture.mosquito.canvas.FreeCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.gui.PlayerHpBar;
@@ -51,6 +52,10 @@ public class GameFrame extends Frame {
 		if(canvas instanceof StageCanvas) {
 			StageCanvas stageCanvas = (StageCanvas) canvas;
 			stageCanvas.start();
+		} else if(canvas instanceof FreeCanvas) {
+			FreeCanvas freeCanvas = (FreeCanvas) canvas;
+			freeCanvas.start();
+			
 		} else if(canvas instanceof MenuCanvas) {			
 			MenuCanvas menuCanvas = (MenuCanvas) canvas;
 			menuCanvas.start();

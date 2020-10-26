@@ -40,7 +40,7 @@ public class Mosquito extends Bug {
 		// (ex : imgDirection=270이면 왼쪽방향 이미지와 오른쪽 방향 이미지 위치 차이가 270인격)
 		this.setImgDirection(270);
 		
-		attackTimer = (int)((Math.random()*6+5)*60);
+		attackTimer = (int)((Math.random()*11+10)*60);
 		damage = 5;
 
 		setImg(ImageLoader.mosquito);
@@ -93,26 +93,22 @@ public class Mosquito extends Bug {
 		} else { 					// 평상시
 			if (this.getCurrentDir() != 2)// 살아 있을 때
 				if(attackTimer <= 120 && this.getCurrentDir() == 0) {
-					//모기 눈만 빨간 이미지 그리기(오른쪽 방향 이미지)
-					//공격 2초 전부터 눈 빨간색 이미지.
-					//공격 1초전에 모기 전체가 빨간색 이미지.
-					//이미지 소스 width값 위치를 attackTimer/60을 곱해서 하면 수치화 될듯.
-					//60이상일땐 1 60 미만일때는 0의 위치 그림 가져오게끔
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
 							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
 					
 					if(attackTimer <= 0) {// 공격
-						System.out.println("모기 공격");
 						mosqAttackListener.attackListener(damage);
 						attackTimer = (int)((Math.random()*11+10)*60);
 					}
 				}
 				else if(attackTimer <= 120 && this.getCurrentDir() == 1) {
-					//모기 눈만 빨간 이미지 그리기(왼쪽 방향 이미지)
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
 							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
-					if(attackTimer == 0)
+					if(attackTimer <= 0) {
 						mosqAttackListener.attackListener(damage);
+						attackTimer = (int)((Math.random()*11+10)*60);
+					}
+					
 				}
 				else
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection(), imgWidth + offsetX,
