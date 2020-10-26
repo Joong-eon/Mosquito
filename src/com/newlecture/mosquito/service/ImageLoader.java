@@ -1,7 +1,7 @@
 package com.newlecture.mosquito.service;
 
 import java.awt.Image;
-
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,6 +36,8 @@ public class ImageLoader {
 	public static Image strawShoes;
 	public static Image rightHand;
 	public static Image leftHand;
+	public static Image stageText;
+	public static Image stageNumber;
 
 	static {
 		try {
@@ -77,6 +79,11 @@ public class ImageLoader {
 			strawShoes = ImageIO.read(new File("res/strawShoes.png"));
 			rightHand = ImageIO.read(new File("res/rightHand.png"));
 			leftHand = ImageIO.read(new File("res/leftHand.png"));
+			
+			
+			// 스테이지 텍스트
+			stageText = ImageIO.read(new File("res/stage_text.png"));
+			stageNumber = ImageIO.read(new File("res/stage_num.png"));		// 70x70 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

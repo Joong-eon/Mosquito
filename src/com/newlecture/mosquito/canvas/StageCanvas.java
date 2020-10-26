@@ -38,8 +38,8 @@ import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.PlayerHpBar;
 import com.newlecture.mosquito.gui.WeaponButton;
+import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
-import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
@@ -78,8 +78,11 @@ public class StageCanvas extends Canvas {
 	private int userLevel;
 	private int userScore;
 
-
+	// 스테이지별 배경
 	private Image background;
+	// 현재 스테이지를 표시하는 텍스트 이미지
+	private Image stageText;
+	private Image stageNumber;
 
 	private int count = 1;
 
@@ -109,7 +112,10 @@ public class StageCanvas extends Canvas {
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
 		background = ImageLoader.stageBackgrounds[stageIndex - 1];
-
+		stageText = ImageLoader.stageText;
+		stageNumber = ImageLoader.stageNumber;
+		
+		
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
 		weaponImg = new Image[wpDir.size()];
@@ -141,7 +147,7 @@ public class StageCanvas extends Canvas {
 		score = new Score();
 		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
 		userScore = player.getUserTotalScore();
-		stageService.getGameOver().addClickListener(new MenuButtonClickedAdapter() {
+		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 
 			@Override
 			public void onClicked(GameOver gameOver) {
@@ -159,7 +165,7 @@ public class StageCanvas extends Canvas {
 
 		});
 
-		stageService.getGameClear().addClickListener(new MenuButtonClickedAdapter() {
+		stageService.getGameClear().addClickListener(new ButtonClickedAdapter() {
 
 			@Override
 			public void onClicked(GameClear gameClear) {
@@ -277,7 +283,7 @@ public class StageCanvas extends Canvas {
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
-								if (player.getUserTotalScore() % 100 == 0 && player.getUserTotalScore() / 100 != 0)
+								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
@@ -336,7 +342,7 @@ public class StageCanvas extends Canvas {
 
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i].addClickListener(new MenuButtonClickedAdapter() {
+			weapons[i].addClickListener(new ButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
 
@@ -376,7 +382,19 @@ public class StageCanvas extends Canvas {
 		Graphics bg = buf.getGraphics();
 		// 배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-
+		
+		// 스테이지 텍스트 전시
+		{
+			bg.drawImage(stageText, 30, 30, null);
+			int index = stageService.getStageIndex() - 1;
+			int sX1 = 70*index;
+			int sY1 = 70*(index/5);
+			int sX2 = sX1 + 70;
+			int sY2 = sY1 + 70;
+			bg.drawImage(stageNumber, 20+stageText.getWidth(null), 30, 90+stageText.getWidth(null), 100, 
+					sX1, sY1, sX2, sY2, null);
+		}
+		
 		// 게임 실패시...
 		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0) && stageService.getGameClear() == null) {
 			// 지방

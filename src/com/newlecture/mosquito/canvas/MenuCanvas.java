@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.gui.Button;
+import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
-import com.newlecture.mosquito.gui.listener.MenuButtonClickedAdapter;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.SoundLoader;
 
@@ -98,6 +98,7 @@ public class MenuCanvas extends Canvas {
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
+						buttons[i].getClickListener().onClicked(buttons[i]);		// 메뉴버튼 안눌리는 현상이 있어서 메뉴버튼은 Release 쪽으로 넘김
 						// 버튼 클릭시 메인사운드 off
 						//bgmOff();
 						mainSoundoff.stop();
@@ -115,22 +116,11 @@ public class MenuCanvas extends Canvas {
 					}
 				}
 			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				for (int i = 0; i < buttons.length; i++) {
-					if (true == buttons[i].contains(e.getX(), e.getY())) {
-						// 이벤트에게 클릭된 버튼의 정보를 넘겨줌. 오버라이드한 함수에서 어떤 버튼이 클릭되었는지 알 수 있도록
-						buttons[i].getClickListener().onClicked(buttons[i]);
-					}
-				}
-			}
 		});
 
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].addClickListener(new MenuButtonClickedAdapter() {
+			buttons[i].addClickListener(new ButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
 

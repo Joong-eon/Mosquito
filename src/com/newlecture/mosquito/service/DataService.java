@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 import com.newlecture.mosquito.entity.Butterfly;
+import com.newlecture.mosquito.entity.Free;
 import com.newlecture.mosquito.entity.Mosquito;
 import com.newlecture.mosquito.entity.Stage;
 
@@ -244,6 +245,39 @@ public class DataService {
 		return result;
 	}	
 	
-	
+	  public Free getFreeValue(String freeStage) {
+	      Free free = new Free();
+	      
+	      LinkedHashMap<String, String> datas = allGameDatas.get(freeStage);
+	      if(null != datas) {
+	         String limitTime = datas.get("limitTime");
+	         String mosqCreateCount = datas.get("mosqCreateCount");
+	         String mosqMaxCount = datas.get("mosqMaxCount");
+//	         String mosqCreateTime = datas.get("mosqCreateTime");
+
+	         String buttMaxCount = datas.get("buttMaxCount");
+	         String buttCreateCount = datas.get("buttCreateCount");
+	         String buttCreateTime = datas.get("buttCreateTime");
+	         
+	         String killScore = datas.get("killScore");
+
+
+	         // 값 넣기
+	         free.limitTime = Integer.parseInt(limitTime);
+	         free.mosqCreateCount = Integer.parseInt(mosqCreateCount);
+	         free.mosqMaxCount = Integer.parseInt(mosqMaxCount);
+//	         free.mosqCreateTime = Integer.parseInt(mosqCreateTime);
+	         
+	         // 값 넣기
+	         free.buttMaxCount = Integer.parseInt(buttMaxCount);
+	         free.buttCreateCount = Integer.parseInt(buttCreateCount);
+	         free.buttCreateTime = Integer.parseInt(buttCreateTime);
+	         
+	         free.killScore = Integer.parseInt(killScore);
+	      }
+	      
+	      return free;
+	   }
+
 	
 }
