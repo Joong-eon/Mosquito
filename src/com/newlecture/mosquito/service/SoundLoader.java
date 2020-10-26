@@ -12,7 +12,7 @@ public class SoundLoader {
 	public static AudioInputStream mainBg;
 
 	
-	
+	/*
 	static {
 		try {
 			mainBg = AudioSystem.getAudioInputStream(new File("res/sound/mainBgm.wav"));
@@ -32,8 +32,8 @@ public class SoundLoader {
 	public void bgmOff() {
 		mainClip.stop();
 	}
-
+*/
 	
-	}
+}
 
 

@@ -50,7 +50,7 @@ public class Mosquito extends Bug {
 	// //페인트 함수
 	public void paint(Graphics g) {
 		
-		//attackTimer--;//모기 공격 이미지 설정하고 주석 해제 하기
+		attackTimer--;//모기 공격 이미지 설정하고 주석 해제 하기
 		
 		// 우리가 화면에 전시할 모기 크기 ex:60
 		int w = (int) this.getWidth();
@@ -82,6 +82,7 @@ public class Mosquito extends Bug {
 			offsetX -= 1;
 
 		if (true == isAttacked()) { // 공격 당했을 경우
+			attackTimer = (int)((Math.random()*11+10)*60);
 			if (this.getCurrentDir() == 0) {			// 오른쪽
 				g.drawImage(img, x1, y1, x2, y2, 
 						imgWidth, imgHeight*2, imgWidth*2, imgHeight*3, StageCanvas.instance);		// 왼쪽 방향
@@ -97,12 +98,19 @@ public class Mosquito extends Bug {
 					//공격 1초전에 모기 전체가 빨간색 이미지.
 					//이미지 소스 width값 위치를 attackTimer/60을 곱해서 하면 수치화 될듯.
 					//60이상일땐 1 60 미만일때는 0의 위치 그림 가져오게끔
-					if(attackTimer == 0)// 공격
+					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
+							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
+					
+					if(attackTimer <= 0) {// 공격
+						System.out.println("모기 공격");
 						mosqAttackListener.attackListener(damage);
+						attackTimer = (int)((Math.random()*11+10)*60);
+					}
 				}
 				else if(attackTimer <= 120 && this.getCurrentDir() == 1) {
 					//모기 눈만 빨간 이미지 그리기(왼쪽 방향 이미지)
-					
+					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
+							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
 					if(attackTimer == 0)
 						mosqAttackListener.attackListener(damage);
 				}
