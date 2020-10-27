@@ -43,6 +43,8 @@ public class ImageLoader {
 	public static Image spear;
 	public static Image strawShoes;
 	public static Image hand;
+	
+	public static Image rankBackground;
 
 
 	static {
@@ -92,6 +94,10 @@ public class ImageLoader {
 			// 스테이지 텍스트
 			stageText = ImageIO.read(new File("res/stage_text.png"));
 			stageNumber = ImageIO.read(new File("res/stage_num.png"));		// 70x70 
+			
+			rankBackground = ImageIO.read(new File("res/rank_bg.png"));				
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
