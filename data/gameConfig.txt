@@ -1,11 +1,11 @@
 [default]
 playerLevel=1
 stageIndex=1
-stageCount=2
+stageCount=3
 mosqHP=10
 buttHP=5
 [stage1]
-limitTime=60
+limitTime=10
 mosqMaxCount=15
 mosqCreateCount=5
 mosqCreateTime=20

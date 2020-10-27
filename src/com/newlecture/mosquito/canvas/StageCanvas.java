@@ -405,7 +405,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      Image buf = this.createImage(this.getWidth(), this.getHeight());
 	      Graphics bg = buf.getGraphics();
 	      // 배경 그려주세요
-	      bg.drawImage(background, 0, 0, null);
+		  bg.drawImage(stageService.getBackground(), 0, 0, null);
 	      
 	      // 스테이지 텍스트 전시
 	      {
