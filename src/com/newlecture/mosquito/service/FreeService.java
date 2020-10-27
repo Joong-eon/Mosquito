@@ -35,24 +35,36 @@ public class FreeService {
 	private Image gameClearBtn = ImageLoader.gameClearBtn;
 	private String freeStage;
 	private boolean isGameOver;
-	
-	
-	
 
-	
+	private int currentMosqCount;		// 현재 생성 된 모기 수
+	private int mosqDeltaTime;
+	private int mosqMaxCount;
+	private int mosqCreateCount;
+	private int mosqCreateTime;
+
+	private int currentButtCount;		// 현재 생성 된 나비 수
+	private int buttDeltaTime;
+	private int buttMaxCount;
+	private int buttCreateCount;
+	private int buttCreateTime;
+
+	private PlayerHpBar hpBar;
+
+
+
 	public FreeService() {
 		freeStage = "freeStage";
 		timer = new Timer(freeStage);
 		p1 = new Player();
-		
+
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 	}
-	
+
 	public GameClear getGameClear() {
 		return gameClear;
 	}
-	
+
 	public void freeStage(String freeStage) {
 		this.freeStage = freeStage;
 		if(mosqs == null) {
@@ -62,58 +74,106 @@ public class FreeService {
 			mosqs.clear();
 			butts.clear();
 		}
-		
+
 		free = DataService.getInstance().getFreeValue(freeStage);
-		
-		int mosqCreateCount = free.getMosqCreateCount();
-		int buttCreateCount = free.getButtCreateCount();
-		
-		for(int i =0; i<mosqCreateCount; i++) {
-			mosqs.add(new Mosquito());
-			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-				
-				@Override
-				public void attackListener(int damage) {
-					p1.setHp(p1.getHp()-damage);
-					
-				}
-			});
-		}
-		
-		for(int i = 0; i<buttCreateCount; i++) {
-			butts.add(new Butterfly());
-		}
+
+		//모기 & 나비 생성		
+		currentMosqCount = 0;		// 현재 생성 된 모기 수
+		mosqDeltaTime = 0;
+		mosqMaxCount = free.getMosqMaxCount();
+		mosqCreateCount = free.getMosqCreateCount();
+		mosqCreateTime = free.getMosqCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createMosquito();
+
+		currentButtCount = 0;		// 현재 생성 된 나비 수
+		buttDeltaTime = 0;
+		buttMaxCount = free.getButtMaxCount();
+		buttCreateCount = free.getButtCreateCount();
+		buttCreateTime = free.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
+		createButterfly();
 	}
 	
 	public void setScore() {
 		int killScore = free.getKillScore();
-		totalScore +=killScore;
+		totalScore += killScore;
+	}
+		
+//		for(int i =0; i<mosqCreateCount; i++) {
+//			mosqs.add(new Mosquito());
+//			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
+//
+//				@Override
+//				public void attackListener(int damage) {
+//					p1.setHp(p1.getHp()-damage);
+//
+//				}
+//			});
+//		}
+
+//		for(int i = 0; i<buttCreateCount; i++) {
+//			butts.add(new Butterfly());
+//		}
+
+	public void createMosquito() {
+
+		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
+			mosqDeltaTime = 0;
+			currentMosqCount += mosqCreateCount;
+			System.out.println("모기 생성 시작");
+			System.out.println("mosqCreateCount : "+mosqCreateCount);
+			for (int i = 0 ;i < mosqCreateCount; i++) {
+				// 모기
+				Mosquito m = new Mosquito();
+				m.setMosqAttackListener(new MosqAttackListener() {
+
+					@Override
+					public void attackListener(int damage) {
+						// TODO Auto-generated method stub
+						p1.setHp(p1.getHp()-damage);
+						hpBar.setHp(p1.getHp());
+					}
+				});
+				mosqs.add(m);
+			}
+		}
 	}
 	
+	public void createButterfly() {
+		if( (currentButtCount+buttCreateCount) < buttMaxCount) {
+			buttDeltaTime = 0;
+
+			currentButtCount += buttCreateCount;
+			
+			for (int i = 0; i < buttCreateCount; i++) {		// 나비
+				butts.add(new Butterfly());
+			}
+		}
+	}
+
 	public void update() {
 		int mosqCreateCount = free.getMosqCreateCount();
 		int buttCreateCount = free.getButtCreateCount();
-		
+
 		for(int i = 0; i<mosqCreateCount; i++) {
 			if(mosqs.get(i).getCurrentDir() == 2) {
 				int deleteTimer = mosqs.get(i).getDeleteTimer();
 				deleteTimer--;
 				mosqs.get(i).setDeleteTimer(deleteTimer);
 			}
-			
+
 			if(mosqs.get(i).getDeleteTimer() == 0) {
 				mosqs.remove(i);
 				free.setMosqCreateCount(--mosqCreateCount);
 			}
 		}
-		
+
 		for (int i = 0; i < buttCreateCount; i++) {		// 모기
 			if(butts.get(i).getCurrentDir() == 2) {
 				int deleteTimer = butts.get(i).getDeleteTimer();
 				deleteTimer--;
 				butts.get(i).setDeleteTimer(deleteTimer);
 			}
-			
+
 			if(butts.get(i).getDeleteTimer() == 0) {
 				butts.remove(i);
 				free.setButtCreateCount(--buttCreateCount);
@@ -176,8 +236,8 @@ public class FreeService {
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
-	
-	
+
+
 
 
 	public void setGameClear(GameClear gameClear) {

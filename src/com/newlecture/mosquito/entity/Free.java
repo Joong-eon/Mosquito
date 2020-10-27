@@ -7,7 +7,7 @@ public class Free {
    
    public int mosqCreateCount;      // 스테이지 당 최대 생성 가능한 모기 수
    public int mosqMaxCount;      // 생성 주기에 따라 생성되는 모기 수
-//   public int mosqCreateTime;      // 모기 생성주기
+   public int mosqCreateTime;      // 모기 생성주기
    
    public int buttMaxCount;      // 스테이지 당 최대 생성 가능한 나비 수
    public int buttCreateCount;      // 생성 주기에 따라 생성되는 나비 수
@@ -102,6 +102,12 @@ public int getKillScore() {
 
 public void setKillScore(int killScore) {
    this.killScore = killScore;
+}
+
+
+public int getMosqCreateTime() {
+	// TODO Auto-generated method stub
+	return mosqCreateTime;
 }
 
 

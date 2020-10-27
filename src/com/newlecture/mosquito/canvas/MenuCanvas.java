@@ -143,15 +143,15 @@ public class MenuCanvas extends Canvas {
 						}
 						break;
 					case "free":
-//						try {
-//							GameFrame.getInstance().switchCanvas(MenuCanvas.this, FreeCanvas.class);
-//						} catch (InstantiationException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (IllegalAccessException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
+						try {
+							GameFrame.getInstance().switchCanvas(MenuCanvas.this, FreeCanvas.class);
+						} catch (InstantiationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					case "exit":
 						int result = JOptionPane.showConfirmDialog(MenuCanvas.this, "게임을 종료하시겠습니까?", "게임종료",

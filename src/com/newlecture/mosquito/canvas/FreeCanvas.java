@@ -39,12 +39,12 @@ public class FreeCanvas extends Canvas{
 	public static Canvas instance;
 	Thread th;
 
-	//	private Clip bgClip;
-	//	private Clip effectClip;
-	//	private AudioInputStream bgAis;
-	//	private AudioInputStream effectAis;
-	//	private boolean isEffect;
-	//	private boolean isBgm;
+		private Clip bgClip;
+		private Clip effectClip;
+		private AudioInputStream bgAis;
+		private AudioInputStream effectAis;
+		private boolean isEffect;
+		private boolean isBgm;
 
 	private FreeService freeService;
 	private Image[] weaponImg;
@@ -67,8 +67,8 @@ public class FreeCanvas extends Canvas{
 
 	public FreeCanvas() {
 		instance = this;
-		//		isBgm = true;
-		//		isEffect = true;
+				isBgm = true;
+				isEffect = true;
 
 		freeService = new FreeService();
 		timer = freeService.getTimer();
@@ -255,208 +255,110 @@ public class FreeCanvas extends Canvas{
 				
 			});
 		}
-//		addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				// 커서 이미지 변경
-//
-//				int x = e.getX();
-//				int y = e.getY();
-//				System.out.println(freeService.getMosqs().size());
-//				if ((timer.getOneCount() == 0 && timer.getTenCount() == 0)
-//						||(freeService.getMosqs().size() == 0)) {
-//					// 게임에서이겼을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
-//					if (freeService.getGameOver().contains(x, y)) {
-//						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
-//					}
-//
-//				} else if (player.getHp() <= 0) {
-//					// 게임에서 졌을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
-//					if (freeService.getGameClear().contains(x, y)) {
-//						freeService.setGameClear(false);
-//						freeService.getGameClear().getClickListener().onClicked(freeService.getGameClear());
-//					}
-//
-//				} else if (true == player.getCurrentWp().isClickable()) {
-//					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
-//					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
-//					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
-//					Mosquito selectedMosq = null;
-//					Butterfly selectedButt = null;
-//
-//					int mosqSize = freeService.getMosqs().size();
-//					for (int i = 0; i < mosqSize; i++) {
-//						Mosquito mosq = freeService.getMosqs().get(i);
-//						boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
-//						if (true == isWeaponRange) {
-//							selectedMosq = mosq;
-//						}
-//					}
-//
-//					int buttSize = freeService.getButts().size();
-//					for (int i = 0; i < buttSize; i++) {
-//						Butterfly butt = freeService.getButts().get(i);
-//						boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
-//						if (true == isWeaponRange) {
-//							selectedButt = butt;
-//						}
-//					}
-//
-//					boolean isMiss = false;
-//
-//					if (selectedMosq != null) { // null이 아니면 찾은거임
-//						System.out.println("모기 클릭 성공");
-//						isMiss = player.attack(selectedMosq);
-//
-//						// System.out.println("공격");
-//					}
-//
-//					if (selectedButt != null) {
-//						isMiss = player.attack(selectedButt);
-//						System.out.println("아얏!");
-//
-//					}
-//
-//					if (isMiss == true) {// 빗나감
-//						// miss뜨는 그림효과
-//						missList.add(new Miss(x, y));
-//						System.out.println("빗나감");
-//
-//					} else {// 빗나간게 아니라면
-//						if (selectedMosq != null) {
-//							if (selectedMosq.getHp() <= 0) {
-//								String stageName = "stage" + freeService.getStageIndex();
-//
-//								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
-//								int nowScore = score.getScore();
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 커서 이미지 변경
+
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println(freeService.getMosqs().size());
+				if ((timer.getOneCount() == 0 && timer.getTenCount() == 0)
+						||(player.getHp() <= 0)) {
+					// 게임에서졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+					if (freeService.getGameOver().contains(x, y)) {
+						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
+					}
+
+				} else if (true == player.getCurrentWp().isClickable()) {
+					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
+					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
+					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
+					Mosquito selectedMosq = null;
+					Butterfly selectedButt = null;
+
+					int mosqSize = freeService.getMosqs().size();
+					for (int i = 0; i < mosqSize; i++) {
+						Mosquito mosq = freeService.getMosqs().get(i);
+						boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
+						if (true == isWeaponRange) {
+							selectedMosq = mosq;
+						}
+					}
+
+					int buttSize = freeService.getButts().size();
+					for (int i = 0; i < buttSize; i++) {
+						Butterfly butt = freeService.getButts().get(i);
+						boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
+						if (true == isWeaponRange) {
+							selectedButt = butt;
+						}
+					}
+
+					boolean isMiss = false;
+
+					if (selectedMosq != null) { // null이 아니면 찾은거임
+						System.out.println("모기 클릭 성공");
+						isMiss = player.attack(selectedMosq);
+
+						// System.out.println("공격");
+					}
+
+					if (selectedButt != null) {
+						isMiss = player.attack(selectedButt);
+						System.out.println("아얏!");
+
+					}
+
+					if (isMiss == true) {// 빗나감
+						// miss뜨는 그림효과
+						missList.add(new Miss(x, y));
+						System.out.println("빗나감");
+
+					} else {// 빗나간게 아니라면
+						if (selectedMosq != null) {
+							if (selectedMosq.getHp() <= 0) {
+								String stageName = "freeStage";
+
+								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
+								int nowScore = score.getScore();
 		
-//								score.setScore(nowScore += killScore);
-//								player.setUserTotalScore(player.getUserTotalScore() + killScore);
-//								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
-//									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
-//								selectedMosq.setCurrentDir(2);
-//								selectedMosq.setMovIndex(4);
-//							}
-//
-//						} else if (selectedButt != null) {
-//
-//							if (selectedButt.getHp() <= 0) {
-//								System.out.println("나비 사망");
-//								System.out.println("10초 감소");
-//								selectedButt.setCurrentDir(2);
-//								selectedButt.setMovIndex(4);
-//								timer.setTenCount(timer.getTenCount() - 1);
-//							}
-//							System.out.println("공격");
-//						}
-//					}
-//
-//
-//					// super.mouseClicked(e);
-//				}
-//			}
-//		}
+								score.setScore(nowScore += killScore);
+								player.setUserTotalScore(player.getUserTotalScore() + killScore);
+								selectedMosq.setCurrentDir(2);
+								selectedMosq.setMovIndex(4);
+							}
+
+						} else if (selectedButt != null) {
+
+							if (selectedButt.getHp() <= 0) {
+								System.out.println("나비 사망");
+								System.out.println("10초 감소");
+								selectedButt.setCurrentDir(2);
+								selectedButt.setMovIndex(4);
+								timer.setTenCount(timer.getTenCount() - 1);
+							}
+							System.out.println("공격");
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	// 모기 사운드
-//	private void mosSound(String file) {
-//		if (isBgm) {
-//			try {
-//				bgAis = AudioSystem.getAudioInputStream(new File(file));
-//				bgClip = AudioSystem.getClip();
-//
-//				bgClip.open(bgAis);
-//				bgClip.start();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				} else if (player.getHp() <= 0) {
-//					// 게임에서 졌을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
-//					if (freeService.getGameClear().contains(x, y)) {
-//						freeService.setGameClear(false);
-//						freeService.getGameClear().getClickListener().onClicked(freeService.getGameClear());
-//					}
-//
-//				} else if (true == player.getCurrentWp().isClickable()) {
-//					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
-//					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
-//					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
-//					Mosquito selectedMosq = null;
-//					Butterfly selectedButt = null;
-//
-//					int mosqSize = freeService.getMosqs().size();
-//					for (int i = 0; i < mosqSize; i++) {
-//						Mosquito mosq = freeService.getMosqs().get(i);
-//						boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
-//						if (true == isWeaponRange) {
-//							selectedMosq = mosq;
-//						}
-//					}
-//
-//					int buttSize = freeService.getButts().size();
-//					for (int i = 0; i < buttSize; i++) {
-//						Butterfly butt = freeService.getButts().get(i);
-//						boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
-//						if (true == isWeaponRange) {
-//							selectedButt = butt;
-//						}
-//					}
-//
-//					boolean isMiss = false;
-//
-//					if (selectedMosq != null) { // null이 아니면 찾은거임
-//						System.out.println("모기 클릭 성공");
-//						isMiss = player.attack(selectedMosq);
-//
-//						// System.out.println("공격");
-//					}
-//
-//					if (selectedButt != null) {
-//						isMiss = player.attack(selectedButt);
-//						System.out.println("아얏!");
-//
-//					}
-//
-//					if (isMiss == true) {// 빗나감
-//						// miss뜨는 그림효과
-//						missList.add(new Miss(x, y));
-//						System.out.println("빗나감");
-//
-//					} else {// 빗나간게 아니라면
-//						if (selectedMosq != null) {
-//							if (selectedMosq.getHp() <= 0) {
-//								String stageName = "stage" + freeService.getStageIndex();
-//
-//								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
-//								int nowScore = score.getScore();
-		
-//								score.setScore(nowScore += killScore);
-//								player.setUserTotalScore(player.getUserTotalScore() + killScore);
-//								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
-//									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
-//								selectedMosq.setCurrentDir(2);
-//								selectedMosq.setMovIndex(4);
-//							}
-//
-//						} else if (selectedButt != null) {
-//
-//							if (selectedButt.getHp() <= 0) {
-//								System.out.println("나비 사망");
-//								System.out.println("10초 감소");
-//								selectedButt.setCurrentDir(2);
-//								selectedButt.setMovIndex(4);
-//								timer.setTenCount(timer.getTenCount() - 1);
-//							}
-//							System.out.println("공격");
-//						}
-//					}
-//
-//
-//					// super.mouseClicked(e);
-//				}
-//			}
-//		}
-//	}
+	private void mosSound(String file) {
+			try {
+				bgAis = AudioSystem.getAudioInputStream(new File(file));
+				bgClip = AudioSystem.getClip();
+
+				bgClip.open(bgAis);
+				bgClip.start();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				} 
+	}
 
 	@Override
 	public void paint(Graphics g) {
