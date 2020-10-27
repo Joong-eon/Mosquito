@@ -40,6 +40,7 @@ public class FreeCanvas extends Canvas{
 //	3. 무기 구현
 //	4. 데이터 저장 후 랭킹에 올리기
 //	5. 모기 잡으면 시간추가, 모기 추가
+	
 	public static Canvas instance;
 	Thread th;
 
