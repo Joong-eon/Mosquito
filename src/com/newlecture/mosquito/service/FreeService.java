@@ -104,23 +104,6 @@ public class FreeService {
 		totalScore += killScore;
 	}
 
-		
-//		for(int i =0; i<mosqCreateCount; i++) {
-//			mosqs.add(new Mosquito());
-//			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-//
-//				@Override
-//				public void attackListener(int damage) {
-//					p1.setHp(p1.getHp()-damage);
-//
-//				}
-//			});
-//		}
-//
-//		for(int i = 0; i<buttCreateCount; i++) {
-//			butts.add(new Butterfly());
-//		}
-
 	public void createMosquito() {
 
 		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
@@ -245,9 +228,6 @@ public class FreeService {
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
-
-
-
 
 	public void setGameClear(boolean isGameClear) {
 		this.isGameClear = isGameClear;

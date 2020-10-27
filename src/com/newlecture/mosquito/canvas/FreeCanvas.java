@@ -201,6 +201,7 @@ public class FreeCanvas extends Canvas{
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setMovIndex(4);
+								timer.setOneCount(timer.getOneCount() + 3);
 							}
 
 						} else if (selectedButt != null) {
