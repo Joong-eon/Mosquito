@@ -77,7 +77,6 @@ public class FreeCanvas extends Canvas{
 		missList = new ArrayList<Miss>();
 
 		background = ImageLoader.stageBackgrounds[0];
-		//왜 만든거임?
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
 		weaponImg = new Image[wpDir.size()];
@@ -133,8 +132,8 @@ public class FreeCanvas extends Canvas{
 				int x = e.getX();
 				int y = e.getY();
 				System.out.println(freeService.getMosqs().size());
-				if ((timer.getOneCount() == 0 && timer.getTenCount() == 0)
-						||(player.getHp() <= 0)&& killCount != freeService.getMosqMaxCount()) {
+				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0)
+						||(player.getHp() <= 0))&& killCount != freeService.getMosqMaxCount()) {
 					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (freeService.getGameOver().contains(x, y)) {
 						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
@@ -426,7 +425,7 @@ public class FreeCanvas extends Canvas{
 
 				while (true) {
 					timer.update();
-					
+										
 					int mosqSize = freeService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						freeService.getMosqs().get(i).update();

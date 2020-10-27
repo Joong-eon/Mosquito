@@ -59,13 +59,15 @@ public class FreeService {
 
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
+	
+		freeStage();
 	}
 
 	public GameClear getGameClear() {
 		return gameClear;
 	}
 
-	public void freeStage(String freeStage) {
+	public void freeStage() {
 		this.freeStage = freeStage;
 		if(mosqs == null) {
 			mosqs = new ArrayList<Mosquito>();
