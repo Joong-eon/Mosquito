@@ -64,6 +64,8 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private Clip effectClip;
 	   private AudioInputStream bgAis;
 	   private AudioInputStream effectAis;
+	   private Clip mosClip;
+	   private AudioInputStream mosAis;
 	 
 	   /// 여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -203,13 +205,18 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      addMouseListener(new MouseAdapter() {
 	         @Override
 	         public void mouseClicked(MouseEvent e) {
-	            
+	        	 //현재 무기 소리
+	     //   	 player.getCurrentWp().getBgm();
+	     //       effectSound("res/sound/hand.wav");
 	            // 커서 이미지 변경
 	            int x = e.getX();
 	            int y = e.getY();
 	            
 	            if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && killCount != stageService.getMosqMaxCount()) {
 	               // 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+	            	mosSoundOff();
+	            	
+	            
 	               if (stageService.getGameOver().contains(x, y)) {
 	                  stageService.setGameOver(false);
 	                  stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
@@ -354,11 +361,11 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private void mosSound(String file) {
 	   
 	         try {
-	            bgAis = AudioSystem.getAudioInputStream(new File(file));
-	            bgClip = AudioSystem.getClip();
+	            mosAis = AudioSystem.getAudioInputStream(new File(file));
+	            mosClip = AudioSystem.getClip();
 
-	            bgClip.open(bgAis);
-	            bgClip.start();
+	            mosClip.open(mosAis);
+	            mosClip.start();
 
 	         } catch (Exception e) {
 	            e.printStackTrace();
@@ -366,7 +373,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      }
 	   
 	   public void mosSoundOff() {
-			bgClip.stop();
+			mosClip.stop();
 		}
 	   
 	   private void effectSound(String file) {

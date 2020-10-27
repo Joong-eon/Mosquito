@@ -243,6 +243,14 @@ public class FreeService {
 		return isGameOver;
 	}
 
+	public PlayerHpBar getHpBar() {
+		return hpBar;
+	}
+
+	public void setHpBar(PlayerHpBar hpBar) {
+		this.hpBar = hpBar;
+	}
+
 	
 
 }

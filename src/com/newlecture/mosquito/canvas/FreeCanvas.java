@@ -35,9 +35,9 @@ import com.newlecture.mosquito.service.FreeService;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class FreeCanvas extends Canvas{
-//	1. 모기가 공격 구현(갖다 붙이기)
+//	1. 모기가 공격 구현(갖다 붙이기) // 미뇽
 //	2. 게임오버 구현(조건따져보기) // a미뇽
-//	3. 무기 구현 // 미뇽
+//	3. 무기 구현 // 
 //	4. 데이터 저장 후 랭킹에 올리기
 //	5. 모기 잡으면 시간추가, 모기 추가
 	
@@ -77,7 +77,8 @@ public class FreeCanvas extends Canvas{
 		freeService = new FreeService();
 		timer = freeService.getTimer();
 		player = freeService.getP1();
-		hpBar = new PlayerHpBar(player.getHp());
+		 hpBar = freeService.getHpBar();
+		//hpBar = new PlayerHpBar(player.getHp());
 		missList = new ArrayList<Miss>();
 
 		background = ImageLoader.stageBackgrounds[0];
