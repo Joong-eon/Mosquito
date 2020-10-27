@@ -206,6 +206,7 @@ public class FreeCanvas extends Canvas{
 //
 //								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 //								int nowScore = score.getScore();
+		
 //								score.setScore(nowScore += killScore);
 //								player.setUserTotalScore(player.getUserTotalScore() + killScore);
 //								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)

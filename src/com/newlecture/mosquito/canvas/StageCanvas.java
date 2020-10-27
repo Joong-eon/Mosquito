@@ -64,9 +64,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private Clip effectClip;
 	   private AudioInputStream bgAis;
 	   private AudioInputStream effectAis;
-	   private boolean isEffect;
-	   private boolean isBgm;
-
+	 
 	   /// 여기서 보유무기 이미지 stageService에서 받아오고,
 
 	   private StageService stageService;
@@ -97,11 +95,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 
 	      stageStep = 1;
 
-	      isBgm = true;
-	      isEffect = true;
-
-	      // 파일이 없어 잠깐 주석
-	      ///////////////// mosSound("res/sound/mos.wav");
+	      mosSound("res/sound/mos.wav");
 
 	      stageService = new StageService();
 	      timer = stageService.getTimer();
@@ -225,6 +219,8 @@ import com.newlecture.mosquito.weapon.Weapon;
 
 	            } else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
 	               // 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
+	            	mosSoundOff();
+	            	clearSound("res/sound/gameclear.wav");
 	               if (stageService.getGameClear().contains(x, y)) {
 	                  stageService.setGameClear(false);
 	                  stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
@@ -273,6 +269,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	               if (isMiss == true) {// 빗나감
 	                  // miss뜨는 그림효과
 	                  missList.add(new Miss(x, y));
+	                  effectSound("res/sound/miss.wav");
 	                  System.out.println("빗나감");
 
 	               } else {// 빗나간게 아니라면
@@ -356,7 +353,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   }
 
 	   // 모기 사운드
-	   private void Sound(String file) {
+	   private void mosSound(String file) {
 	   
 	         try {
 	            bgAis = AudioSystem.getAudioInputStream(new File(file));
@@ -369,6 +366,10 @@ import com.newlecture.mosquito.weapon.Weapon;
 	            e.printStackTrace();
 	         }
 	      }
+	   
+	   public void mosSoundOff() {
+			bgClip.stop();
+		}
 	   
 	   private void effectSound(String file) {
 		   
@@ -383,6 +384,20 @@ import com.newlecture.mosquito.weapon.Weapon;
 	            e.printStackTrace();
 	         }
 	      }
+	   private void clearSound(String file) {
+		   
+	         try {
+	            bgAis = AudioSystem.getAudioInputStream(new File(file));
+	            bgClip = AudioSystem.getClip();
+
+	            bgClip.open(bgAis);
+	            bgClip.start();
+
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	   
 	   
 
 	   
