@@ -34,6 +34,7 @@ public class FreeService {
 	private Image gameOverBtn = ImageLoader.gameOverBtn;
 	private Image gameClearBtn = ImageLoader.gameClearBtn;
 	private String freeStage;
+	private boolean isGameOver;
 	
 	public FreeService() {
 		
@@ -172,8 +173,8 @@ public class FreeService {
 		return gameOver;
 	}
 
-	public void setGameOver(GameOver gameOver) {
-		this.gameOver = gameOver;
+	public void setGameOver(boolean isGameOver) {
+		this.isGameOver = isGameOver;
 	}
 	
 	
@@ -182,4 +183,15 @@ public class FreeService {
 	public void setGameClear(GameClear gameClear) {
 		this.gameClear = gameClear;
 	}
+
+	public int getMosqMaxCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean isGameOver() {
+		// TODO Auto-generated method stub
+		return isGameOver;
+	}
+
 }

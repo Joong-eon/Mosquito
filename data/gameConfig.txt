@@ -37,4 +37,4 @@ mosMaxCount=100
 mosqCreateCount=100
 buttMaxCount=50
 buttCreateCount=50
-killScore=100
+killScore=1
