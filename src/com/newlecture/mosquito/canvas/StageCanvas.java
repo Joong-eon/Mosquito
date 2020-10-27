@@ -108,9 +108,6 @@ public class StageCanvas extends Canvas {
 		player = stageService.getP1();
 		hpBar = stageService.getHpBar();
 		missList = new ArrayList<Miss>();
-		// timer = new Timer(stageService.getStageIndex());
-
-		// p1 = new Player();
 
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		int stageIndex = stageService.getStageIndex();
@@ -125,10 +122,6 @@ public class StageCanvas extends Canvas {
 		for (int i = 0; i < wpDir.size(); i++) {
 			try {
 				weaponImg[i] = ImageIO.read(new File((String) wpDir.get(i)));
-
-				// weapon1 = ImageIO.read(new File("res/spear.png"));// 파일이름
-				// weapon2 = ImageIO.read(new File("res/flyswatter.png"));
-				// weapon22 = ImageIO.read(new File("res/flyswatter1.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,9 +134,6 @@ public class StageCanvas extends Canvas {
 		for (int i = 0; i < wpDir.size(); i++) {
 			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 800 + 350 * i, 700, 135, 188);
 		}
-		// weapons[0] = new WeaponButton("spear", weapon1, weapon1, 800, 700, 135, 188);
-		// weapons[1] = new WeaponButton("flyswatter", weapon2, weapon22, 1050, 700,
-		// 118, 141);
 		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
 		// p1.current 정보변경
 		score = new Score();
@@ -196,7 +186,7 @@ public class StageCanvas extends Canvas {
 				hpBar.setHp(hp);
 				stageService.getGameOver().addClickListener(gameOverListener);
 				stageService.getGameClear().addClickListener(gameClearListener);
-				
+				killCount = 0;
 				
 				System.out.println(timer.getLimitTime());
 			}
@@ -221,14 +211,11 @@ public class StageCanvas extends Canvas {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				// 커서 이미지 변경
-				//System.out.println("킬 : "+killCount);
-				//System.out.println(stageService.getMosqMaxCount());
 				int x = e.getX();
 				int y = e.getY();
-				//System.out.println(stageService.getMosqs().size());
-				//System.out.println("ten : "+timer.getTenCount());
-				//System.out.println("one : "+timer.getOneCount());
+				
 				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && killCount != stageService.getMosqMaxCount()) {
 					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (stageService.getGameOver().contains(x, y)) {
@@ -302,6 +289,7 @@ public class StageCanvas extends Canvas {
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 								selectedMosq.setMovIndex(4);
 								selectedMosq.setCurrentDir(2);
+								
 								System.out.println(killCount);
 							}
 						
@@ -341,7 +329,6 @@ public class StageCanvas extends Canvas {
 						weapons[i].getClickListener().onReleased(weapons[i]);
 
 						for (int j = 0; j < player.getWeapons().length; j++) {
-							// System.out.println(p1.getWeapons()[j]);
 							if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
 								if (weapons[i].getName().equals("flyswatter"))
 									player.setCurrentWp(player.getWeapons()[j]);
@@ -365,7 +352,7 @@ public class StageCanvas extends Canvas {
 				}
 			});
 		}
-
+		
 	}
 
 	// 모기 사운드
@@ -387,18 +374,12 @@ public class StageCanvas extends Canvas {
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-
-		// weapon.paint(g);
-
-		// timer.paint(g);
-		// super.paint(g);
-
+		
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
 		// 배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-		//Iterator<Mosquito> it = stageService.getMosqs().iterator();
+		
 		// 스테이지 텍스트 전시
 		{
 			bg.drawImage(stageText, 30, 30, null);
@@ -425,17 +406,12 @@ public class StageCanvas extends Canvas {
 		} else {
 			timer.paint(bg);
 			score.paint(bg);
-
+			
 			
 			int mosqSize = stageService.getMosqs().size();
 			for (int i = 0; i < mosqSize; i++) {
 				stageService.getMosqs().get(i).paint(bg);
 			}
-			/*
-			while(it.hasNext()) {
-				Mosquito m = it.next();
-				m.paint(bg);
-			}*/
 
 			int buttSize = stageService.getButts().size();
 			for (int i = 0; i < buttSize; i++) {
@@ -474,15 +450,13 @@ public class StageCanvas extends Canvas {
 			public void run() {
 
 				while (true) {
-					// weapon.update();
 					timer.update();
-
 					
-
 					int mosqSize = stageService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						stageService.getMosqs().get(i).update();
 					}
+					
 					int buttSize = stageService.getButts().size();
 					for (int i = 0; i < buttSize; i++) {
 						stageService.getButts().get(i).update();

@@ -213,7 +213,7 @@ public class MenuCanvas extends Canvas {
 	}
 	
 	public void mainSound(String file) {
-	
+	/*
 			try {
 				bgAis = AudioSystem.getAudioInputStream(new File(file));
 				bgClip = AudioSystem.getClip();
@@ -223,11 +223,11 @@ public class MenuCanvas extends Canvas {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}*/
 		
 	}
 	public void mainSoundOff() {
-		bgClip.stop();
+		//bgClip.stop();
 	}
 
 }
