@@ -93,8 +93,11 @@ public class FreeCanvas extends Canvas{
 		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
 		weapons = new WeaponButton[wpDir.size()];
 
+		for (int i = 0; i < wpDir.size(); i++) {
+			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 800 + 350 * i, 700, 135, 188);
+		}
+		
 		score = new Score();
-
 		userScore = player.getUserTotalScore();
 		freeService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 
