@@ -453,7 +453,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	         }
 
 	         weapons[0].paint(bg);
-	         weapons[1].paint(bg);
+	         //weapons[1].paint(bg);
 
 	         player.getCurrentWp().paint(bg);
 
