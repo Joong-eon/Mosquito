@@ -32,7 +32,7 @@ buttCreateCount=10
 buttCreateTime=25
 killScore=20
 [freeStage]
-limitTmie=40
+limitTime=40
 mosMaxCount=100
 mosqCreateCount=100
 buttMaxCount=50

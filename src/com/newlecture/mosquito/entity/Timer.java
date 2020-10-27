@@ -32,6 +32,15 @@ public class Timer {
 		this(0);
 	}
 	
+	public Timer(String freeStage) {
+		img = ImageLoader.timerNumber;  
+		dot = ImageLoader.timerDot;
+		
+		limitTime = DataService.getInstance().getGameIntValue(freeStage, "limitTime");
+		tenCount = limitTime/10;
+		oneCount = limitTime%10;
+	}
+	
 	public Timer(int stageIndex) {
 		// TODO Auto-generated constructor stub
 		img = ImageLoader.timerNumber;  

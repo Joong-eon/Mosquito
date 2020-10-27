@@ -36,13 +36,11 @@ public class FreeService {
 	private String freeStage;
 	private boolean isGameOver;
 	
-	public FreeService() {
-		
-	}
+
 	
-	public FreeService(String freeStage) {
-		freeStage = freeStage;
-		timer = new Timer();
+	public FreeService() {
+		freeStage = "freeStage";
+		timer = new Timer(freeStage);
 		p1 = new Player();
 		
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);

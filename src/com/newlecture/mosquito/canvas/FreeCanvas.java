@@ -75,7 +75,7 @@ public class FreeCanvas extends Canvas{
 		hpBar = new PlayerHpBar(player.getHp());
 		missList = new ArrayList<Miss>();
 
-		background = ImageLoader.stageBackgrounds[rand.nextInt(3)+1];
+		background = ImageLoader.stageBackgrounds[0];
 		//왜 만든거임?
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
