@@ -38,7 +38,6 @@ public class StageService {
 	private int buttCreateCount;
 	private int buttCreateTime;
 	
-
 			
 	private GameOver gameOver;
 	private GameClear gameClear;
@@ -49,9 +48,10 @@ public class StageService {
 	private boolean isGameClear;
 	private boolean isGameOver;
 	
+	private Image background;
 	
 	public StageService() {
-		this(1);
+		this(3);
 	}
 	
 	public StageService(int stageStep) {
@@ -103,6 +103,8 @@ public class StageService {
 		buttCreateCount = stage.getButtCreateCount();
 		buttCreateTime = stage.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
 		createButterfly();
+		
+		background = ImageLoader.stageBackgrounds[stageIndex-1];
 	}
 
 	public void setScore() {
@@ -306,9 +308,13 @@ public class StageService {
 		this.isGameOver = isGameOver;
 	}
 
-	
+	public Image getBackground() {
+		return background;
+	}
 
-	
+	public void setBackground(Image background) {
+		this.background = background;
+	}
 	
 	
 }
