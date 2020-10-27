@@ -36,8 +36,8 @@ import com.newlecture.mosquito.service.ImageLoader;
 
 public class FreeCanvas extends Canvas{
 //	1. 모기가 공격 구현(갖다 붙이기)
-//	2. 게임오버 구현(조건따져보기)
-//	3. 무기 구현
+//	2. 게임오버 구현(조건따져보기) // a미뇽
+//	3. 무기 구현 // 미뇽
 //	4. 데이터 저장 후 랭킹에 올리기
 //	5. 모기 잡으면 시간추가, 모기 추가
 	
@@ -135,12 +135,14 @@ public class FreeCanvas extends Canvas{
 
 				int x = e.getX();
 				int y = e.getY();
-				System.out.println(freeService.getMosqs().size());
-				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0)
+		//		System.out.println(freeService.getMosqs().size());
+				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0 )
 						||(player.getHp() <= 0))&& killCount != freeService.getMosqMaxCount()) {
 					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (freeService.getGameOver().contains(x, y)) {
+						freeService.setGameOver(false);
 						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
+								
 					}
 
 				} else if (true == player.getCurrentWp().isClickable()) {
@@ -375,13 +377,20 @@ public class FreeCanvas extends Canvas{
 		
 		
 		// 게임 실패시...
-		if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && killCount != freeService.getMosqMaxCount()) {
+		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 )
+				||(player.getHp() <= 0)&& killCount != freeService.getMosqMaxCount()) {
 			// 지방
 			freeService.setGameOver(true);
 			freeService.getGameOver().paint(bg);
 			// 토탈점수 그려주세요
 
-		}  else {
+//		} else if(killCount == freeService.getMosqMaxCount()&&freeService.isGameOver()==false) {
+//			freeService.setGameClear(true);
+//			freeService.getGameClear().paint(bg);
+			
+		}
+		
+		else {
 			timer.paint(bg);
 			score.paint(bg);
 			
