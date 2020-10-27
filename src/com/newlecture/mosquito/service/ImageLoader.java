@@ -80,13 +80,13 @@ public class ImageLoader {
 			}
 			
 			//여기부터 무기이미지
-			bow = ImageIO.read(new File("res/bow.png"));
-			fan = ImageIO.read(new File("res/fan.png"));
-			money = ImageIO.read(new File("res/money.png"));
-			riceStraw = ImageIO.read(new File("res/riceStraw.png"));
-			spear = ImageIO.read(new File("res/spear.png"));
-			strawShoes = ImageIO.read(new File("res/strawShoes.png"));
-			hand = ImageIO.read(new File("res/hand.png"));
+			bow = ImageIO.read(new File("res/weapon/bow.png"));
+			fan = ImageIO.read(new File("res/weapon/fan.png"));
+			money = ImageIO.read(new File("res/weapon/money.png"));
+			riceStraw = ImageIO.read(new File("res/weapon/riceStraw.png"));
+			spear = ImageIO.read(new File("res/weapon/spear.png"));
+			strawShoes = ImageIO.read(new File("res/weapon/strawShoes.png"));
+			hand = ImageIO.read(new File("res/weapon/hand.png"));
 			
 			
 			// 스테이지 텍스트
