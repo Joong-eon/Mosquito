@@ -1,5 +1,4 @@
 [level1]
-Hand=res/hand2.jpg
+Hand=res/weapon/hand.png
 [level10]
-Hand=res/hand2.jpg
-RiceStraw=res/riceStraw.png
+Hand=res/weapon/hand.png
