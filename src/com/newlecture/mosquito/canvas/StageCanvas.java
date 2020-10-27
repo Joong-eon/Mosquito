@@ -195,8 +195,6 @@ import com.newlecture.mosquito.weapon.Weapon;
 	         public void mouseMoved(MouseEvent e) {
 	            player.getCurrentWp().setX(e.getX());
 	            player.getCurrentWp().setY(e.getY());
-//	            spear.setX(e.getX());// 볏짚
-//	            spear.setY(e.getY());// 볏짚
 
 	         }
 	      });
