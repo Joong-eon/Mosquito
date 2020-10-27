@@ -31,7 +31,7 @@ public abstract class Bug{
 	private int movIndex ;
 	private int speed ;
 	private int walkTempo ;
-	private int outRange ;
+	private int outRange =60;
 	private int direction;
 	private int imgDirection;		// 방향이 바뀔때 imgDirection기준으로 그릴 이미지가 변경 됨
 	private int currentDir;
@@ -47,8 +47,13 @@ public abstract class Bug{
 		int h = GameFrame.canvasHeight;
 		
 		// 나비가 화면 바깥에서 나오게하기 위해 상하좌우 60만큼 좌표 추가
+		
+		int rand2 = (int)(Math.random()*2+1);
+	
 		this.x = (double) rand.nextInt(w + outRange * 2 + 1) - 60; 
 		this.y = (double) rand.nextInt(h + outRange * 2 + 1) - 60;
+		
+		
 		
 		// 만약 화면 안쪽에 나비가 생성되었을 경우 좌표 다시 설정
 		while (-30 < x && x < w + 30 && -30 < y && y < h + 30) {

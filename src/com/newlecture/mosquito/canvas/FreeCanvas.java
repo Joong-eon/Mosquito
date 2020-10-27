@@ -35,7 +35,11 @@ import com.newlecture.mosquito.service.FreeService;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class FreeCanvas extends Canvas{
-
+//	1. 모기가 공격 구현(갖다 붙이기)
+//	2. 게임오버 구현(조건따져보기)
+//	3. 무기 구현
+//	4. 데이터 저장 후 랭킹에 올리기
+//	5. 모기 잡으면 시간추가, 모기 추가
 	public static Canvas instance;
 	Thread th;
 
@@ -59,8 +63,6 @@ public class FreeCanvas extends Canvas{
 	private Random rand;
 	private int userLevel;
 
-	
-	
 	private WeaponButton weapon;
 	private int killCount = 0;
 
@@ -401,7 +403,7 @@ public class FreeCanvas extends Canvas{
 			}
 
 			weapons[0].paint(bg);
-			weapons[1].paint(bg);
+			//weapons[1].paint(bg);
 
 			player.getCurrentWp().paint(bg);
 

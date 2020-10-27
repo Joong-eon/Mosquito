@@ -50,14 +50,11 @@ public class FreeService {
 
 	private PlayerHpBar hpBar;
 
-
-	
-
 	public FreeService() {
 		freeStage = "freeStage";
 		timer = new Timer(freeStage);
 		p1 = new Player();
-
+		hpBar = new PlayerHpBar(p1.getHp());
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 	
@@ -142,7 +139,9 @@ public class FreeService {
 	}
 	
 	public void createButterfly() {
+		
 		if( (currentButtCount+buttCreateCount) < buttMaxCount) {
+			System.out.println("나비 생성");
 			buttDeltaTime = 0;
 
 			currentButtCount += buttCreateCount;
@@ -165,11 +164,11 @@ public class FreeService {
 			}
 
 			if(mosqs.get(i).getDeleteTimer() == 0) {
-				mosqs.remove(i);
-				free.setMosqCreateCount(--mosqCreateCount);
+				mosqs.get(i).setX(-1);
+				mosqs.get(i).setY(-1);
 			}
 		}
-
+		
 		for (int i = 0; i < buttCreateCount; i++) {		// 모기
 			if(butts.get(i).getCurrentDir() == 2) {
 				int deleteTimer = butts.get(i).getDeleteTimer();
@@ -178,8 +177,8 @@ public class FreeService {
 			}
 
 			if(butts.get(i).getDeleteTimer() == 0) {
-				butts.remove(i);
-				free.setButtCreateCount(--buttCreateCount);
+				butts.get(i).setX(-1);
+				butts.get(i).setY(-1);
 			}
 		}
 	}
