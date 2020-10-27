@@ -60,6 +60,7 @@ public class FreeCanvas extends Canvas{
 	private int userLevel;
 
 	
+	
 	private WeaponButton weapon;
 	private int killCount = 0;
 

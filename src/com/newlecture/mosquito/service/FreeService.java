@@ -51,6 +51,7 @@ public class FreeService {
 	private PlayerHpBar hpBar;
 
 
+	
 
 	public FreeService() {
 		freeStage = "freeStage";
