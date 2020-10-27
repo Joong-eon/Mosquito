@@ -59,6 +59,7 @@ public class FreeCanvas extends Canvas{
 	private Random rand;
 	private int userLevel;
 
+	
 	private WeaponButton weapon;
 	private int killCount = 0;
 
