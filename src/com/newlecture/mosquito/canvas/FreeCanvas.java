@@ -251,6 +251,7 @@ public class FreeCanvas extends Canvas{
 				public void onClicked(Button target) {
 
 				}
+				
 			});
 		}
 	}

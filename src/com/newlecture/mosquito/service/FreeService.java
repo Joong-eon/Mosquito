@@ -36,6 +36,7 @@ public class FreeService {
 	private String freeStage;
 	private boolean isGameOver;
 	
+	
 
 	
 	public FreeService() {
