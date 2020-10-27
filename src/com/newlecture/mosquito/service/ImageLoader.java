@@ -31,13 +31,19 @@ public class ImageLoader {
 
 	public static Image[] stageBackgrounds;
 
+
+	public static Image stageText;
+	public static Image stageNumber;
+	
+	//무기 이미지
+	public static Image bow;
+	public static Image fan;
+	public static Image money;
 	public static Image riceStraw;
 	public static Image spear;
 	public static Image strawShoes;
-	public static Image rightHand;
-	public static Image leftHand;
-	public static Image stageText;
-	public static Image stageNumber;
+	public static Image hand;
+
 
 	static {
 		try {
@@ -74,11 +80,13 @@ public class ImageLoader {
 			}
 			
 			//여기부터 무기이미지
+			bow = ImageIO.read(new File("res/bow.png"));
+			fan = ImageIO.read(new File("res/fan.png"));
+			money = ImageIO.read(new File("res/money.png"));
 			riceStraw = ImageIO.read(new File("res/riceStraw.png"));
 			spear = ImageIO.read(new File("res/spear.png"));
 			strawShoes = ImageIO.read(new File("res/strawShoes.png"));
-			rightHand = ImageIO.read(new File("res/rightHand.png"));
-			leftHand = ImageIO.read(new File("res/leftHand.png"));
+			hand = ImageIO.read(new File("res/hand.png"));
 			
 			
 			// 스테이지 텍스트

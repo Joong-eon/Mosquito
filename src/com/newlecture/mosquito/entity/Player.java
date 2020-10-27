@@ -4,7 +4,6 @@ package com.newlecture.mosquito.entity;
 import java.util.ArrayList;
 
 import com.newlecture.mosquito.service.DataService;
-import com.newlecture.mosquito.weapon.FlySwatter;
 import com.newlecture.mosquito.weapon.Hand;
 import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.Weapon;

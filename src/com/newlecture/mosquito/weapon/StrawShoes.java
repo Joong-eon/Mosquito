@@ -1,28 +1,22 @@
 package com.newlecture.mosquito.weapon;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import com.newlecture.mosquito.service.ImageLoader;
 
-import javax.imageio.ImageIO;
-
-import com.newlecture.mosquito.canvas.StageCanvas;
-
-public class StrawShoes extends Weapon{
-
+public class StrawShoes extends Weapon {
 	public StrawShoes() {
-		try {
-			this.setImg(ImageIO.read(new File("")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		this.setType("StrawShoes");
 		this.setDamage(2);
-		this.setType("strawshoes");
-		this.setProb(0.4);
+		this.setImg(ImageLoader.strawShoes);
+		this.setProb(0.42);
 		this.setRange(2);
+		
+		this.setWidth(250);
+		this.setHeight(211);
+		this.setImgX(60);
+		this.setImgY(60);
+		this.setAttackSpeed(40); //공격속도는 imgTempo * imgSize 보다 낮을 수 없음
+		this.setImgSize(11);
+		this.setImgTempo(2);
+		
 	}
-
 }
