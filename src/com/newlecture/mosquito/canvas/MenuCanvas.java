@@ -26,7 +26,6 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.ImageLoader;
 
-
 public class MenuCanvas extends Canvas {
 	public static Canvas instance;
 
@@ -35,6 +34,7 @@ public class MenuCanvas extends Canvas {
 	private Button stageButton;
 	private Button freeButton;
 	private Button exitButton;
+	private Button rankButton;
 
 	private Image stageBtnNormal;
 	private Image stageBtnPressed;
@@ -42,19 +42,16 @@ public class MenuCanvas extends Canvas {
 	private Image freeBtnPressed;
 	private Image exitBtnNormal;
 	private Image exitBtnPressed;
+	private Image rankBtnNormal;
+	private Image rankBtnPressed;
+
 
 	private Image menuBackground;
-	
+
 	private Clip bgClip;
-//	private Clip effectClip;
+	// private Clip effectClip;
 	private AudioInputStream bgAis;
-//	private AudioInputStream effectAis;
-
-
-	
-
-	
-
+	// private AudioInputStream effectAis;
 
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub
@@ -62,15 +59,13 @@ public class MenuCanvas extends Canvas {
 
 		int btnWidth = 230;
 		int btnHeight = 417;
-		double sx = 200;
+		double sx = 150;				// 200;
 		double sy = 530;
-		double space = 180;
+		double space = 80;				// 180;
 
 		setBackground(Color.GREEN);
 
-	   mainSound("res/sound/mainBgm.wav");
-
-
+		mainSound("res/sound/mainBgm.wav");
 
 		// 메뉴 버튼의 이미지를 받아옴
 		stageBtnNormal = ImageLoader.menuStageBtnNormal;
@@ -81,20 +76,26 @@ public class MenuCanvas extends Canvas {
 
 		exitBtnNormal = ImageLoader.menuExitBtnNormal;
 		exitBtnPressed = ImageLoader.menuExitBtnPressed;
+		
+		rankBtnNormal=ImageLoader.menuExitBtnNormal;
+		rankBtnPressed=ImageLoader.menuExitBtnPressed;
 
 		menuBackground = ImageLoader.menuBackground;
 
 		// 메뉴 버튼 생성
 		stageButton = new Button("stage", stageBtnNormal, stageBtnPressed, sx, sy, btnWidth, btnHeight);
 		freeButton = new Button("free", freeBtnNormal, freeBtnPressed, sx + btnWidth + space, sy, btnWidth, btnHeight);
-		exitButton = new Button("exit", exitBtnNormal, exitBtnPressed, sx + (btnWidth + space) * 2, sy, btnWidth,
+		rankButton = new Button("rank", rankBtnNormal, rankBtnPressed, sx + (btnWidth + space) * 2, sy, btnWidth,
+				btnHeight);
+		exitButton = new Button("exit", exitBtnNormal, exitBtnPressed, sx + (btnWidth + space) * 3, sy, btnWidth,
 				btnHeight);
 
 		// 버튼 배열에 넣음
-		buttons = new Button[3];
+		buttons = new Button[4];
 		buttons[0] = stageButton;
 		buttons[1] = freeButton;
 		buttons[2] = exitButton;
+		buttons[3] = rankButton;
 
 		// 캔버스에서 마우스 이벤트 발생 처리
 		addMouseListener(new MouseAdapter() {
@@ -104,11 +105,11 @@ public class MenuCanvas extends Canvas {
 				for (int i = 0; i < buttons.length; i++) {
 					if (true == buttons[i].contains(e.getX(), e.getY())) {
 						buttons[i].getClickListener().onReleased(buttons[i]);
-						buttons[i].getClickListener().onClicked(buttons[i]);		// 메뉴버튼 안눌리는 현상이 있어서 메뉴버튼은 Release 쪽으로 넘김
+						buttons[i].getClickListener().onClicked(buttons[i]); // 메뉴버튼 안눌리는 현상이 있어서 메뉴버튼은 Release 쪽으로 넘김
 						// 버튼 클릭시 메인사운드 off
-					
+
 						mainSoundOff();
-						
+
 					}
 				}
 			}
@@ -149,6 +150,14 @@ public class MenuCanvas extends Canvas {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
+					case "rank":
+						try {
+							GameFrame.getInstance().switchCanvas(MenuCanvas.this, RankCanvas.class);
+						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -211,21 +220,22 @@ public class MenuCanvas extends Canvas {
 		th = new Thread(sub);
 		th.start();
 	}
-	
+
 	public void mainSound(String file) {
-	
-			try {
-				bgAis = AudioSystem.getAudioInputStream(new File(file));
-				bgClip = AudioSystem.getClip();
 
-				bgClip.open(bgAis);
-				bgClip.start();
+		try {
+			bgAis = AudioSystem.getAudioInputStream(new File(file));
+			bgClip = AudioSystem.getClip();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		
+			bgClip.open(bgAis);
+			bgClip.start();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
+
 	public void mainSoundOff() {
 		bgClip.stop();
 	}
