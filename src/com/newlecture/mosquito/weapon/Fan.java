@@ -6,11 +6,16 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Fan extends Weapon {
+	  private Clip bgClip;
+	   private AudioInputStream bgAis;
 	public Fan() {
 		this.setType("Fan");
 		this.setDamage(2);
@@ -26,4 +31,20 @@ public class Fan extends Weapon {
 		this.setImgSize(23);
 		this.setImgTempo(1);
 	}
+	public void AttackSound() {
+		try {
+			bgAis = AudioSystem.getAudioInputStream(new File("res/sound/fan.wav"));
+			bgClip = AudioSystem.getClip();
+
+			bgClip.open(bgAis);
+			bgClip.start();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	
 }
