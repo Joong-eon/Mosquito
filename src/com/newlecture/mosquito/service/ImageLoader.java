@@ -50,6 +50,7 @@ public class ImageLoader {
 	
 	public static Image backBtnNormal;
 	public static Image backBtnPressed;
+	public static Image hpBar;
 
 	static {
 		try {
@@ -77,15 +78,11 @@ public class ImageLoader {
 			timerNumber = ImageIO.read(new File("res/timer_final.png"));
 			timerDot = ImageIO.read(new File("res/timer_dot.png"));
 			
-			
-			
-			
-
-			int stageCount = DataService.getInstance().getGameIntValue("default", "stageCount");
-			stageBackgrounds = new Image[stageCount];
-			for (int i = 0; i < stageCount; i++) {
-				stageBackgrounds[i] = ImageIO.read(new File("res/stage" + (i + 1) + "_bg.jpg"));
-			}
+	         int stageCount = 3;             //DataService.getInstance().getGameIntValue("default", "stageCount");
+	         stageBackgrounds = new Image[stageCount];
+	         for (int i = 0; i < stageCount; i++) {
+	            stageBackgrounds[i] = ImageIO.read(new File("res/stage" + (i + 1) + "_bg.jpg"));
+	         } 
 			
 			//여기부터 무기이미지
 			bow = ImageIO.read(new File("res/weapon/bow.png"));
@@ -105,7 +102,9 @@ public class ImageLoader {
 			
 			
 			backBtnNormal = ImageIO.read(new File("res/back_normal.png"));		  
-			backBtnPressed = ImageIO.read(new File("res/back_pressed.png"));			 
+			backBtnPressed = ImageIO.read(new File("res/back_pressed.png"));		
+			
+			hpBar = ImageIO.read(new File("res/hp_bar.png"));	
 			
 			
 		} catch (IOException e) {

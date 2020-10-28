@@ -91,7 +91,6 @@ public class StageCanvas extends Canvas {
 	// 현재 스테이지를 표시하는 텍스트 이미지
 	private Image stageText;
 	private Image stageNumber;
-	private Image background;
 
 	private int killCount = 0;
 
@@ -111,8 +110,6 @@ public class StageCanvas extends Canvas {
 		hpBar = stageService.getHpBar();
 		missList = new ArrayList<Miss>();
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
-		int stageIndex = stageService.getStageIndex();
-		background = ImageLoader.stageBackgrounds[stageIndex - 1];
 		stageText = ImageLoader.stageText;
 		stageNumber = ImageLoader.stageNumber;
 
@@ -456,19 +453,38 @@ public class StageCanvas extends Canvas {
 
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
-		// 배경 그려주세요
-		bg.drawImage(stageService.getBackground(), 0, 0, null);
+		 // 배경 그려주세요
+	    bg.drawImage(stageService.getBackground(), 0, 0, null);
 
 		// 스테이지 텍스트 전시
-		{
+	    {
 			bg.drawImage(stageText, 30, 30, null);
-			int index = stageService.getStageIndex() - 1;
-			int sX1 = 70 * index;
-			int sY1 = 70 * (index / 5);
+			
+			int index = stageService.getStageIndex();
+
+			int x = 20 + stageText.getWidth(null);
+			int tenValue = index/10;
+
+			if(tenValue != 0) {
+				int sX1 = 70 * tenValue;
+				int sY1 = 70 * (tenValue/6);
+				int sX2 = sX1 + 70;
+				int sY2 = sY1 + 70;
+				
+				bg.drawImage(stageNumber, x, 30, x + 70, 100, 
+						sX1, sY1, sX2, sY2, null);
+				x += 40;
+			} 
+
+			
+			int oneValue = index%10;
+			int sX1 = 70 * (oneValue%5);				
+			int sY1 = 70 * (oneValue/5);
 			int sX2 = sX1 + 70;
 			int sY2 = sY1 + 70;
-			bg.drawImage(stageNumber, 20 + stageText.getWidth(null), 30, 90 + stageText.getWidth(null), 100, sX1, sY1,
-					sX2, sY2, null);
+				
+			bg.drawImage(stageNumber, x, 30,  x + 70, 100, 
+						sX1, sY1, sX2, sY2, null);
 		}
 
 		// 게임 실패시...
