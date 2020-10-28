@@ -348,7 +348,7 @@ public class StageCanvas extends Canvas {
 								selectedMosq.setMovIndex(4);
 								selectedMosq.setCurrentDir(2);
 
-								System.out.println(killCount);
+								//System.out.println(killCount);
 							}
 
 						} else if (selectedButt != null) {

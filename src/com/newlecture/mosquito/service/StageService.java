@@ -53,7 +53,7 @@ public class StageService {
 	private Image background;
 	
 	public StageService() {
-		this(15);
+		this(1);
 	}
 	
 	public StageService(int stageStep) {
