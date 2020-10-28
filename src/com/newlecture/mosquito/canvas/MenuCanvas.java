@@ -132,7 +132,7 @@ public class MenuCanvas extends Canvas {
 
 					switch (target.getName()) {
 					case "stage":
-						try {
+						try {													//class의 모든 정보를 인자로(매개변수) 전달
 							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class,true);
 						} catch (InstantiationException e) {
 							// TODO Auto-generated catch block

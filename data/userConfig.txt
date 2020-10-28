@@ -13,3 +13,6 @@ totalScore=100
 [kk]
 level=10
 totalScore=100
+[sje]
+level=10
+totalScore=300

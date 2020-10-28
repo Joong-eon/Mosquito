@@ -20,7 +20,7 @@ import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.PlayerHpBar;
 
 public class StageService {
-	private ArrayList<Mosquito> mosqs;
+	private ArrayList<Mosquito> mosqs;//==null
 	private ArrayList<Butterfly> butts;		// 스테이지에 생성되는 모든 모기와 나비
 	private Stage stage;
 	private int stageIndex;
@@ -82,7 +82,7 @@ public class StageService {
 	public void changeStage(int stageIndex) {
 		this.stageIndex = stageIndex;		// 현재 스테이지 바꾸고
 	
-		if(mosqs == null) {
+		if(mosqs == null) {// = new X
 			mosqs = new ArrayList<Mosquito>();	
 			butts = new ArrayList<Butterfly>();	
 		} else {

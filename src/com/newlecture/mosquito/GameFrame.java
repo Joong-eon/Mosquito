@@ -30,7 +30,7 @@ public class GameFrame extends Frame {
 		instance = this;
 		MenuCanvas menuCanvas = new MenuCanvas();
 		
-		add(menuCanvas);
+		//add(menuCanvas);
 		menuCanvas.start();
 		
 		this.setSize(canvasWidth, canvasHeight);
@@ -92,12 +92,12 @@ public class GameFrame extends Frame {
 				RankCanvas rankCanvas = (RankCanvas) canvas;
 				rankCanvas.start();
 			}
-			revalidate();
+			revalidate();//재활성화(다시 유효하게 만든다)
 			remove(oldCanvas);
 		}
 		
 	}
-
+	//instance 변수 / static 변수
 	public static GameFrame getInstance() {
 		// TODO Auto-generated method stub
 		return instance;

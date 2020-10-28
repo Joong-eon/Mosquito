@@ -87,7 +87,6 @@ public class DataService {
 		try {
 			loadConfig("data/userConfig.txt");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -129,7 +128,7 @@ public class DataService {
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
 
-			line.trim();
+			line.trim();//앞 뒤 공백 제거
 			String firstText = line.substring(0, 1);
 			if (true == firstText.equals("[")) { // [로 시작하는 라인은 어떤 항목인지를 알려주는 텍스트
 				// 새로운 항목을 넣을 건데 기존 항목 데이터가 있으면 전체 데이터에 넣어줌
@@ -139,7 +138,7 @@ public class DataService {
 					datas = null;
 					title = "";
 				}
-
+				//[김병준]  5
 				title = line.substring(1, line.length() - 1);
 				System.out.println("change Title : " + title);
 

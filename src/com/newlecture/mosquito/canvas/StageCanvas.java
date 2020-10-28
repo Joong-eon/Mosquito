@@ -113,8 +113,8 @@ public class StageCanvas extends Canvas {
 		stageText = ImageLoader.stageText;
 		stageNumber = ImageLoader.stageNumber;
 
-		ArrayList wpDir = player.getArrWpDir();
-		ArrayList wp = player.getArrWp();
+		ArrayList wpDir = player.getArrWpDir();//무기 이미지경로 리스트
+		ArrayList wp = player.getArrWp();//무기 이름 리스트
 		weaponImg = new Image[wpDir.size()];
 /*
 		for (int i = 0; i < wpDir.size(); i++) {
@@ -185,7 +185,7 @@ public class StageCanvas extends Canvas {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				stageStep++;
+				stageStep++;//2
 				// stageService.changeStage(stageStep);
 				ButtonClickedListener gameOverListener = stageService.getGameOver().getClickListener();
 				ButtonClickedListener gameClearListener = stageService.getGameClear().getClickListener();
@@ -229,7 +229,7 @@ public class StageCanvas extends Canvas {
 			public void keyPressed(KeyEvent e) {
 
 				switch (e.getKeyCode()) {
-				case 49:
+				case 49://1
 					player.setCurrentWp(player.getWeapons()[0]);
 
 					player.getCurrentWp().setX(getMousePosition().x);
@@ -357,7 +357,7 @@ public class StageCanvas extends Canvas {
 								effectSound("res/sound/mosdie.wav");
 								killCount++;
 								String stageName = "stage" + stageService.getStageIndex();
-
+											//"stage1"
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
@@ -365,7 +365,7 @@ public class StageCanvas extends Canvas {
 								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 								selectedMosq.setMovIndex(4);
-								selectedMosq.setCurrentDir(2);
+								selectedMosq.setCurrentDir(2);//죽었다
 
 								//System.out.println(killCount);
 							}
@@ -600,7 +600,7 @@ public class StageCanvas extends Canvas {
 					repaint();
 
 					try {
-						Thread.sleep(17);
+						Thread.sleep(17);//ms 1000
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

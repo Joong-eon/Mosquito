@@ -17,7 +17,7 @@ public class Program {
 
 	public static void main(String[] args) {
 		// 데이터를 관리하는 서비스가 먼저 만들어져야함   => 캔버스를 만들거나 이미지를 로드 할 때 데이터가 필요한 경우 때문
-		DataService ds = new DataService();	
+		DataService ds = new DataService();
 		Frame frame = new GameFrame();
 		
 		/*마우스 커서 숨기는 코드

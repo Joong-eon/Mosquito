@@ -56,7 +56,7 @@ public class Player {
 		
 		arrWpDir = new ArrayList();
 		
-		for(int i=0;i<arrWp.size();i++) {
+		for(int i=0;i<arrWp.size();i++) {								//"level1"
 			arrWpDir.add(DataService.getInstance().getWeaponStringValue("level"+userLevel, (String)arrWp.get(i)));
 		}
 		/*
