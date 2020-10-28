@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Miss;
 import com.newlecture.mosquito.entity.MosqAttackListener;
@@ -51,21 +52,21 @@ public class StageService {
 	private Image background;
 	
 	public StageService() {
-		this(3);
+		this(1);
 	}
 	
 	public StageService(int stageStep) {
 		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
-		p1 = new Player();
+		p1 = new Player(GameFrame.userName);
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;
 	
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
-		System.out.println("gameover, gameclear 객체 생성 완료");
+		//System.out.println("gameover, gameclear 객체 생성 완료");
 		
 		changeStage(stageStep);
 	}
@@ -122,8 +123,8 @@ public class StageService {
 		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
 			mosqDeltaTime = 0;
 			currentMosqCount += mosqCreateCount;
-			System.out.println("모기 생성 시작");
-			System.out.println("mosqCreateCount : "+mosqCreateCount);
+			//System.out.println("모기 생성 시작");
+			//System.out.println("mosqCreateCount : "+mosqCreateCount);
 			for (int i = 0 ;i < mosqCreateCount; i++) {
 				// 모기
 				Mosquito m = new Mosquito();
