@@ -1,8 +1,16 @@
 package com.newlecture.mosquito.weapon;
 
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class RiceStraw extends Weapon {
+	 private Clip bgClip;
+	   private AudioInputStream bgAis;
 	public RiceStraw() {
 		this.setType("riceStraw");
 		this.setDamage(2);
@@ -19,4 +27,16 @@ public class RiceStraw extends Weapon {
 		this.setImgTempo(2);
 		
 	}
+	public void AttackSound() {
+		try {
+			bgAis = AudioSystem.getAudioInputStream(new File("res/sound/straw.wav"));
+			bgClip = AudioSystem.getClip();
+
+			bgClip.open(bgAis);
+			bgClip.start();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+}
 }

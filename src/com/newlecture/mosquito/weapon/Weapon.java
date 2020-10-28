@@ -234,6 +234,11 @@ public abstract class Weapon {// 추상클래스 구현
 	public void setBgm(AudioInputStream bgm) {
 		Bgm = bgm;
 	}
+
+	public void AttackSound() {
+	
+		
+	}
 	
 	
 
