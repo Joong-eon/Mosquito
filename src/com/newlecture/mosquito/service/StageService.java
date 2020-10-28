@@ -58,6 +58,8 @@ public class StageService {
 	
 	public StageService(int stageStep) {
 		
+		
+		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
 		p1 = new Player(GameFrame.getInstance().getUserName(),1);
