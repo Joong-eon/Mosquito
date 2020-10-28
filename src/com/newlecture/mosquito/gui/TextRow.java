@@ -58,9 +58,6 @@ public class TextRow {
 	}
 	
 	public void paint(Graphics g) {		// bg
-		g.setColor(Color.red);
-		g.fillRect(x-2, y-2, 4, 4);
-		
 		g.setColor(Color.black);
 		g.setFont(font);
 		g.drawString(text, x, y+50);				

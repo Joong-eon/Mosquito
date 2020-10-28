@@ -73,12 +73,12 @@ public class MenuCanvas extends Canvas {
 		freeBtnNormal = ImageLoader.menuFreeBtnNormal;
 		freeBtnPressed = ImageLoader.menuFreeBtnPressed;
 
+		rankBtnNormal=ImageLoader.menuRankBtnNormal;
+		rankBtnPressed=ImageLoader.menuRankBtnPressed;
+
 		exitBtnNormal = ImageLoader.menuExitBtnNormal;
 		exitBtnPressed = ImageLoader.menuExitBtnPressed;
 		
-		rankBtnNormal=ImageLoader.menuExitBtnNormal;
-		rankBtnPressed=ImageLoader.menuExitBtnPressed;
-
 		menuBackground = ImageLoader.menuBackground;
 
 		// 메뉴 버튼 생성

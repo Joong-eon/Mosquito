@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 
 import com.newlecture.mosquito.canvas.FreeCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
+import com.newlecture.mosquito.canvas.RankCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.gui.PlayerHpBar;
 
@@ -59,6 +60,9 @@ public class GameFrame extends Frame {
 		} else if(canvas instanceof MenuCanvas) {			
 			MenuCanvas menuCanvas = (MenuCanvas) canvas;
 			menuCanvas.start();
+		} else if(canvas instanceof RankCanvas) {			
+			RankCanvas rankCanvas = (RankCanvas) canvas;
+			rankCanvas.start();
 		}
 		revalidate();
 		remove(oldCanvas);

@@ -14,6 +14,8 @@ public class ImageLoader {
 	public static Image menuStageBtnPressed;
 	public static Image menuFreeBtnNormal;
 	public static Image menuFreeBtnPressed;
+	public static Image menuRankBtnNormal;
+	public static Image menuRankBtnPressed;
 	public static Image menuExitBtnNormal;
 	public static Image menuExitBtnPressed;
 	public static Image menuBackground;
@@ -45,7 +47,9 @@ public class ImageLoader {
 	public static Image hand;
 	
 	public static Image rankBackground;
-
+	
+	public static Image backBtnNormal;
+	public static Image backBtnPressed;
 
 	static {
 		try {
@@ -54,6 +58,8 @@ public class ImageLoader {
 			menuStageBtnPressed = ImageIO.read(new File("res/menu_stage_pressed.png"));
 			menuFreeBtnNormal = ImageIO.read(new File("res/menu_free_normal.png"));
 			menuFreeBtnPressed = ImageIO.read(new File("res/menu_free_pressed.png"));
+			menuRankBtnNormal = ImageIO.read(new File("res/menu_rank_normal.png"));
+			menuRankBtnPressed = ImageIO.read(new File("res/menu_rank_pressed.png"));
 			menuExitBtnNormal = ImageIO.read(new File("res/menu_exit_normal.png"));
 			menuExitBtnPressed = ImageIO.read(new File("res/menu_exit_pressed.png"));
 
@@ -95,7 +101,11 @@ public class ImageLoader {
 			stageText = ImageIO.read(new File("res/stage_text.png"));
 			stageNumber = ImageIO.read(new File("res/stage_num.png"));		// 70x70 
 			
-			rankBackground = ImageIO.read(new File("res/rank_bg.png"));				
+			rankBackground = ImageIO.read(new File("res/rank_bg.png"));			
+			
+			
+			backBtnNormal = ImageIO.read(new File("res/back_normal.png"));		  
+			backBtnPressed = ImageIO.read(new File("res/back_pressed.png"));			 
 			
 			
 		} catch (IOException e) {

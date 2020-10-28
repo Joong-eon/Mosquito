@@ -87,7 +87,7 @@ public class Button {
 		
 		
 		g.drawImage(currentImg, (int)x, (int)y, (int)x+width , (int)y+height, 
-				(int)0, (int)0, (int)imgWidth, (int)imgHeight, MenuCanvas.instance);				
+				(int)0, (int)0, (int)imgWidth, (int)imgHeight, null);				
 	}
 	
 	public boolean contains(double x, double y) {
@@ -159,7 +159,6 @@ public class Button {
 
 	public void setCurrentImg(Image currentImg) {
 		this.currentImg = currentImg;
-		
 		// 이미지가 바뀌면 이미지 사이즈도 같이 바꿔줘야함
 		this.imgWidth = currentImg.getWidth(null);
 		this.imgHeight = currentImg.getHeight(null);		
