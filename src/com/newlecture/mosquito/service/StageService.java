@@ -127,6 +127,8 @@ public class StageService {
 			for (int i = 0 ;i < mosqCreateCount; i++) {
 				// 모기
 				Mosquito m = new Mosquito();
+				m.setMinSpeed(stage.mosqMinSpeed);		// 스피드 설정
+				m.setMaxSpeed(stage.mosqMaxSpeed);		// 스피드 설정
 				m.setMosqAttackListener(new MosqAttackListener() {
 					
 					@Override
@@ -148,7 +150,10 @@ public class StageService {
 			currentButtCount += buttCreateCount;
 			
 			for (int i = 0; i < buttCreateCount; i++) {		// 나비
-				butts.add(new Butterfly());
+				Butterfly butt = new Butterfly();
+				butt.setMinSpeed(stage.buttMinSpeed);		// 스피드 설정
+				butt.setMaxSpeed(stage.buttMaxSpeed);		// 스피드 설정
+				butts.add(butt);
 			}
 		}
 	}
