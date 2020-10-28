@@ -35,6 +35,7 @@ public class FreeService {
 	private Image gameClearBtn = ImageLoader.gameClearBtn;
 	private String freeStage;
 	private boolean isGameOver;
+	private boolean isGameClear;
 
 	private int currentMosqCount;		// 현재 생성 된 모기 수
 	private int mosqDeltaTime;
@@ -55,6 +56,11 @@ public class FreeService {
 		timer = new Timer(freeStage);
 		p1 = new Player();
 		hpBar = new PlayerHpBar(p1.getHp());
+		
+		
+		isGameClear = false;
+		isGameOver = false;
+		
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 	
@@ -97,22 +103,6 @@ public class FreeService {
 		int killScore = free.getKillScore();
 		totalScore += killScore;
 	}
-		
-//		for(int i =0; i<mosqCreateCount; i++) {
-//			mosqs.add(new Mosquito());
-//			mosqs.get(i).setMosqAttackListener(new MosqAttackListener() {
-//
-//				@Override
-//				public void attackListener(int damage) {
-//					p1.setHp(p1.getHp()-damage);
-//
-//				}
-//			});
-//		}
-
-//		for(int i = 0; i<buttCreateCount; i++) {
-//			butts.add(new Butterfly());
-//		}
 
 	public void createMosquito() {
 
@@ -239,11 +229,8 @@ public class FreeService {
 		this.isGameOver = isGameOver;
 	}
 
-
-
-
-	public void setGameClear(GameClear gameClear) {
-		this.gameClear = gameClear;
+	public void setGameClear(boolean isGameClear) {
+		this.isGameClear = isGameClear;
 	}
 
 	public int getMosqMaxCount() {
@@ -255,5 +242,15 @@ public class FreeService {
 		// TODO Auto-generated method stub
 		return isGameOver;
 	}
+
+	public PlayerHpBar getHpBar() {
+		return hpBar;
+	}
+
+	public void setHpBar(PlayerHpBar hpBar) {
+		this.hpBar = hpBar;
+	}
+
+	
 
 }

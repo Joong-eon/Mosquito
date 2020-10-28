@@ -49,9 +49,8 @@ public class MenuCanvas extends Canvas {
 	private Image menuBackground;
 
 	private Clip bgClip;
-	// private Clip effectClip;
 	private AudioInputStream bgAis;
-	// private AudioInputStream effectAis;
+	
 
 	public MenuCanvas() {
 		// TODO Auto-generated constructor stub

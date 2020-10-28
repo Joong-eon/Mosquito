@@ -4,7 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.service.ImageLoader;
@@ -23,7 +28,8 @@ public class Mosquito extends Bug {
 	public void setMosqAttackListener(MosqAttackListener mosqAttackListener) {
 		this.mosqAttackListener = mosqAttackListener;
 	}
-
+	 private Clip effectClip;
+	 private AudioInputStream effectAis;
 	// 생성자
 	public Mosquito() {
 		// this(100,100); //랜덤값으로 수정
@@ -82,6 +88,7 @@ public class Mosquito extends Bug {
 			offsetX -= 1;
 
 		if (true == isAttacked()) { // 공격 당했을 경우
+			
 			attackTimer = (int)((Math.random()*11+10)*60);
 			if (this.getCurrentDir() == 0) {			// 오른쪽
 				g.drawImage(img, x1, y1, x2, y2, 
@@ -97,6 +104,7 @@ public class Mosquito extends Bug {
 							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
 					
 					if(attackTimer <= 0) {// 공격
+						effectSound("res/sound/attacked.wav");
 						mosqAttackListener.attackListener(damage);
 						attackTimer = (int)((Math.random()*11+10)*60);
 					}
@@ -137,5 +145,19 @@ public class Mosquito extends Bug {
 	public void setDeleteTimer(int deleteTimer) {
 		this.deleteTimer = deleteTimer;
 	}
+	 private void effectSound(String file) {
+		   
+         try {
+        	 effectAis = AudioSystem.getAudioInputStream(new File(file));
+        	 effectClip = AudioSystem.getClip();
+
+        	 effectClip.open(effectAis);
+        	 effectClip.start();
+
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
+	
 
 }
