@@ -104,7 +104,7 @@ public class FreeCanvas extends Canvas{
 
 			public void onClicked(GameOver gameOver) {
 				try {
-					GameFrame.getInstance().switchCanvas(FreeCanvas.this, MenuCanvas.class);
+					GameFrame.getInstance().switchCanvas(FreeCanvas.this, MenuCanvas.class,true);
 
 				}catch(InstantiationException e) {
 					e.printStackTrace();

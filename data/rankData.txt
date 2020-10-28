@@ -6,3 +6,5 @@ popo=5
 hihi=2
 5555555555=103
 rrrrrrrrrrrrr=101
+jun=0
+jun=0

@@ -50,13 +50,12 @@ public class ImageLoader {
 	
 	public static Image backBtnNormal;
 	public static Image backBtnPressed;
-<<<<<<< HEAD
+
 	public static Image level1_weapon;
 	public static Image level2_weapon;
 	public static Image level3_weapon;
-=======
+
 	public static Image hpBar;
->>>>>>> branch 'master' of https://github.com/NewLecture-study/Mosquito.git
 
 	static {
 		try {

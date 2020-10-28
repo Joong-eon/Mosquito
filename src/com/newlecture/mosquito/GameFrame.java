@@ -48,7 +48,7 @@ public class GameFrame extends Frame {
 	}
 
 	// 메뉴가 바뀌었을때 호출됨/
-	public void switchCanvas(Canvas oldCanvas, Class newCanvas) throws InstantiationException, IllegalAccessException {
+	public void switchCanvas(Canvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
 		boolean change = true;
 		if(oldCanvas instanceof MenuCanvas && checkId) {
 			

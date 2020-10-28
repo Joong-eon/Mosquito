@@ -152,7 +152,7 @@ public class StageCanvas extends Canvas {
 		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
 		// p1.current 정보변경
 		score = new Score();
-		userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.userName, "level");
+		userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.getInstance().getUserName(), "level");
 		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 			// 이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
