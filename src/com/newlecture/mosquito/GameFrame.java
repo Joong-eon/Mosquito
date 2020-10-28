@@ -6,6 +6,8 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
+
 import com.newlecture.mosquito.canvas.FreeCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.RankCanvas;
@@ -22,6 +24,7 @@ public class GameFrame extends Frame {
 	
 	public static int canvasWidth = 1500;
 	public static int canvasHeight = 1000;
+	public static String userName;
 
 	public GameFrame() {
 		instance = this;
@@ -46,26 +49,43 @@ public class GameFrame extends Frame {
 
 	// 메뉴가 바뀌었을때 호출됨/
 	public void switchCanvas(Canvas oldCanvas, Class newCanvas) throws InstantiationException, IllegalAccessException {
-		// TODO Auto-generated method stub
-		
-		Canvas canvas = (Canvas)newCanvas.newInstance();
-		add(canvas);
-		if(canvas instanceof StageCanvas) {
-			StageCanvas stageCanvas = (StageCanvas) canvas;
-			stageCanvas.start();
-		} else if(canvas instanceof FreeCanvas) {
-			FreeCanvas freeCanvas = (FreeCanvas) canvas;
-			freeCanvas.start();
+		boolean change = true;
+		if(oldCanvas instanceof MenuCanvas) {
 			
-		} else if(canvas instanceof MenuCanvas) {			
-			MenuCanvas menuCanvas = (MenuCanvas) canvas;
-			menuCanvas.start();
-		} else if(canvas instanceof RankCanvas) {			
-			RankCanvas rankCanvas = (RankCanvas) canvas;
-			rankCanvas.start();
+			String id="";
+			
+			id = JOptionPane.showInputDialog(null, "사용자 아이디를 입럭하시오.", "USER ID", TEXT_CURSOR);
+			if(id == null) {
+				System.out.println(id);
+				change = false;
+			}
+			
+			
+			userName = id;
 		}
-		revalidate();
-		remove(oldCanvas);
+		
+		
+		if(change) {
+			Canvas canvas = (Canvas)newCanvas.newInstance();
+			add(canvas);
+			if(canvas instanceof StageCanvas) {
+				StageCanvas stageCanvas = (StageCanvas) canvas;
+				stageCanvas.start();
+			} else if(canvas instanceof FreeCanvas) {
+				FreeCanvas freeCanvas = (FreeCanvas) canvas;
+				freeCanvas.start();
+				
+			} else if(canvas instanceof MenuCanvas) {			
+				MenuCanvas menuCanvas = (MenuCanvas) canvas;
+				menuCanvas.start();
+			} else if(canvas instanceof RankCanvas) {			
+				RankCanvas rankCanvas = (RankCanvas) canvas;
+				rankCanvas.start();
+			}
+			revalidate();
+			remove(oldCanvas);
+		}
+		
 	}
 
 	public static GameFrame getInstance() {

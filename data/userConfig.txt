@@ -1,3 +1,9 @@
 [player]
 level=10
 totalScore=840
+[jun]
+level=10
+totalScore=100
+[123456]
+level=10
+totalScore=100

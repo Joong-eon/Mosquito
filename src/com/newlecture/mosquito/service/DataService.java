@@ -1,6 +1,7 @@
 package com.newlecture.mosquito.service;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -25,6 +26,7 @@ public class DataService {
 	private static String userFileName;
 	private static String weaponFileName;
 	private static String rankFileName;
+	private static ArrayList<String> userDatas;
 
 	// map이란 -> Key(이름), Value(데이터)로 자료를 저장 할 수 있는 컬렉션의 일종
 	// TreeMap<[defalut], TreeMap<playerLevel,1>>
@@ -58,6 +60,46 @@ public class DataService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void checkId(String id) throws FileNotFoundException {
+		FileInputStream fis = new FileInputStream("data/userConfig.txt");
+		Scanner scan = new Scanner(fis);
+
+		userDatas = new ArrayList<>();
+		boolean isContain = false;
+
+		while (scan.hasNextLine()) {
+			String line = scan.nextLine();
+			userDatas.add(line);
+
+			if (line.contains(id))
+				isContain = true;
+		}
+
+		if (isContain == false) {
+			userDatas.add("[" + id + "]");
+			userDatas.add("level=10");
+			userDatas.add("totalScore=100");
+
+			saveUserData(userDatas);
+		}
+		try {
+			loadConfig("data/userConfig.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveUserData(ArrayList userDatas) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(userFileName);
+		pw.print("");
+		for (Object data : userDatas) {
+			System.out.println((String) data);
+			pw.append((String) data + "\n");
+		}
+		pw.close();
 	}
 
 	public static DataService getInstance() {
@@ -133,14 +175,26 @@ public class DataService {
 		fis.close();
 	}
 
-	public static void save(int level, int totalScore) throws IOException {
-		// 추후 개발 예정
-		PrintWriter pw = new PrintWriter(userFileName);
-		pw.println("[player]");
-		pw.println("level=" + level);
-		pw.println("totalScore=" + totalScore);
-		pw.close();
-	}
+	public static void save(String userName, int level, int totalScore) throws IOException {
+	      // 추후 개발 예정
+	      PrintWriter pw = new PrintWriter(userFileName);
+	      pw.print("");
+	      
+	      
+	      for(int i=0;i<userDatas.size();i++) {
+	         if(userDatas.get(i).contains(userName)) {
+	            userDatas.set(i+1, "level="+level);
+	            userDatas.set(i+2, "totalScore="+totalScore);
+	            break;
+	         }
+	      }
+	      
+	      for(Object data : userDatas) {
+	         pw.append((String)data+"\n");
+	      }
+	      
+	      pw.close();
+	   }
 	
 	public void saveRank(String name, int score) throws IOException {
 		// 추후 개발 예정

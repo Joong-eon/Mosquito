@@ -74,6 +74,8 @@ public abstract class Bug{
 	}
 	
 	public void move(double x, double y) {		
+		System.out.println(maxSpeed);
+		System.out.println(minSpeed);
 		int newSpeed = minSpeed + rand.nextInt(maxSpeed-minSpeed);
 		setSpeed(newSpeed);		
 		

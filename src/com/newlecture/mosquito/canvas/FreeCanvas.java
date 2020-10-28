@@ -46,8 +46,7 @@ public class FreeCanvas extends Canvas{
 	private Clip effectClip;
 	private AudioInputStream bgAis;
 	private AudioInputStream effectAis;
-	private boolean isEffect;
-	private boolean isBgm;
+
 
 	private FreeService freeService;
 	private Image[] weaponImg;
@@ -69,8 +68,7 @@ public class FreeCanvas extends Canvas{
 
 	public FreeCanvas() {
 		instance = this;
-		isBgm = true;
-		isEffect = true;
+
 
 		freeService = new FreeService();
 		timer = freeService.getTimer();
@@ -185,6 +183,7 @@ public class FreeCanvas extends Canvas{
 
 					if (isMiss == true) {// 빗나감
 						// miss뜨는 그림효과
+						effectSound("res/sound/miss.wav");
 						missList.add(new Miss(x, y));
 						System.out.println("빗나감");
 
@@ -323,6 +322,7 @@ public class FreeCanvas extends Canvas{
 						if (selectedMosq != null) {
 							if (selectedMosq.getHp() <= 0) {
 								String stageName = "freeStage";
+								effectSound("res/sound/mosdie.wav");
 
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
@@ -363,6 +363,23 @@ public class FreeCanvas extends Canvas{
 			e.printStackTrace();
 		} 
 	}
+	 public void mosSoundOff() {
+	      bgClip.stop();
+	   }
+	 
+	 private void effectSound(String file) {
+
+	      try {
+	         effectAis = AudioSystem.getAudioInputStream(new File(file));
+	         effectClip = AudioSystem.getClip();
+
+	         effectClip.open(effectAis);
+	         effectClip.start();
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	   }
 
 	@Override
 	public void paint(Graphics g) {
@@ -377,6 +394,7 @@ public class FreeCanvas extends Canvas{
 
 		// 게임 실패시...
 		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 ) || (player.getHp() <= 0)) {
+		//	mosSoundOff();
 			// 지방
 			freeService.setGameOver(true);
 			freeService.getGameOver().paint(bg);
@@ -478,4 +496,6 @@ public class FreeCanvas extends Canvas{
 		th = new Thread(sub);
 		th.start();
 	}
+	
+	
 }

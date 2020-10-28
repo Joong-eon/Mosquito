@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 
+import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Free;
 import com.newlecture.mosquito.entity.Miss;
@@ -54,7 +55,7 @@ public class FreeService {
 	public FreeService() {
 		freeStage = "freeStage";
 		timer = new Timer(freeStage);
-		p1 = new Player();
+		p1 = new Player(GameFrame.userName);
 		hpBar = new PlayerHpBar(p1.getHp());
 		
 		
