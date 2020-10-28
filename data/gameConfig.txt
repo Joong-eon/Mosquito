@@ -36,6 +36,6 @@ limitTime=40
 mosqMaxCount=100
 mosqCreateCount=100
 buttMaxCount=50
-buttCreateCount=10
+buttCreateCount=25
 buttCreateTime=5
 killScore=1

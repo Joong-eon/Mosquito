@@ -35,21 +35,19 @@ import com.newlecture.mosquito.service.FreeService;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class FreeCanvas extends Canvas{
-//	1. 모기가 공격 구현(갖다 붙이기) // 미뇽
-//	2. 게임오버 구현(조건따져보기) // a미뇽
-//	3. 무기 구현 // 
-//	4. 데이터 저장 후 랭킹에 올리기
-//	5. 모기 잡으면 시간추가, 모기 추가
-	
+	//	3. 무기 구현 // 
+	//	4. 데이터 저장 후 랭킹에 올리기
+
+
 	public static Canvas instance;
 	Thread th;
 
-		private Clip bgClip;
-		private Clip effectClip;
-		private AudioInputStream bgAis;
-		private AudioInputStream effectAis;
-		private boolean isEffect;
-		private boolean isBgm;
+	private Clip bgClip;
+	private Clip effectClip;
+	private AudioInputStream bgAis;
+	private AudioInputStream effectAis;
+	private boolean isEffect;
+	private boolean isBgm;
 
 	private FreeService freeService;
 	private Image[] weaponImg;
@@ -71,13 +69,13 @@ public class FreeCanvas extends Canvas{
 
 	public FreeCanvas() {
 		instance = this;
-				isBgm = true;
-				isEffect = true;
+		isBgm = true;
+		isEffect = true;
 
 		freeService = new FreeService();
 		timer = freeService.getTimer();
 		player = freeService.getP1();
-		 hpBar = freeService.getHpBar();
+		hpBar = freeService.getHpBar();
 		//hpBar = new PlayerHpBar(player.getHp());
 		missList = new ArrayList<Miss>();
 
@@ -101,7 +99,7 @@ public class FreeCanvas extends Canvas{
 		for (int i = 0; i < wpDir.size(); i++) {
 			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 800 + 350 * i, 700, 135, 188);
 		}
-		
+
 		score = new Score();
 		userScore = player.getUserTotalScore();
 		freeService.getGameOver().addClickListener(new ButtonClickedAdapter() {
@@ -120,7 +118,6 @@ public class FreeCanvas extends Canvas{
 
 		});
 
-		
 		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -128,7 +125,7 @@ public class FreeCanvas extends Canvas{
 				player.getCurrentWp().setY(e.getY());
 			}
 		});
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,14 +133,14 @@ public class FreeCanvas extends Canvas{
 
 				int x = e.getX();
 				int y = e.getY();
-		//		System.out.println(freeService.getMosqs().size());
+				//		System.out.println(freeService.getMosqs().size());
 				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0 )
 						||(player.getHp() <= 0))&& killCount != freeService.getMosqMaxCount()) {
 					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (freeService.getGameOver().contains(x, y)) {
 						freeService.setGameOver(false);
 						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
-								
+
 					}
 
 				} else if (true == player.getCurrentWp().isClickable()) {
@@ -230,7 +227,7 @@ public class FreeCanvas extends Canvas{
 					}
 				}
 			}
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				for (int i = 0; i < weapons.length; i++) {
@@ -250,16 +247,16 @@ public class FreeCanvas extends Canvas{
 					}
 				}
 			}
-			
+
 		});
-		
+
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i].addClickListener(new ButtonClickedAdapter() {
 				@Override
 				public void onClicked(Button target) {
 
 				}
-				
+
 			});
 		}
 		addMouseListener(new MouseAdapter() {
@@ -329,7 +326,7 @@ public class FreeCanvas extends Canvas{
 
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
-		
+
 								score.setScore(nowScore += killScore);
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
 								selectedMosq.setCurrentDir(2);
@@ -352,51 +349,45 @@ public class FreeCanvas extends Canvas{
 			}
 		});
 	}
-	
+
 	// 모기 사운드
 	private void mosSound(String file) {
-			try {
-				bgAis = AudioSystem.getAudioInputStream(new File(file));
-				bgClip = AudioSystem.getClip();
+		try {
+			bgAis = AudioSystem.getAudioInputStream(new File(file));
+			bgClip = AudioSystem.getClip();
 
-				bgClip.open(bgAis);
-				bgClip.start();
+			bgClip.open(bgAis);
+			bgClip.start();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		
+
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
 		// 배경 그려주세요
 		bg.drawImage(background, 0, 0, null);
-		
+
 		// 스테이지 텍스트 전시
-		
-		
+
+
 		// 게임 실패시...
-		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 )
-				||(player.getHp() <= 0)&& killCount != freeService.getMosqMaxCount()) {
+		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 ) || (player.getHp() <= 0)) {
 			// 지방
 			freeService.setGameOver(true);
 			freeService.getGameOver().paint(bg);
 			// 토탈점수 그려주세요
-
-//		} else if(killCount == freeService.getMosqMaxCount()&&freeService.isGameOver()==false) {
-//			freeService.setGameClear(true);
-//			freeService.getGameClear().paint(bg);
-			
 		}
-		
+
 		else {
 			timer.paint(bg);
 			score.paint(bg);
-			
-			
+
+
 			int mosqSize = freeService.getMosqs().size();
 			for (int i = 0; i < mosqSize; i++) {
 				freeService.getMosqs().get(i).paint(bg);
@@ -424,7 +415,12 @@ public class FreeCanvas extends Canvas{
 
 		g.drawImage(buf, 0, 0, this);
 	}
-	
+
+	private int hpBar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public void update(Graphics g) {
 		// TODO Auto-generated method stub
@@ -440,12 +436,12 @@ public class FreeCanvas extends Canvas{
 
 				while (true) {
 					timer.update();
-										
+
 					int mosqSize = freeService.getMosqs().size();
 					for (int i = 0; i < mosqSize; i++) {
 						freeService.getMosqs().get(i).update();
 					}
-					
+
 					int buttSize = freeService.getButts().size();
 					for (int i = 0; i < buttSize; i++) {
 						freeService.getButts().get(i).update();
@@ -456,7 +452,7 @@ public class FreeCanvas extends Canvas{
 						for (int i = 0; i < missList.size(); i++) {
 
 							missList.get(i).update();
-							
+
 						}
 						for (int i = 0; i < missList.size(); i++) {
 							if (missList.get(i).getDelTime() < 0) {
@@ -479,11 +475,7 @@ public class FreeCanvas extends Canvas{
 				}
 			}
 		};
-
 		th = new Thread(sub);
 		th.start();
-
 	}
-	}
-		
-	
+}
