@@ -219,7 +219,7 @@ public class StageCanvas extends Canvas {
 				// effectSound("res/sound/hand.wav");
 				// 커서 이미지 변경
 				int x = e.getX();
-				int y = e.getY();
+				int y = e.getY(); 
 
 				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
 						&& killCount != stageService.getMosqMaxCount()) {
