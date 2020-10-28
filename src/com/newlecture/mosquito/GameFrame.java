@@ -24,7 +24,7 @@ public class GameFrame extends Frame {
 	
 	public static int canvasWidth = 1500;
 	public static int canvasHeight = 1000;
-	public static String userName;
+	public String userName;
 
 	public GameFrame() {
 		instance = this;
@@ -48,7 +48,7 @@ public class GameFrame extends Frame {
 	}
 
 	// 메뉴가 바뀌었을때 호출됨/
-	public void switchCanvas(Canvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
+	public void switchCanvas(Canvas oldCanvas, Class newCanvas) throws InstantiationException, IllegalAccessException {
 		boolean change = true;
 		if(oldCanvas instanceof MenuCanvas && checkId) {
 			
@@ -102,4 +102,14 @@ public class GameFrame extends Frame {
 		// TODO Auto-generated method stub
 		return instance;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
 }

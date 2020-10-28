@@ -7,6 +7,7 @@ totalScore=100
 [123456]
 level=10
 totalScore=100
+<<<<<<< HEAD
 [junjun]
 level=10
 totalScore=100
@@ -17,5 +18,29 @@ totalScore=100
 level=10
 totalScore=100
 [lk]
+=======
+[sje]
+level=10
+totalScore=100
+[1qqq]
+level=10
+totalScore=100
+[aaaa]
+level=10
+totalScore=100
+[1111]
+level=10
+totalScore=100
+[555555555]
+level=10
+totalScore=100
+[5555555555]
+level=10
+totalScore=100
+[rrrrrrrrrrrrr]
+level=10
+totalScore=100
+[c0c0c0c0c0c0]
+>>>>>>> branch 'master' of https://github.com/NewLecture-study/Mosquito.git
 level=10
 totalScore=100

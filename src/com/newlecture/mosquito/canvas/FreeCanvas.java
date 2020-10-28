@@ -104,7 +104,7 @@ public class FreeCanvas extends Canvas{
 
 			public void onClicked(GameOver gameOver) {
 				try {
-					GameFrame.getInstance().switchCanvas(FreeCanvas.this, MenuCanvas.class,true);
+					GameFrame.getInstance().switchCanvas(FreeCanvas.this, MenuCanvas.class);
 
 				}catch(InstantiationException e) {
 					e.printStackTrace();
@@ -268,6 +268,10 @@ public class FreeCanvas extends Canvas{
 				System.out.println(freeService.getMosqs().size());
 				if ((timer.getOneCount() == 0 && timer.getTenCount() == 0)
 						||(player.getHp() <= 0)) {
+					
+					
+					
+					
 					// 게임에서졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					if (freeService.getGameOver().contains(x, y)) {
 						freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
@@ -394,6 +398,16 @@ public class FreeCanvas extends Canvas{
 
 		// 게임 실패시...
 		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 ) || (player.getHp() <= 0)) {
+			
+			String name = GameFrame.getInstance().getUserName();
+			
+			try {
+				DataService.getInstance().saveRank(name, player.getUserTotalScore());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		//	mosSoundOff();
 			// 지방
 			freeService.setGameOver(true);
@@ -480,6 +494,7 @@ public class FreeCanvas extends Canvas{
 					}
 
 					player.getCurrentWp().update();
+					
 
 					repaint();
 

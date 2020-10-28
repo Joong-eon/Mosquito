@@ -74,8 +74,11 @@ public abstract class Bug{
 	}
 	
 	public void move(double x, double y) {		
+<<<<<<< HEAD
 		//System.out.println(maxSpeed);
 		//System.out.println(minSpeed);
+=======
+>>>>>>> branch 'master' of https://github.com/NewLecture-study/Mosquito.git
 		int newSpeed = minSpeed + rand.nextInt(maxSpeed-minSpeed);
 		setSpeed(newSpeed);		
 		

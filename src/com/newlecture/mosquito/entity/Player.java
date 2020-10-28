@@ -32,7 +32,7 @@ public class Player {
 	
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
 	
-	public Player(String name) {
+	public Player(String name,int mode) {
 		try {
 	         DataService.getInstance().checkId(name);
 	      } catch (FileNotFoundException e1) {
@@ -98,8 +98,13 @@ public class Player {
 //		weapons[1] = new Spear();
 //		weapons[2] = new FlySwatter();
 //		
-		userTotalScore=DataService.getInstance().getPlayerIntValue(userName, "totalScore");
-	    //setImg;
+		if(mode == 1)
+			userTotalScore=DataService.getInstance().getPlayerIntValue(userName, "totalScore");
+		else
+			userTotalScore = 0;
+		
+		System.out.println("현재 스코어"+userTotalScore);
+		//setImg;
 		
 		//나중에 정리해야함 일단 기능만 확인
 		

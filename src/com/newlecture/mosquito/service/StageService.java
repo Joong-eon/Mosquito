@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.newlecture.mosquito.GameFrame;
@@ -57,9 +58,12 @@ public class StageService {
 	
 	public StageService(int stageStep) {
 		
+		
+		
+		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
-		p1 = new Player(GameFrame.userName);
+		p1 = new Player(GameFrame.getInstance().getUserName(),1);
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;
@@ -105,7 +109,15 @@ public class StageService {
 		buttCreateTime = stage.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
 		createButterfly();
 		
-		background = ImageLoader.stageBackgrounds[stageIndex-1];
+		// 배경화면 갯수와 스테이지 갯수가 달라서, 스테이지3을 넘어가면 일단 랜덤으로 전시함.
+	    int backgroundIndex = 0;
+	    if (stageIndex > 3) {
+	         Random rand = new Random();
+	         backgroundIndex = rand.nextInt(3);
+	    } else {
+	         backgroundIndex = stageIndex - 1;
+	    }
+	    background = ImageLoader.stageBackgrounds[backgroundIndex];
 	}
 
 	public void setScore() {
