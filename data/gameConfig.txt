@@ -46,7 +46,8 @@ killScore=20
 [freeStage]
 limitTime=40
 mosqMaxCount=100
-mosqCreateCount=100
+mosqCreateCount=20
+mosqCreateTime=10
 buttMaxCount=50
 buttCreateCount=25
 buttCreateTime=5
