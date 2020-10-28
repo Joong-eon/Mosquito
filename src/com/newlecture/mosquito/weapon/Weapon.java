@@ -54,7 +54,7 @@ public abstract class Weapon {// 추상클래스 구현
 	public void update() {
 		attackDelay++;
 
-		if (imgLoading && attackDelay > attackSpeed) { // 마우스 클릭되면 무기 이미지 움직임 시작
+		if (imgLoading) { // 마우스 클릭되면 무기 이미지 움직임 시작
 			imgTempoCnt++;
 			if (imgTempoCnt % imgTempo == 0) {
 				imgIndex++;

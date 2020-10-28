@@ -45,8 +45,10 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
-import com.newlecture.mosquito.weapon.RiceStraw;
-import com.newlecture.mosquito.weapon.Spear;
+
+
+
+import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
 
 	public class StageCanvas extends Canvas {
@@ -66,6 +68,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private AudioInputStream effectAis;
 	   private Clip mosClip;
 	   private AudioInputStream mosAis;
+	   private StrawShoes strawShoes;
 	 
 	   /// 여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -104,7 +107,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      player = stageService.getP1();
 	      hpBar = stageService.getHpBar();
 	      missList = new ArrayList<Miss>();
-
+	      strawShoes = new StrawShoes();
 	      // 현재 스테이지에 맞는 백그라운드를 가져옴
 	      int stageIndex = stageService.getStageIndex();
 	      background = ImageLoader.stageBackgrounds[stageIndex - 1];
@@ -197,7 +200,8 @@ import com.newlecture.mosquito.weapon.Weapon;
 	         public void mouseMoved(MouseEvent e) {
 	            player.getCurrentWp().setX(e.getX());
 	            player.getCurrentWp().setY(e.getY());
-
+	            strawShoes.setX(e.getX());
+	            strawShoes.setY(e.getY());
 	         }
 	      });
 
@@ -314,7 +318,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 
 	         @Override
 	         public void mousePressed(MouseEvent e) {
-
+	        	 strawShoes.setImgLoading(true);
 	            for (int i = 0; i < weapons.length; i++) {
 	               if (true == weapons[i].contains(e.getX(), e.getY())) {
 	                  System.out.println("선택되었습니다");
@@ -334,7 +338,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	                     if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
 	                        if (weapons[i].getName().equals("flyswatter"))
 	                           player.setCurrentWp(player.getWeapons()[j]);
-	                        else if (weapons[i].getName().equals("spear"))
+	                        else if (weapons[i].getName().equals("strawShoes"))
 	                           player.setCurrentWp(player.getWeapons()[j]);
 	                     }
 	                  }
@@ -441,7 +445,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	         timer.paint(bg);
 	         score.paint(bg);
 	         
-	         
+	         strawShoes.paint(bg);
 	         int mosqSize = stageService.getMosqs().size();
 	         for (int i = 0; i < mosqSize; i++) {
 	            stageService.getMosqs().get(i).paint(bg);
@@ -511,7 +515,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	               }
 
 	               player.getCurrentWp().update();
-
+	               strawShoes.update();
 	               repaint();
 
 	               try {

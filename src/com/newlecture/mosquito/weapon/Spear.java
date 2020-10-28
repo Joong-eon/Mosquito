@@ -25,7 +25,7 @@ public class Spear extends Weapon{
 		this.setImgY(10);
 		this.setAttackSpeed(40); //공격속도는 imgTempo * imgSize 보다 낮을 수 없음
 		this.setImgSize(11);
-		this.setImgTempo(3);
+		this.setImgTempo(2);
 	}
 	
 }

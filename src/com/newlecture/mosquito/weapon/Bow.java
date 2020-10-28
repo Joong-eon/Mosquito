@@ -17,7 +17,7 @@ public class Bow extends Weapon {
 		this.setImgY(3);
 		this.setAttackSpeed(40); // 공격속도는 imgTempo * imgSize 보다 낮을 수 없음
 		this.setImgSize(23);
-		this.setImgTempo(2);
+		this.setImgTempo(1);
 	}
 
 }

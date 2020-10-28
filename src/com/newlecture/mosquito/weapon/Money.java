@@ -16,6 +16,6 @@ public class Money extends Weapon {
 		this.setImgY(10);
 		this.setAttackSpeed(40); // 공격속도는 imgTempo * imgSize 보다 낮을 수 없음
 		this.setImgSize(21);
-		this.setImgTempo(3);
+		this.setImgTempo(1);
 	}
 }
