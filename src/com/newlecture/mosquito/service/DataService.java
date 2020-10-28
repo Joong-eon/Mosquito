@@ -119,15 +119,15 @@ public class DataService {
 		}
 
 		// 출력 확인용
-		for (String key : allRankDatas.keySet()) {
-
-			System.out.println("[" + key + "]");
-			LinkedHashMap<String, String> contents = allRankDatas.get(key);
-			for (String key2 : contents.keySet()) {
-				String value = contents.get(key2);
-				System.out.printf("%s = %s\n", key2, value);
-			}
-		}
+//		for (String key : allRankDatas.keySet()) {
+//
+//			System.out.println("[" + key + "]");
+//			LinkedHashMap<String, String> contents = allRankDatas.get(key);
+//			for (String key2 : contents.keySet()) {
+//				String value = contents.get(key2);
+//				System.out.printf("%s = %s\n", key2, value);
+//			}
+//		}
 
 		scan.close();
 		fis.close();
@@ -192,10 +192,14 @@ public class DataService {
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
 			String mosqCreateTime = datas.get("mosqCreateTime");
-
+			String mosqMinSpeed = datas.get("mosqMinSpeed");
+			String mosqMaxSpeed = datas.get("mosqMaxSpeed");
+			
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
+			String buttMinSpeed = datas.get("buttMinSpeed");
+			String buttMaxSpeed = datas.get("buttMaxSpeed");
 
 			String killScore = datas.get("killScore");
 
@@ -204,12 +208,17 @@ public class DataService {
 			stage.mosqCreateCount = Integer.parseInt(mosqCreateCount);
 			stage.mosqMaxCount = Integer.parseInt(mosqMaxCount);
 			stage.mosqCreateTime = Integer.parseInt(mosqCreateTime);
+			stage.mosqMinSpeed = Integer.parseInt(mosqMinSpeed);
+			stage.mosqMaxSpeed = Integer.parseInt(mosqMaxSpeed);
 
 			// 값 넣기
 			stage.buttMaxCount = Integer.parseInt(buttMaxCount);
 			stage.buttCreateCount = Integer.parseInt(buttCreateCount);
 			stage.buttCreateTime = Integer.parseInt(buttCreateTime);
-
+			stage.buttMinSpeed = Integer.parseInt(buttMinSpeed);
+			stage.buttMaxSpeed = Integer.parseInt(buttMaxSpeed);
+			
+			
 			stage.killScore = Integer.parseInt(killScore);
 		}
 

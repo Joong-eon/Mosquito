@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.util.Random;
 
 import com.newlecture.mosquito.GameFrame;
+import com.newlecture.mosquito.service.DataService;
+import com.newlecture.mosquito.service.StageService;
 
 public abstract class Bug{
 	
@@ -29,7 +31,9 @@ public abstract class Bug{
 	private int timeoutForMoving = 30;
 	private int timeoutForAttack = 20;		//공격 이미지 변경 시 시간 체크를 위함
 	private int movIndex ;
-	private int speed ;
+	private int speed;
+	private int minSpeed;
+	private int maxSpeed;
 	private int walkTempo ;
 	private int outRange =60;
 	private int direction;
@@ -67,8 +71,10 @@ public abstract class Bug{
 		walkTempo = 6;
 	}
 	
-	
-	public void move(double x, double y) {
+	public void move(double x, double y) {		
+		int newSpeed = minSpeed + rand.nextInt(maxSpeed-minSpeed);
+		setSpeed(newSpeed);		
+		
 	    this.dx = x;
 		this.dy = y;
 
@@ -76,9 +82,8 @@ public abstract class Bug{
 		double w = this.dx - this.x;
 		double h = this.dy - this.y;
 		double d = Math.sqrt(w*w + h*h);
-		this.vx = w/d*speed;
-		this.vy = h/d*speed;
-
+		this.vx = w/d*getSpeed();
+		this.vy = h/d*getSpeed();
 	}
 
 	public  void update() {
@@ -232,8 +237,24 @@ public abstract class Bug{
 
 	public int getWalkTempo() {
 		return walkTempo;
+	}	
+
+	public int getMinSpeed() {
+		return minSpeed;
 	}
 
+	public void setMinSpeed(int minSpeed) {
+		this.minSpeed = minSpeed;
+	}
+
+	public int getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(int maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+	
 	public void setWalkTempo(int walkTempo) {
 		this.walkTempo = walkTempo;
 	}
@@ -304,6 +325,8 @@ public abstract class Bug{
 	public boolean isAttacked() {
 		return isAttacked;
 	}
+
+	
 	
 }
 
