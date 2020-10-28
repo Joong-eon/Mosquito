@@ -20,9 +20,9 @@ public class Hand extends Weapon {
 	public Hand() {
 
 		this.setType("Hand");
-		this.setDamage(2);
+		this.setDamage(5);
 		this.setImg(ImageLoader.hand);
-		this.setProb(0.42);
+		this.setProb(0.7);
 		this.setRange(2);
 
 		this.setWidth(180);

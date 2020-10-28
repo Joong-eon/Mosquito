@@ -68,6 +68,8 @@ public abstract class Bug{
 		hp = 10;
 		movIndex = 0;
 		speed = 1;
+		minSpeed = 1;
+		maxSpeed = 3;
 		walkTempo = 6;
 	}
 	

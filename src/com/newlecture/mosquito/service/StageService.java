@@ -66,7 +66,7 @@ public class StageService {
 	
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
-		System.out.println("gameover, gameclear 객체 생성 완료");
+		//System.out.println("gameover, gameclear 객체 생성 완료");
 		
 		changeStage(stageStep);
 	}
@@ -123,8 +123,8 @@ public class StageService {
 		if( (currentMosqCount+mosqCreateCount) <= mosqMaxCount) {
 			mosqDeltaTime = 0;
 			currentMosqCount += mosqCreateCount;
-			System.out.println("모기 생성 시작");
-			System.out.println("mosqCreateCount : "+mosqCreateCount);
+			//System.out.println("모기 생성 시작");
+			//System.out.println("mosqCreateCount : "+mosqCreateCount);
 			for (int i = 0 ;i < mosqCreateCount; i++) {
 				// 모기
 				Mosquito m = new Mosquito();

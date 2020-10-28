@@ -89,9 +89,6 @@ public class Player {
 		}
 		currentWp = weapons[0];
 		
-		if(currentWp instanceof Hand) {
-			System.out.println("현재 무기는 손입니다.");
-		}
 		
 		
 		//wp = new Hand();
@@ -121,7 +118,7 @@ public class Player {
 			int bugHp = bug.getHp();
 			bugHp -= currentWp.getDamage();
 			bug.setHp(bugHp);
-			System.out.println("남은 hp : " + bug.getHp());
+			//System.out.println("남은 hp : " + bug.getHp());
 			return false;
 		}else {
 			//System.out.println("모기 죽이기 ㄴ실패");
