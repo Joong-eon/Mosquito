@@ -114,6 +114,3 @@ Spear=res/weapon/spear.png
 Hand=res/weapon/hand.png
 Bow=res/weapon/bow.png
 Spear=res/weapon/spear.png
-
-
-
