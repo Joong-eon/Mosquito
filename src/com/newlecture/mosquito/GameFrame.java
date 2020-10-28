@@ -48,17 +48,27 @@ public class GameFrame extends Frame {
 	}
 
 	// 메뉴가 바뀌었을때 호출됨/
-	public void switchCanvas(Canvas oldCanvas, Class newCanvas) throws InstantiationException, IllegalAccessException {
+	public void switchCanvas(Canvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
 		boolean change = true;
-		if(oldCanvas instanceof MenuCanvas) {
+		if(oldCanvas instanceof MenuCanvas && checkId) {
 			
 			String id="";
-			
-			id = JOptionPane.showInputDialog(null, "사용자 아이디를 입럭하시오.", "USER ID", TEXT_CURSOR);
-			if(id == null) {
-				System.out.println(id);
-				change = false;
+			while(true) {
+				
+				id = JOptionPane.showInputDialog(null, "사용자 아이디를 입럭하시오.", "USER ID", TEXT_CURSOR);
+				if(id == null) {
+					System.out.println(id);
+					change = false;
+					id="";
+				}
+				
+				if(id.length() > 8)
+					JOptionPane.showMessageDialog(null, "8자리 이하의 이름을 입력하시오.", "Warning",
+					        JOptionPane.WARNING_MESSAGE);
+				else
+					break;
 			}
+			
 			
 			
 			userName = id;

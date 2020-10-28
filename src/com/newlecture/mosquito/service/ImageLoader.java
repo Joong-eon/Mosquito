@@ -50,6 +50,9 @@ public class ImageLoader {
 	
 	public static Image backBtnNormal;
 	public static Image backBtnPressed;
+	public static Image level1_weapon;
+	public static Image level2_weapon;
+	public static Image level3_weapon;
 
 	static {
 		try {
@@ -107,6 +110,10 @@ public class ImageLoader {
 			backBtnNormal = ImageIO.read(new File("res/back_normal.png"));		  
 			backBtnPressed = ImageIO.read(new File("res/back_pressed.png"));			 
 			
+			
+			level1_weapon = ImageIO.read(new File("res/level1_weapon.png"));
+			level2_weapon = ImageIO.read(new File("res/level2_weapon.png"));	
+			level3_weapon = ImageIO.read(new File("res/level3_weapon.png"));	
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -133,7 +133,7 @@ public class MenuCanvas extends Canvas {
 					switch (target.getName()) {
 					case "stage":
 						try {
-							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class);
+							GameFrame.getInstance().switchCanvas(MenuCanvas.this, StageCanvas.class,true);
 						} catch (InstantiationException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -144,7 +144,7 @@ public class MenuCanvas extends Canvas {
 						break;
 					case "free":
 						try {
-							GameFrame.getInstance().switchCanvas(MenuCanvas.this, FreeCanvas.class);
+							GameFrame.getInstance().switchCanvas(MenuCanvas.this, FreeCanvas.class, true);
 						} catch (InstantiationException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -155,7 +155,7 @@ public class MenuCanvas extends Canvas {
 						break;
 					case "rank":
 						try {
-							GameFrame.getInstance().switchCanvas(MenuCanvas.this, RankCanvas.class);
+							GameFrame.getInstance().switchCanvas(MenuCanvas.this, RankCanvas.class, false);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

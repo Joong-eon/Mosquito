@@ -55,7 +55,7 @@ public class RankCanvas extends Canvas {
 			@Override
 			public void onClicked(Button target) {
 				try {
-					GameFrame.getInstance().switchCanvas(RankCanvas.this, MenuCanvas.class);
+					GameFrame.getInstance().switchCanvas(RankCanvas.this, MenuCanvas.class,true);
 				} catch (InstantiationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

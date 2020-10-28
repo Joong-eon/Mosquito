@@ -55,9 +55,6 @@ import com.newlecture.mosquito.weapon.Weapon;
 
 public class StageCanvas extends Canvas {
 
-	private Image weapon1;
-	private Image weapon2;
-	private Image weapon22;
 	private Image[] weaponImg;
 
 	// ü
@@ -80,7 +77,7 @@ public class StageCanvas extends Canvas {
 	private Player player;
 	private PlayerHpBar hpBar;
 
-	private WeaponButton[] weapons;
+	private WeaponButton weapons;
 	private boolean isTypedTab = false;
 	private ArrayList<Miss> missList;
 	private Score score;
@@ -119,7 +116,7 @@ public class StageCanvas extends Canvas {
 		ArrayList wpDir = player.getArrWpDir();
 		ArrayList wp = player.getArrWp();
 		weaponImg = new Image[wpDir.size()];
-
+/*
 		for (int i = 0; i < wpDir.size(); i++) {
 			try {
 				weaponImg[i] = ImageIO.read(new File((String) wpDir.get(i)));
@@ -127,18 +124,35 @@ public class StageCanvas extends Canvas {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
+		weaponImg[0] = ImageLoader.level1_weapon;
+		weaponImg[1] = ImageLoader.level2_weapon;
+		weaponImg[2] = ImageLoader.level3_weapon;
+		
 
 		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
+		switch(player.getUserLevel()/10) {
+		case 0:
+			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 1:
+			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 2:
+			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		}
+		/*
 		weapons = new WeaponButton[wpDir.size()];
 
 		for (int i = 0; i < wpDir.size(); i++) {
-			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 800 + 350 * i, 700, 135, 188);
-		}
+			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 100, 100, 732, 500);
+		}*/
+		
 		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
 		// p1.current 정보변경
 		score = new Score();
-		userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
+		userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.userName, "level");
 		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 			// 이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
@@ -147,7 +161,7 @@ public class StageCanvas extends Canvas {
 			public void onClicked(GameOver gameOver) {
 				// TODO Auto-generated method stub
 				try {
-					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class);
+					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class,true);
 				} catch (InstantiationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -254,18 +268,19 @@ public class StageCanvas extends Canvas {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				player.getCurrentWp().setImgLoading(true);// 무기 이미지 실행
+				/*
 				for (int i = 0; i < weapons.length; i++) {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						System.out.println("선택되었습니다");
 						weapons[i].getClickListener().onPressed(weapons[i]);
 						// weapons[i].getClickListener().onPressed(weapons[i]);
 					}
-				}
+				}*/
 
 				// 현재 무기 소리
 				// player.getCurrentWp().getBgm();
 				// effectSound("res/sound/hand.wav");
-				player.getCurrentWp().AttackSound();
+				
 				// 커서 이미지 변경
 				int x = e.getX();
 				int y = e.getY();
@@ -290,6 +305,7 @@ public class StageCanvas extends Canvas {
 					}
 
 				} else if (true == player.getCurrentWp().isClickable()) {
+					player.getCurrentWp().AttackSound();
 					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
 					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
 					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
@@ -373,6 +389,7 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				/*
 				for (int i = 0; i < weapons.length; i++) {
 					if (true == weapons[i].contains(e.getX(), e.getY())) {
 						weapons[i].getClickListener().onReleased(weapons[i]);
@@ -388,10 +405,10 @@ public class StageCanvas extends Canvas {
 						player.getCurrentWp().setX(e.getX());
 						player.getCurrentWp().setY(e.getY());
 					}
-				}
+				}*/
 			}
 		});
-
+/*
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i].addClickListener(new ButtonClickedAdapter() {
@@ -400,7 +417,7 @@ public class StageCanvas extends Canvas {
 
 				}
 			});
-		}
+		}*/
 
 	}
 
@@ -506,8 +523,7 @@ public class StageCanvas extends Canvas {
 				}
 			}
 			if (isTypedTab) {
-				weapons[0].paint(bg);
-				weapons[1].paint(bg);
+				weapons.paint(bg);
 			}
 
 			player.getCurrentWp().paint(bg);
