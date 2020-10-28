@@ -67,7 +67,7 @@ public abstract class Weapon {// 추상클래스 구현
 	}
 
 	public boolean isClickable() {
-		if (attackDelay > attackSpeed) { // 1초에 60프레임 반복함. 20 = 60/3 = 약 0.3초
+		if (attackDelay > imgSize*imgTempo) { // 이미지가 모두 넘어가야 공격가능
 			attackDelay = 0;
 			return true;
 		} else
