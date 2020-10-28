@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
 
 import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.entity.Bug;
@@ -39,6 +40,8 @@ public abstract class Weapon {// 추상클래스 구현
 	private boolean imgLoading; // 무기 이미지 움직이는 중인지 판단
 	private int imgTempoCnt; // 이미지 넘어가는 속도 카운트
 	private int imgTempo; // 이미지 넘어가는 속도
+	
+	private AudioInputStream Bgm;
 
 	public void paint(Graphics g) {
 
@@ -223,5 +226,15 @@ public abstract class Weapon {// 추상클래스 구현
 	public void setImgY(int imgY) {
 		this.imgY = imgY;
 	}
+
+	public AudioInputStream getBgm() {
+		return Bgm;
+	}
+
+	public void setBgm(AudioInputStream bgm) {
+		Bgm = bgm;
+	}
+	
+	
 
 }
