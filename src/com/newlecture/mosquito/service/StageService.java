@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.newlecture.mosquito.GameFrame;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Miss;
 import com.newlecture.mosquito.entity.MosqAttackListener;
@@ -51,14 +52,14 @@ public class StageService {
 	private Image background;
 	
 	public StageService() {
-		this(3);
+		this(1);
 	}
 	
 	public StageService(int stageStep) {
 		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
-		p1 = new Player();
+		p1 = new Player(GameFrame.userName);
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;

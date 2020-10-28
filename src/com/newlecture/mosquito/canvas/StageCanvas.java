@@ -9,7 +9,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.TextField;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -45,11 +48,11 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 import com.newlecture.mosquito.service.StageService;
-
-
-
+import com.newlecture.mosquito.weapon.RiceStraw;
+import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
+
 
 	public class StageCanvas extends Canvas {
 
@@ -65,6 +68,8 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private Clip bgClip;
 	   private Clip effectClip;
 	   private AudioInputStream bgAis;
+	   private boolean clearSound = true;
+	   private boolean overSound = true;
 	   private AudioInputStream effectAis;
 	   private Clip mosClip;
 	   private AudioInputStream mosAis;
@@ -78,6 +83,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	   private PlayerHpBar hpBar;
 	   
 	   private WeaponButton[] weapons;
+	   private boolean isTypedTab = false;
 	   private ArrayList<Miss> missList;
 	   private Score score;
 	   private int stageStep;
@@ -107,7 +113,6 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      player = stageService.getP1();
 	      hpBar = stageService.getHpBar();
 	      missList = new ArrayList<Miss>();
-	      strawShoes = new StrawShoes();
 	      // 현재 스테이지에 맞는 백그라운드를 가져옴
 	      int stageIndex = stageService.getStageIndex();
 	      background = ImageLoader.stageBackgrounds[stageIndex - 1];
@@ -136,13 +141,15 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      // 이벤트 발생시 웨폰버튼에서 이름 가져오고
 	      // p1.current 정보변경
 	      score = new Score();
-	      userLevel = DataService.getInstance().getPlayerIntValue("player", "level");
+	      userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.userName, "level");
 	      userScore = player.getUserTotalScore();
 	      stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
 	         //이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
 	         //생성한 stageService에서는 객체 생성을 안하고 있음... 그래서 문제
 	         @Override
 	         public void onClicked(GameOver gameOver) {
+	        	 
+	        	 overSound = true;
 	            System.out.println("onClicked 실행");
 	            // TODO Auto-generated method stub
 	            try {
@@ -165,7 +172,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	            System.out.println("저장중");
 
 	            try {
-	               DataService.save(userLevel, player.getUserTotalScore());
+	               DataService.save(player.getUserName(),userLevel, player.getUserTotalScore());
 	            } catch (IOException e1) {
 	               // TODO Auto-generated catch block
 	               e1.printStackTrace();
@@ -186,7 +193,7 @@ import com.newlecture.mosquito.weapon.Weapon;
 	            stageService.getGameOver().addClickListener(gameOverListener);
 	            stageService.getGameClear().addClickListener(gameClearListener);
 	            killCount = 0;
-	            
+	            clearSound = true;
 	            System.out.println(timer.getLimitTime());
 	         }
 
@@ -194,160 +201,205 @@ import com.newlecture.mosquito.weapon.Weapon;
 
 	      // p1.getCurrentWp()
 	      // weaponBtn = new Button(, null, 700, 500, 72, 52);//
+	    setFocusable(true);
+	    setFocusTraversalKeysEnabled(false);
+	      
+		addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == 9) {
+					isTypedTab = false;
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println(e.getKeyCode());
+				switch(e.getKeyCode()) {
+				case 49:
+					player.setCurrentWp(player.getWeapons()[0]);
+					System.out.println("현재 무기 : 손" );
+					player.getCurrentWp().setX(getMousePosition().x);
+					player.getCurrentWp().setY(getMousePosition().y);
+					break;
+				case 50:
+					player.setCurrentWp(player.getWeapons()[1]);
+					System.out.println("현재 무기 : 머니" );
+					player.getCurrentWp().setX(getMousePosition().x);
+					player.getCurrentWp().setY(getMousePosition().y);
+					break;
+				case 51:
+					player.setCurrentWp(player.getWeapons()[2]);
+					System.out.println("현재 무기 : 팬" );
+					player.getCurrentWp().setX(getMousePosition().x);
+					player.getCurrentWp().setY(getMousePosition().y);
+					break;
+				case 9:
+					isTypedTab = true;
+					break;
+				}
+			}
+		});
 
 	      addMouseMotionListener(new MouseMotionAdapter() {
 	         @Override
 	         public void mouseMoved(MouseEvent e) {
 	            player.getCurrentWp().setX(e.getX());
 	            player.getCurrentWp().setY(e.getY());
-	            strawShoes.setX(e.getX());
-	            strawShoes.setY(e.getY());
+	            //strawShoes.setX(e.getX());
+	            //strawShoes.setY(e.getY());
 	         }
 	      });
 
 	      // addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
 	      addMouseListener(new MouseAdapter() {
-	         @Override
-	         public void mouseClicked(MouseEvent e) {
-	        	 //현재 무기 소리
-	     //   	 player.getCurrentWp().getBgm();
-	     //       effectSound("res/sound/hand.wav");
-	            // 커서 이미지 변경
-	            int x = e.getX();
-	            int y = e.getY();
-	            
-	            if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && killCount != stageService.getMosqMaxCount()) {
-	               // 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
-	            	mosSoundOff();
-	            	
-	            
-	               if (stageService.getGameOver().contains(x, y)) {
-	                  stageService.setGameOver(false);
-	                  stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
-	               }
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					player.getCurrentWp().setImgLoading(true);//무기 이미지 실행
+					for (int i = 0; i < weapons.length; i++) {
+						if (true == weapons[i].contains(e.getX(), e.getY())) {
+							System.out.println("선택되었습니다");
+							weapons[i].getClickListener().onPressed(weapons[i]);
+							// weapons[i].getClickListener().onPressed(weapons[i]);
+						}
+					}
+					
+					// 현재 무기 소리
+					// player.getCurrentWp().getBgm();
+					// effectSound("res/sound/hand.wav");
+					// 커서 이미지 변경
+					int x = e.getX();
+					int y = e.getY(); 
 
-	            } else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
-	               // 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
-	            	mosSoundOff();
-	            	clearSound("res/sound/gameclear.wav");
-	               if (stageService.getGameClear().contains(x, y)) {
-	                  stageService.setGameClear(false);
-	                  stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
-	               }
+					if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
+							&& killCount != stageService.getMosqMaxCount()) {
+						// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+						mosSoundOff();
 
-	            } else if (true == player.getCurrentWp().isClickable()) {
-	               // 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
-	               // 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
-	               // 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
-	               Mosquito selectedMosq = null;
-	               Butterfly selectedButt = null;
+						if (stageService.getGameOver().contains(x, y)) {
+							stageService.setGameOver(false);
+							stageService.getGameOver().getClickListener().onClicked(stageService.getGameOver());
+						}
 
-	               int mosqSize = stageService.getMosqs().size();
-	               for (int i = 0; i < mosqSize; i++) {
-	                  Mosquito mosq = stageService.getMosqs().get(i);
-	                  boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
-	                  if (true == isWeaponRange) {
-	                     selectedMosq = mosq;
-	                  }
-	               }
+					} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
+						// 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
+						mosSoundOff();
+						clearSound("res/sound/gameclear.wav");
+						if (stageService.getGameClear().contains(x, y)) {
+							stageService.setGameClear(false);
+							stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
+						}
 
-	               int buttSize = stageService.getButts().size();
-	               for (int i = 0; i < buttSize; i++) {
-	                  Butterfly butt = stageService.getButts().get(i);
-	                  boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
-	                  if (true == isWeaponRange) {
-	                     selectedButt = butt;
-	                  }
-	               }
+					} else if (true == player.getCurrentWp().isClickable()) {
+						// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
+						// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
+						// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
+						Mosquito selectedMosq = null;
+						Butterfly selectedButt = null;
 
-	               boolean isMiss = false;
+						int mosqSize = stageService.getMosqs().size();
+						for (int i = 0; i < mosqSize; i++) {
+							Mosquito mosq = stageService.getMosqs().get(i);
+							boolean isWeaponRange = player.getCurrentWp().isAttackRange(mosq);
+							if (true == isWeaponRange) {
+								selectedMosq = mosq;
+							}
+						}
 
-	               if (selectedMosq != null) { // null이 아니면 찾은거임
-	                  System.out.println("모기 클릭 성공");
-	                  isMiss = player.attack(selectedMosq);
+						int buttSize = stageService.getButts().size();
+						for (int i = 0; i < buttSize; i++) {
+							Butterfly butt = stageService.getButts().get(i);
+							boolean isWeaponRange = player.getCurrentWp().isAttackRange(butt);
+							if (true == isWeaponRange) {
+								selectedButt = butt;
+							}
+						}
 
-	                  // System.out.println("공격");
-	               }
+						boolean isMiss = false;
 
-	               if (selectedButt != null) {
-	                  isMiss = player.attack(selectedButt);
-	                  System.out.println("아얏!");
+						if (selectedMosq != null) { // null이 아니면 찾은거임
+							System.out.println("모기 클릭 성공");
+							isMiss = player.attack(selectedMosq);
 
-	               }
+							// System.out.println("공격");
+						}
 
-	               if (isMiss == true) {// 빗나감
-	                  // miss뜨는 그림효과
-	                  missList.add(new Miss(x, y));
-	                  effectSound("res/sound/miss.wav");
-	                  System.out.println("빗나감");
+						if (selectedButt != null) {
+							isMiss = player.attack(selectedButt);
+							System.out.println("아얏!");
 
-	               } else {// 빗나간게 아니라면
-	                  if (selectedMosq != null) {
-	                     if (selectedMosq.getHp() <= 0 && selectedMosq.getCurrentDir() != 2) {
-	                        killCount++;
-	                        String stageName = "stage" + stageService.getStageIndex();
+						}
 
-	                        int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
-	                        int nowScore = score.getScore();
-	                        score.setScore(nowScore += killScore);
-	                        player.setUserTotalScore(player.getUserTotalScore() + killScore);
-	                        if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
-	                           System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
-	                        selectedMosq.setMovIndex(4);
-	                        selectedMosq.setCurrentDir(2);
-	                        
-	                        System.out.println(killCount);
-	                     }
-	                  
-	                  } else if (selectedButt != null) {
+						if (isMiss == true) {// 빗나감
+							// miss뜨는 그림효과
+							missList.add(new Miss(x, y));
+							effectSound("res/sound/miss.wav");
+							System.out.println("빗나감");
 
-	                     if (selectedButt.getHp() <= 0) {
-	                        System.out.println("나비 사망");
-	                        System.out.println("10초 감소");
-	                        selectedButt.setCurrentDir(2);
-	                        selectedButt.setMovIndex(4);
-	                        timer.setTenCount(timer.getTenCount() - 1);
-	                     }
-	                     System.out.println("공격");
-	                  }
-	               }
-	            }
+						} else {// 빗나간게 아니라면
+							if (selectedMosq != null) {
+								if (selectedMosq.getHp() <= 0 && selectedMosq.getCurrentDir() != 2) {
+									killCount++;
+									String stageName = "stage" + stageService.getStageIndex();
 
-	            // super.mouseClicked(e);
-	         }
+									int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
+									int nowScore = score.getScore();
+									score.setScore(nowScore += killScore);
+									player.setUserTotalScore(player.getUserTotalScore() + killScore);
+									if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
+										System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
+									selectedMosq.setMovIndex(4);
+									selectedMosq.setCurrentDir(2);
 
-	         @Override
-	         public void mousePressed(MouseEvent e) {
-	        	 strawShoes.setImgLoading(true);
-	            for (int i = 0; i < weapons.length; i++) {
-	               if (true == weapons[i].contains(e.getX(), e.getY())) {
-	                  System.out.println("선택되었습니다");
-	                  weapons[i].getClickListener().onPressed(weapons[i]);
-	                  // weapons[i].getClickListener().onPressed(weapons[i]);
-	               }
-	            }
-	         }
+									System.out.println(killCount);
+								}
 
-	         @Override
-	         public void mouseReleased(MouseEvent e) {
-	            for (int i = 0; i < weapons.length; i++) {
-	               if (true == weapons[i].contains(e.getX(), e.getY())) {
-	                  weapons[i].getClickListener().onReleased(weapons[i]);
+							} else if (selectedButt != null) {
 
-	                  for (int j = 0; j < player.getWeapons().length; j++) {
-	                     if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
-	                        if (weapons[i].getName().equals("flyswatter"))
-	                           player.setCurrentWp(player.getWeapons()[j]);
-	                        else if (weapons[i].getName().equals("strawShoes"))
-	                           player.setCurrentWp(player.getWeapons()[j]);
-	                     }
-	                  }
-	                  player.getCurrentWp().setX(e.getX());
-	                  player.getCurrentWp().setY(e.getY());
-	               }
-	            }
-	         }
-	      });
+								if (selectedButt.getHp() <= 0) {
+									System.out.println("나비 사망");
+									System.out.println("10초 감소");
+									selectedButt.setCurrentDir(2);
+									selectedButt.setMovIndex(4);
+									timer.setTenCount(timer.getTenCount() - 1);
+								}
+								System.out.println("공격");
+							}
+						}
+					}
+
+					// super.mouseClicked(e);
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					for (int i = 0; i < weapons.length; i++) {
+						if (true == weapons[i].contains(e.getX(), e.getY())) {
+							weapons[i].getClickListener().onReleased(weapons[i]);
+
+							for (int j = 0; j < player.getWeapons().length; j++) {
+								if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
+									if (weapons[i].getName().equals("flyswatter"))
+										player.setCurrentWp(player.getWeapons()[j]);
+									else if (weapons[i].getName().equals("strawShoes"))
+										player.setCurrentWp(player.getWeapons()[j]);
+								}
+							}
+							player.getCurrentWp().setX(e.getX());
+							player.getCurrentWp().setY(e.getY());
+						}
+					}
+				}
+			});
 
 	      // 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
 	      for (int i = 0; i < weapons.length; i++) {
@@ -433,19 +485,26 @@ import com.newlecture.mosquito.weapon.Weapon;
 	      // 게임 실패시...
 	      if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0) && stageService.isGameClear()==false) {
 	         // 지방
+	    	  if(overSound) {
+	    		  mosSoundOff();
+	    		  overSound = false;
+	    	  }
 	         stageService.setGameOver(true);
 	         stageService.getGameOver().paint(bg);
 	         // 토탈점수 그려주세요
 
 	      } else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
-	         
+			if (clearSound) {
+				mosSoundOff();
+				clearSound("res/sound/gameclear.wav");
+				clearSound = false;
+			}
 	         stageService.setGameClear(true);
 	         stageService.getGameClear().paint(bg);
 	      } else {
 	         timer.paint(bg);
 	         score.paint(bg);
 	         
-	         strawShoes.paint(bg);
 	         int mosqSize = stageService.getMosqs().size();
 	         for (int i = 0; i < mosqSize; i++) {
 	            stageService.getMosqs().get(i).paint(bg);
@@ -463,8 +522,11 @@ import com.newlecture.mosquito.weapon.Weapon;
 	            }
 	         }
 
-	         weapons[0].paint(bg);
-	         //weapons[1].paint(bg);
+	         if(isTypedTab) {
+	             weapons[0].paint(bg);
+	             weapons[1].paint(bg);
+	          }
+
 
 	         player.getCurrentWp().paint(bg);
 
@@ -515,7 +577,6 @@ import com.newlecture.mosquito.weapon.Weapon;
 	               }
 
 	               player.getCurrentWp().update();
-	               strawShoes.update();
 	               repaint();
 
 	               try {
