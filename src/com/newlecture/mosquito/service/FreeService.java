@@ -55,7 +55,7 @@ public class FreeService {
 	public FreeService() {
 		freeStage = "freeStage";
 		timer = new Timer(freeStage);
-		p1 = new Player(GameFrame.userName);
+		p1 = new Player(GameFrame.getInstance().getUserName(),2);
 		hpBar = new PlayerHpBar(p1.getHp());
 		
 		

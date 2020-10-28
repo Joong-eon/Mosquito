@@ -24,7 +24,7 @@ public class GameFrame extends Frame {
 	
 	public static int canvasWidth = 1500;
 	public static int canvasHeight = 1000;
-	public static String userName;
+	public String userName;
 
 	public GameFrame() {
 		instance = this;
@@ -92,4 +92,14 @@ public class GameFrame extends Frame {
 		// TODO Auto-generated method stub
 		return instance;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
 }

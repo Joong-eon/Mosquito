@@ -35,7 +35,7 @@ public class DataService {
 	private LinkedHashMap<String, LinkedHashMap<String, String>> allGameDatas;
 	private LinkedHashMap<String, LinkedHashMap<String, String>> allUserDatas;
 	private LinkedHashMap<String, LinkedHashMap<String, String>> allWeaponDatas;
-	private LinkedHashMap<String, LinkedHashMap<String, String>> allRankDatas;
+	private static LinkedHashMap<String, LinkedHashMap<String, String>> allRankDatas;
 	private static DataService instance;
 
 	public DataService() {
@@ -209,6 +209,9 @@ public class DataService {
 		// 추가된 데이터 저장
 		pw.println(name+"=" + score);
 		pw.close();
+		
+		allRankDatas.clear();
+		loadConfig(rankFileName);
 	}
 
 	public ArrayList getWeaponList(int level) {

@@ -60,7 +60,7 @@ public class StageService {
 		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
-		p1 = new Player(GameFrame.userName);
+		p1 = new Player(GameFrame.getInstance().getUserName(),1);
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;
