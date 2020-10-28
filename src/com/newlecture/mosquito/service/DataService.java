@@ -141,6 +141,21 @@ public class DataService {
 		pw.println("totalScore=" + totalScore);
 		pw.close();
 	}
+	
+	public void saveRank(String name, int score) throws IOException {
+		// 추후 개발 예정
+		LinkedHashMap<String, String> datas = allRankDatas.get("rank");
+			
+		PrintWriter pw = new PrintWriter(rankFileName);
+		pw.println("[rank]");
+		// 이전 데이터 저장
+		for(String key : datas.keySet()) {
+			pw.println(key+"=" + datas.get(key));			
+		}		
+		// 추가된 데이터 저장
+		pw.println(name+"=" + score);
+		pw.close();
+	}
 
 	public ArrayList getWeaponList(int level) {
 
