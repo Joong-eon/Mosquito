@@ -174,6 +174,14 @@ public class MenuCanvas extends GameCanvas {
 		}
 
 	}
+	
+	@Override
+	public void closeCanvas() {
+		int input = JOptionPane.showConfirmDialog(GameFrame.getInstance(), "종료하시겠습니까?", "종료", JOptionPane.OK_CANCEL_OPTION);
+		if(input == 0) {
+			System.exit(0);
+		}		
+	}
 
 	@Override
 	public void paint(Graphics g) {
