@@ -23,7 +23,10 @@ public class GameCanvas extends Canvas {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				closeCanvas();	
+				
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					closeCanvas();	
+				}
 			}
 		});
 	}
