@@ -2,6 +2,7 @@
 playerLevel=1
 stageIndex=1
 stageCount=30
+levelBound=30
 [stage1]
 limitTime=60
 mosqMaxCount=5

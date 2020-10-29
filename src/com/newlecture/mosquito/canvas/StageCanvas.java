@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -314,8 +315,16 @@ public class StageCanvas extends GameCanvas {
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
 								player.setUserTotalScore(player.getUserTotalScore() + killScore);
-								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
+								int levelBound = DataService.getInstance().getGameIntValue("default", "levelBound");
+								levelBound *= stageService.getP1().getUserLevel();
+								if(player.getUserTotalScore() >= levelBound) { 
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
+									stageService.getP1().setUserLevel(userLevel);
+								}
+								
+//								if (player.getUserTotalScore() % levelBound == 0 && player.getUserTotalScore() / 100 != 0) {
+//									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
+//								}
 								selectedMosq.setMovIndex(4);
 								selectedMosq.setCurrentDir(2);
 								selectedMosq.setClickable(false);
@@ -429,7 +438,15 @@ public class StageCanvas extends GameCanvas {
 			bg.drawImage(stageNumber, x, 30,  x + 70, 100, 
 						sX1, sY1, sX2, sY2, null);
 		}
-
+	    
+	    {
+		    int level = stageService.getP1().getUserLevel();
+		    
+		    bg.setColor(Color.BLACK);
+		    bg.setFont(new Font("돋움", Font.BOLD, 20));
+		    bg.drawString("LEVEL." + level, 700, 890);
+	    }
+	    
 		if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
 				&& stageService.isGameClear() == false) {
 			
