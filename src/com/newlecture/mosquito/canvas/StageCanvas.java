@@ -298,7 +298,7 @@ public class StageCanvas extends GameCanvas {
 				} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
 					// 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
 					mosSoundOff();
-					clearSound("res/sound/gameclear.wav");
+				//	clearSound("res/sound/gameclear.wav");
 					if (stageService.getGameClear().contains(x, y)) {
 						stageService.setGameClear(false);
 						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
