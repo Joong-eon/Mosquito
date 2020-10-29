@@ -53,7 +53,7 @@ import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
 
-public class StageCanvas extends Canvas {
+public class StageCanvas extends GameCanvas {
 
 	private Image weapon1;
 	private Image weapon2;
@@ -386,27 +386,6 @@ public class StageCanvas extends Canvas {
 				// super.mouseClicked(e);
 
 			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				/*
-				for (int i = 0; i < weapons.length; i++) {
-					if (true == weapons[i].contains(e.getX(), e.getY())) {
-						weapons[i].getClickListener().onReleased(weapons[i]);
-
-						for (int j = 0; j < player.getWeapons().length; j++) {
-							if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
-								if (weapons[i].getName().equals("flyswatter"))
-									player.setCurrentWp(player.getWeapons()[j]);
-								else if (weapons[i].getName().equals("strawShoes"))
-									player.setCurrentWp(player.getWeapons()[j]);
-							}
-						}
-						player.getCurrentWp().setX(e.getX());
-						player.getCurrentWp().setY(e.getY());
-					}
-				}*/
-			}
 		});
 /*
 		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
@@ -557,61 +536,36 @@ public class StageCanvas extends Canvas {
 	// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
 
 	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		paint(g);
-	}
+	public void gameUpdate() {
+		timer.update();
 
-	public void start() {//
+		int mosqSize = stageService.getMosqs().size();
+		for (int i = 0; i < mosqSize; i++) {
+			stageService.getMosqs().get(i).update();
+		}
 
-		Runnable sub = new Runnable() {
+		int buttSize = stageService.getButts().size();
+		for (int i = 0; i < buttSize; i++) {
+			stageService.getButts().get(i).update();
+		}
 
-			@Override
-			public void run() {
+		if (missList != null) {
 
-				while (true) {
-					timer.update();
+			for (int i = 0; i < missList.size(); i++) {
 
-					int mosqSize = stageService.getMosqs().size();
-					for (int i = 0; i < mosqSize; i++) {
-						stageService.getMosqs().get(i).update();
-					}
+				missList.get(i).update();
 
-					int buttSize = stageService.getButts().size();
-					for (int i = 0; i < buttSize; i++) {
-						stageService.getButts().get(i).update();
-					}
-
-					if (missList != null) {
-
-						for (int i = 0; i < missList.size(); i++) {
-
-							missList.get(i).update();
-
-						}
-						for (int i = 0; i < missList.size(); i++) {
-							if (missList.get(i).getDelTime() < 0) {
-								missList.remove(i);
-							}
-						}
-					}
-
-					player.getCurrentWp().update();
-					repaint();
-
-					try {
-						Thread.sleep(17);//ms 1000
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					stageService.update();
+			}
+			for (int i = 0; i < missList.size(); i++) {
+				if (missList.get(i).getDelTime() < 0) {
+					missList.remove(i);
 				}
 			}
-		};
+		}
 
-		th = new Thread(sub);
-		th.start();
+		player.getCurrentWp().update();
 
+		stageService.update();
 	}
+	
 }
