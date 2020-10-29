@@ -3,7 +3,7 @@ level=10
 totalScore=840
 [jun]
 level=10
-totalScore=100
+totalScore=500
 [123456]
 level=10
 totalScore=100
@@ -32,5 +32,8 @@ totalScore=100
 level=10
 totalScore=100
 [agfasg]
+level=10
+totalScore=100
+[fd]
 level=10
 totalScore=100

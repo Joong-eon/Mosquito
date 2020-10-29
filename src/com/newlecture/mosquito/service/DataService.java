@@ -332,7 +332,7 @@ public class DataService {
 			String limitTime = datas.get("limitTime");
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
-			// String mosqCreateTime = datas.get("mosqCreateTime");
+			String mosqCreateTime = datas.get("mosqCreateTime");
 
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
@@ -344,7 +344,7 @@ public class DataService {
 			free.limitTime = Integer.parseInt(limitTime);
 			free.mosqCreateCount = Integer.parseInt(mosqCreateCount);
 			free.mosqMaxCount = Integer.parseInt(mosqMaxCount);
-			// free.mosqCreateTime = Integer.parseInt(mosqCreateTime);
+			 free.mosqCreateTime = Integer.parseInt(mosqCreateTime);
 
 			// 값 넣기
 			free.buttMaxCount = Integer.parseInt(buttMaxCount);

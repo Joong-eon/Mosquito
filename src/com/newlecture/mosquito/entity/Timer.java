@@ -29,6 +29,7 @@ public class Timer {
 	private int tenCount;
 	private int oneCount;
 	private int decimalCount = 10;
+	private boolean isAdded = false;
 	
 	public Timer() {
 		this(0);
@@ -40,7 +41,7 @@ public class Timer {
 		
 		limitTime = DataService.getInstance().getGameIntValue(freeStage, "limitTime");
 		tenCount = limitTime/10;
-		oneCount = limitTime%10;
+		oneCount = limitTime%10;//0~9
 	}
 	
 	public Timer(int stageIndex) {
@@ -71,7 +72,7 @@ public class Timer {
 		timeForTimer--;
 		timeForDecimal--;
 		
-		if(tenCount*10+oneCount == limitTime)//카운트의 첫 시작일때에만 수행하는 구문
+		if(tenCount*10+oneCount == limitTime && false == isAdded)//카운트의 첫 시작일때에만 수행하는 구문
 			if(oneCount != 0) {			//60.0 -> 59.9로 만들기 위함
 				tenCount--;
 				oneCount--;
@@ -140,5 +141,14 @@ public class Timer {
 	public void setLimitTime(int limitTime) {
 		this.limitTime = limitTime;
 	}
+
+	public boolean isAdded() {
+		return isAdded;
+	}
+
+	public void setAdded(boolean isAdded) {
+		this.isAdded = isAdded;
+	}
+	
 	
 }
