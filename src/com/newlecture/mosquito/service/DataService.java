@@ -200,12 +200,14 @@ public class DataService {
 			
 		PrintWriter pw = new PrintWriter(rankFileName);
 		pw.println("[rank]");
-		// 이전 데이터 저장
-		for(String key : datas.keySet()) {
-			pw.println(key+"=" + datas.get(key));			
-		}		
+		if(datas != null) {
+			// 이전 데이터 저장
+			for(String key : datas.keySet()) {
+				pw.println(key+"=" + datas.get(key));			
+			}	
+		}	
 		// 추가된 데이터 저장
-		pw.println(name+"=" + score);
+		pw.print(name+"=" + score);
 		pw.close();
 		
 		allRankDatas.clear();
@@ -360,11 +362,14 @@ public class DataService {
 		LinkedHashMap<String, String> datas = allRankDatas.get("rank");
 		
 		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
-		for(String key : datas.keySet()) {
-			String value = datas.get(key);
-			int score = Integer.parseInt(value);
-			result.put(key, score);
-		}
+		
+		if(datas != null) {
+			for(String key : datas.keySet()) {
+				String value = datas.get(key);
+				int score = Integer.parseInt(value);
+				result.put(key, score);
+			}
+		}	
 		
 		return result;
 	}
