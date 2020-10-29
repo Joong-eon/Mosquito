@@ -89,6 +89,7 @@ public class FreeCanvas extends GameCanvas{
 		weaponImg[0] = ImageLoader.level1_weapon;
 		weaponImg[1] = ImageLoader.level2_weapon;
 		weaponImg[2] = ImageLoader.level3_weapon;
+		mosSound("res/sound/mos.wav");
 
 		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
 		switch(player.getUserLevel()/10) {
@@ -183,9 +184,10 @@ public class FreeCanvas extends GameCanvas{
 					int x = e.getX();
 					int y = e.getY();
 					//		System.out.println(freeService.getMosqs().size());
-					if (((timer.getOneCount() == 0 && timer.getTenCount() == 0 )
-							||(player.getHp() <= 0))&& killCount != freeService.getMosqMaxCount()) {
+					if ((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
+							 {
 						// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
+
 						if (freeService.getGameOver().contains(x, y)) {
 							freeService.setGameOver(false);
 							freeService.getGameOver().getClickListener().onClicked(freeService.getGameOver());
@@ -313,7 +315,7 @@ public class FreeCanvas extends GameCanvas{
 
 		// 게임 실패시...
 		if ((timer.getOneCount() == 0 && timer.getTenCount() == 0 ) || (player.getHp() <= 0)) {
-			System.out.println("에러얌");
+			mosSoundOff();
 			freeService.setGameOver(true);
 			freeService.getGameOver().paint(bg);
 			String name = GameFrame.getInstance().getUserName();
