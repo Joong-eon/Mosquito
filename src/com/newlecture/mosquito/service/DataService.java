@@ -62,7 +62,7 @@ public class DataService {
 		}
 	}
 	
-	public void checkId(String id) throws FileNotFoundException {
+	public boolean checkId(String id) throws FileNotFoundException {
 		FileInputStream fis = new FileInputStream("data/userConfig.txt");
 		Scanner scan = new Scanner(fis);
 
@@ -76,7 +76,7 @@ public class DataService {
 			if (line.contains(id))
 				isContain = true;
 		}
-
+		
 		if (isContain == false) {
 			userDatas.add("[" + id + "]");
 			userDatas.add("level=10");
@@ -89,15 +89,23 @@ public class DataService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return isContain;
 	}
 	
 	public void saveUserData(ArrayList userDatas) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(userFileName);
 		pw.print("");
+		int count = 1;
 		for (Object data : userDatas) {
 			System.out.println((String) data);
-			pw.append((String) data + "\n");
+			if(count < userDatas.size())
+				pw.append((String) data + "\n");
+			else
+				pw.append((String) data);
+			count++;
 		}
+		
 		pw.close();
 	}
 

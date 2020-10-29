@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.newlecture.mosquito.GameFrame;
+import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.entity.Butterfly;
 import com.newlecture.mosquito.entity.Miss;
 import com.newlecture.mosquito.entity.MosqAttackListener;
@@ -22,11 +23,13 @@ import com.newlecture.mosquito.gui.PlayerHpBar;
 public class StageService {
 	private ArrayList<Mosquito> mosqs;//==null
 	private ArrayList<Butterfly> butts;		// 스테이지에 생성되는 모든 모기와 나비
+	private ArrayList<Miss> missList;
 	private Stage stage;
 	private int stageIndex;
 	private Timer timer;
 	private Player p1;
 	private int totalScore=0;
+	private boolean isCreatableMiss = true;
 	
 	private int currentMosqCount;		// 현재 생성 된 모기 수
 	private int mosqDeltaTime;
@@ -59,7 +62,7 @@ public class StageService {
 	public StageService(int stageStep) {
 		
 		
-		
+		missList = new ArrayList<Miss>();
 		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
@@ -67,7 +70,6 @@ public class StageService {
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;
-	
 		gameOver = new GameOver("gameOver",gameOverBtn, gameOverBtn, 642, 359, 216, 283);
 		gameClear = new GameClear("gameClear",gameClearBtn, gameClearBtn, 450, 327, 599, 347);
 		//System.out.println("gameover, gameclear 객체 생성 완료");
@@ -200,6 +202,13 @@ public class StageService {
 					//mosqs.remove(i);
 					mosqs.get(i).setX(-1);
 					mosqs.get(i).setY(-1);
+					mosqs.get(i).setClickable(true);
+					
+					isCreatableMiss = true;
+					
+//					for(Miss miss : missList) {
+//						miss.setClickable(true);
+//					}
 					//stage.setMosqCreateCount(--mosqCreateCount);
 				}
 			}
@@ -218,6 +227,8 @@ public class StageService {
 				if(butts.get(i).getDeleteTimer() == 0) {
 					butts.get(i).setX(-1);
 					butts.get(i).setY(-1);
+					butts.get(i).setClickable(true);
+					isCreatableMiss = true;
 				}
 			}
 		}
@@ -333,6 +344,23 @@ public class StageService {
 	public void setBackground(Image background) {
 		this.background = background;
 	}
+
+	public ArrayList<Miss> getMissList() {
+		return missList;
+	}
+
+	public void setMissList(ArrayList<Miss> missList) {
+		this.missList = missList;
+	}
+
+	public boolean isCreatableMiss() {
+		return isCreatableMiss;
+	}
+
+	public void setCreatableMiss(boolean isCreatableMiss) {
+		this.isCreatableMiss = isCreatableMiss;
+	}
+
 	
 	
 }

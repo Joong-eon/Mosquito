@@ -33,12 +33,13 @@ public class Player {
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
 	
 	public Player(String name,int mode) {
+		/*
 		try {
 	         DataService.getInstance().checkId(name);
 	      } catch (FileNotFoundException e1) {
 	         // TODO Auto-generated catch block
 	         e1.printStackTrace();
-	     }
+	     }*/
 		
 		tier = 1;//추후 파일 입출력으로 구현
 		money = 0;

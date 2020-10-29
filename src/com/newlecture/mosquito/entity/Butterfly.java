@@ -18,7 +18,8 @@ public class Butterfly extends Bug {
 	private double lifeTime;
 	private int penaltyTime = 5;
 	private int deleteTimer = 60;
-
+	private boolean isClickable = true;
+	
 	private Random rand = new Random();
 
 	public Butterfly() {
@@ -85,7 +86,7 @@ public class Butterfly extends Bug {
 
 		int offsetX = movIndex * imgWidth;
 
-		if (true == isAttacked()) { // 공격 당했을 경우
+		if (true == isAttacked() && isClickable == true) { // 공격 당했을 경우
 			if (this.getCurrentDir() == 0) { // 왼쪽 방향
 				g.drawImage(img, x1, y1, x2, y2, imgWidth * 2, imgHeight * 2, imgWidth * 3, imgHeight * 3,
 						StageCanvas.instance);
@@ -112,5 +113,14 @@ public class Butterfly extends Bug {
 	public void setDeleteTimer(int deleteTimer) {
 		this.deleteTimer = deleteTimer;
 	}
+
+	public boolean isClickable() {
+		return isClickable;
+	}
+
+	public void setClickable(boolean isClickable) {
+		this.isClickable = isClickable;
+	}
+	
 
 }

@@ -23,6 +23,7 @@ public class Mosquito extends Bug {
 	private int power;
 	private int attackTimer;
 	private int damage;
+	private boolean isClickable = true;
 	private MosqAttackListener mosqAttackListener;
 
 	public void setMosqAttackListener(MosqAttackListener mosqAttackListener) {
@@ -87,7 +88,7 @@ public class Mosquito extends Bug {
 		if (movIndex < 5)
 			offsetX -= 1;
 
-		if (true == isAttacked()) { // 공격 당했을 경우
+		if (true == isAttacked() && isClickable == true) { // 공격 당했을 경우
 			
 			attackTimer = (int)((Math.random()*11+10)*60);
 			if (this.getCurrentDir() == 0) {			// 오른쪽
@@ -99,7 +100,7 @@ public class Mosquito extends Bug {
 			}
 		} else { 					// 평상시
 			if (this.getCurrentDir() != 2)// 살아 있을 때
-				if(attackTimer <= 120 && this.getCurrentDir() == 0) {
+				if(attackTimer <= 120 && this.getCurrentDir() == 0 && isClickable) {
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
 							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
 					
@@ -109,7 +110,7 @@ public class Mosquito extends Bug {
 						attackTimer = (int)((Math.random()*11+10)*60);
 					}
 				}
-				else if(attackTimer <= 120 && this.getCurrentDir() == 1) {
+				else if(attackTimer <= 120 && this.getCurrentDir() == 1 && isClickable) {
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection()+imgHeight*3, imgWidth + offsetX,
 							this.getDirection() + imgHeight+imgHeight*3, StageCanvas.instance);
 					if(attackTimer <= 0) {
@@ -121,9 +122,10 @@ public class Mosquito extends Bug {
 				else
 					g.drawImage(img, x1, y1, x2, y2, 0 + offsetX, this.getDirection(), imgWidth + offsetX,
 						this.getDirection() + imgHeight, StageCanvas.instance);
-			else// 죽었을 때
+			else{// 죽었을 때
 				g.drawImage(img, x1, y1, x2, y2, 0 + 4 * imgWidth, 270 * 2, imgWidth + 4 * imgWidth,
 						270 * 2 + imgHeight, StageCanvas.instance);
+			}
 			
 			
 		}
@@ -158,6 +160,16 @@ public class Mosquito extends Bug {
             e.printStackTrace();
          }
       }
+
+	public boolean isClickable() {
+		return isClickable;
+	}
+
+	public void setClickable(boolean isClickable) {
+		this.isClickable = isClickable;
+	}
 	
+	 
+	 
 
 }

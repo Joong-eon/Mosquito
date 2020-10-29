@@ -49,7 +49,7 @@ public class FreeService {
 	private int buttMaxCount;
 	private int buttCreateCount;
 	private int buttCreateTime;
-
+	
 	private PlayerHpBar hpBar;
 
 	public FreeService() {

@@ -82,6 +82,7 @@ public class StageCanvas extends Canvas {
 
 	private WeaponButton weapons;
 	private boolean isTypedTab = false;
+	
 	private ArrayList<Miss> missList;
 	private Score score;
 	private int stageStep;
@@ -108,7 +109,7 @@ public class StageCanvas extends Canvas {
 		timer = stageService.getTimer();
 		player = stageService.getP1();
 		hpBar = stageService.getHpBar();
-		missList = new ArrayList<Miss>();
+		missList = stageService.getMissList();
 		// 현재 스테이지에 맞는 백그라운드를 가져옴
 		stageText = ImageLoader.stageText;
 		stageNumber = ImageLoader.stageNumber;
@@ -116,21 +117,11 @@ public class StageCanvas extends Canvas {
 		ArrayList wpDir = player.getArrWpDir();//무기 이미지경로 리스트
 		ArrayList wp = player.getArrWp();//무기 이름 리스트
 		weaponImg = new Image[wpDir.size()];
-/*
-		for (int i = 0; i < wpDir.size(); i++) {
-			try {
-				weaponImg[i] = ImageIO.read(new File((String) wpDir.get(i)));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
+
 		weaponImg[0] = ImageLoader.level1_weapon;
 		weaponImg[1] = ImageLoader.level2_weapon;
 		weaponImg[2] = ImageLoader.level3_weapon;
 		
-
-		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
 		switch(player.getUserLevel()/10) {
 		case 0:
 			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
@@ -142,31 +133,19 @@ public class StageCanvas extends Canvas {
 			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
 			break;
 		}
-		/*
-		weapons = new WeaponButton[wpDir.size()];
-
-		for (int i = 0; i < wpDir.size(); i++) {
-			weapons[i] = new WeaponButton((String) wp.get(i), weaponImg[i], weaponImg[i], 100, 100, 732, 500);
-		}*/
 		
-		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
-		// p1.current 정보변경
 		score = new Score();
 		userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.getInstance().getUserName(), "level");
 		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
-			// 이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
-			// 생성한 stageService에서는 객체 생성을 안하고 있음... 그래서 문제
+		
 			@Override
 			public void onClicked(GameOver gameOver) {
-				// TODO Auto-generated method stub
 				try {
 					GameFrame.getInstance().switchCanvas(StageCanvas.this, MenuCanvas.class,true);
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -200,13 +179,10 @@ public class StageCanvas extends Canvas {
 				stageService.getGameClear().addClickListener(gameClearListener);
 				killCount = 0;
 				clearSound = true;
-				// System.out.println(timer.getLimitTime());
 			}
 
 		});
 
-		// p1.getCurrentWp()
-		// weaponBtn = new Button(, null, 700, 500, 72, 52);//
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 
@@ -214,8 +190,7 @@ public class StageCanvas extends Canvas {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
@@ -262,32 +237,17 @@ public class StageCanvas extends Canvas {
 			}
 		});
 
-		// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
 		addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				player.getCurrentWp().setImgLoading(true);// 무기 이미지 실행
-				/*
-				for (int i = 0; i < weapons.length; i++) {
-					if (true == weapons[i].contains(e.getX(), e.getY())) {
-						System.out.println("선택되었습니다");
-						weapons[i].getClickListener().onPressed(weapons[i]);
-						// weapons[i].getClickListener().onPressed(weapons[i]);
-					}
-				}*/
-
-				// 현재 무기 소리
-				// player.getCurrentWp().getBgm();
-				// effectSound("res/sound/hand.wav");
+				player.getCurrentWp().setImgLoading(true);
 				
-				// 커서 이미지 변경
 				int x = e.getX();
 				int y = e.getY();
-
+				
 				if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
 						&& killCount != stageService.getMosqMaxCount()) {
-					// 게임에서 졌을 때, 지방을 누르게 되면 메뉴캔버스로 돌아감
 					mosSoundOff();
 
 					if (stageService.getGameOver().contains(x, y)) {
@@ -296,7 +256,7 @@ public class StageCanvas extends Canvas {
 					}
 
 				} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
-					// 게임에서 이겼을 때, 풍악짤나오고, 누르면 다음 스테이지로 넘어감
+					
 					mosSoundOff();
 					clearSound("res/sound/gameclear.wav");
 					if (stageService.getGameClear().contains(x, y)) {
@@ -306,9 +266,7 @@ public class StageCanvas extends Canvas {
 
 				} else if (true == player.getCurrentWp().isClickable()) {
 					player.getCurrentWp().AttackSound();
-					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
-					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
-					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
+					
 					Mosquito selectedMosq = null;
 					Butterfly selectedButt = null;
 
@@ -332,10 +290,9 @@ public class StageCanvas extends Canvas {
 
 					boolean isMiss = false;
 
-					if (selectedMosq != null) { // null이 아니면 찾은거임
+					if (selectedMosq != null) {
 						System.out.println("모기 클릭 성공");
 						isMiss = player.attack(selectedMosq);
-						// System.out.println("공격");
 					}
 
 					if (selectedButt != null) {
@@ -343,21 +300,24 @@ public class StageCanvas extends Canvas {
 						System.out.println("아얏!");
 
 					}
-
-					if (isMiss == true) {// 빗나감
-						// miss뜨는 그림효과
+					if (isMiss == true && stageService.isCreatableMiss()) {
 						missList.add(new Miss(x, y));
 						effectSound("res/sound/miss.wav");
 						System.out.println("빗나감");
 
-					} else {// 빗나간게 아니라면
+					}/*
+					else if(isMiss == true && selectedButt.isClickable()) {
+						missList.add(new Miss(x, y));
+						effectSound("res/sound/miss.wav");
+						System.out.println("빗나감");
+					}*/
+					else {
 						if (selectedMosq != null) {
 							if (selectedMosq.getHp() <= 0 && selectedMosq.getCurrentDir() != 2) {
 
 								effectSound("res/sound/mosdie.wav");
 								killCount++;
 								String stageName = "stage" + stageService.getStageIndex();
-											//"stage1"
 								int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 								int nowScore = score.getScore();
 								score.setScore(nowScore += killScore);
@@ -365,9 +325,11 @@ public class StageCanvas extends Canvas {
 								if (player.getUserTotalScore() % 1000 == 0 && player.getUserTotalScore() / 100 != 0)
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 								selectedMosq.setMovIndex(4);
-								selectedMosq.setCurrentDir(2);//죽었다
-
-								//System.out.println(killCount);
+								selectedMosq.setCurrentDir(2);
+								selectedMosq.setClickable(false);
+								
+								stageService.setCreatableMiss(false);
+								//missList.clear();
 							}
 
 						} else if (selectedButt != null) {
@@ -377,51 +339,21 @@ public class StageCanvas extends Canvas {
 								System.out.println("10초 감소");
 								selectedButt.setCurrentDir(2);
 								selectedButt.setMovIndex(4);
-								timer.setTenCount(timer.getTenCount() - 1);
+								selectedButt.setClickable(false);
+								stageService.setCreatableMiss(false);
+								if(timer.getTenCount() == 0)
+									timer.setOneCount(0);
+								else
+									timer.setTenCount(timer.getTenCount()-1);
 							}
 							System.out.println("공격");
 						}
 					}
 				}
-				// super.mouseClicked(e);
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				/*
-				for (int i = 0; i < weapons.length; i++) {
-					if (true == weapons[i].contains(e.getX(), e.getY())) {
-						weapons[i].getClickListener().onReleased(weapons[i]);
-
-						for (int j = 0; j < player.getWeapons().length; j++) {
-							if (player.getWeapons()[j].getType().equals(weapons[i].getName())) {
-								if (weapons[i].getName().equals("flyswatter"))
-									player.setCurrentWp(player.getWeapons()[j]);
-								else if (weapons[i].getName().equals("strawShoes"))
-									player.setCurrentWp(player.getWeapons()[j]);
-							}
-						}
-						player.getCurrentWp().setX(e.getX());
-						player.getCurrentWp().setY(e.getY());
-					}
-				}*/
 			}
 		});
-/*
-		// 버튼 배열에 있는 버튼들에게 이벤트를 등록해줌
-		for (int i = 0; i < weapons.length; i++) {
-			weapons[i].addClickListener(new ButtonClickedAdapter() {
-				@Override
-				public void onClicked(Button target) {
-
-				}
-			});
-		}*/
-
 	}
 
-	// 모기 사운드
 	private void mosSound(String file) {
 
 		try {
@@ -473,10 +405,9 @@ public class StageCanvas extends Canvas {
 
 		Image buf = this.createImage(this.getWidth(), this.getHeight());
 		Graphics bg = buf.getGraphics();
-		 // 배경 그려주세요
+		
 	    bg.drawImage(stageService.getBackground(), 0, 0, null);
 
-		// 스테이지 텍스트 전시
 	    {
 			bg.drawImage(stageText, 30, 30, null);
 			
@@ -507,14 +438,12 @@ public class StageCanvas extends Canvas {
 						sX1, sY1, sX2, sY2, null);
 		}
 
-		// 게임 실패시...
 		if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)
 				&& stageService.isGameClear() == false) {
-			// 지방
+			
 			mosSoundOff();
 			stageService.setGameOver(true);
 			stageService.getGameOver().paint(bg);
-			// 토탈점수 그려주세요
 
 		} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
 			mosSoundOff();
@@ -545,6 +474,7 @@ public class StageCanvas extends Canvas {
 				weapons.paint(bg);
 			}
 
+
 			player.getCurrentWp().paint(bg);
 
 			hpBar.paint(bg);
@@ -553,12 +483,8 @@ public class StageCanvas extends Canvas {
 		g.drawImage(buf,0,0,this);
 	}
 
-
-	// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
-
 	@Override
 	public void update(Graphics g) {
-		// TODO Auto-generated method stub
 		paint(g);
 	}
 
@@ -602,7 +528,6 @@ public class StageCanvas extends Canvas {
 					try {
 						Thread.sleep(17);//ms 1000
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					stageService.update();

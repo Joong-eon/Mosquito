@@ -16,3 +16,12 @@ totalScore=100
 [sje]
 level=10
 totalScore=300
+[kkkkk]
+level=10
+totalScore=100
+[bbbbb]
+level=10
+totalScore=100
+[bbbbbb]
+level=10
+totalScore=100
