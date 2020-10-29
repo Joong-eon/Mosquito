@@ -7,6 +7,7 @@ import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 
 import javax.swing.JOptionPane;
 
@@ -15,7 +16,9 @@ import com.newlecture.mosquito.canvas.GameCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.RankCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
+import com.newlecture.mosquito.gui.IntroPanel;
 import com.newlecture.mosquito.gui.PlayerHpBar;
+import com.newlecture.mosquito.gui.listener.IntroListener;
 import com.newlecture.mosquito.service.DataService;
 
 public class GameFrame extends Frame {
@@ -29,23 +32,78 @@ public class GameFrame extends Frame {
 	public static int canvasWidth = 1500;
 	public static int canvasHeight = 1000;
 	public String userName;
+	
+	private IntroListener introListener;
 
-	public GameFrame() {
-		instance = this;
-		MenuCanvas menuCanvas = new MenuCanvas();
-		
-		//add(menuCanvas);
-		menuCanvas.start();
+	public GameFrame() throws MalformedURLException {
+		instance = this;		
 
 		// 포커스 주기	
-		menuCanvas.setFocusable(true);	// 너 포커스 받을 수 있음
-		menuCanvas.requestFocus();		// 포커스 주기
-		
-		
 		this.setSize(canvasWidth, canvasHeight);
 		this.setVisible(true);
 
-		this.add(menuCanvas);
+		
+		IntroPanel intro = new IntroPanel();		
+		add(intro);
+
+		revalidate();//재활성화(다시 유효하게 만든다)
+		
+		introListener = new IntroListener() {
+			
+			@Override
+			public void onIntroEnd() {
+				// TODO Auto-generated method stub
+				
+				System.out.println("시간 지남");
+				intro.introSoundOff();
+				
+				/// 메뉴화면 전시
+				MenuCanvas menuCanvas = new MenuCanvas();
+
+				// 포커스 주기	
+				menuCanvas.setFocusable(true);	// 너 포커스 받을 수 있음
+				menuCanvas.requestFocus();		// 포커스 주기
+				
+				menuCanvas.start();				
+				GameFrame.getInstance().add(menuCanvas);
+				
+				revalidate();//재활성화(다시 유효하게 만든다)
+				
+
+				intro.setVisible(false);
+				
+				
+				// close 코드 
+				addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent we) {
+						System.exit(0);
+					}
+				});
+				
+			}
+		};
+		
+		Runnable sub = new Runnable() {
+			public void run() {				
+					try {
+						System.err.println("슬립");
+						Thread.sleep(47000);
+
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					if(introListener != null) {
+						introListener.onIntroEnd();	
+						System.out.println("On Intro End");
+					}					
+				}
+		};
+		
+		Thread th = new Thread(sub);
+		th.start();
+		
 		
 		// close 코드 
 		addWindowListener(new WindowAdapter() {
