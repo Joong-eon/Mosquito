@@ -19,7 +19,7 @@ public class Score {
 
 	public Score() {
 		setImg(ImageLoader.scoreNumber);
-		x = 1420;
+		x = 1200;
 		y = 50;
 		width = 56;
 		height = 72;
