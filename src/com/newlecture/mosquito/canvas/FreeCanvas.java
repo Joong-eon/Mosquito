@@ -233,7 +233,7 @@ public class FreeCanvas extends GameCanvas{
 
 						}
 
-						if (isMiss == true) {// 빗나감
+						if (isMiss == true && freeService.isCreatableMiss()) {// 빗나감
 							// miss뜨는 그림효과
 							effectSound("res/sound/miss.wav");
 							missList.add(new Miss(x, y));
@@ -250,6 +250,9 @@ public class FreeCanvas extends GameCanvas{
 									player.setUserTotalScore(player.getUserTotalScore() + killScore);
 									selectedMosq.setCurrentDir(2);
 									selectedMosq.setMovIndex(4);
+									
+									selectedMosq.setClickable(false);
+									freeService.setCreatableMiss(false);
 									if(timer.getOneCount() <= 8 )
 										timer.setOneCount(timer.getOneCount() + 1);
 									else {
@@ -266,7 +269,12 @@ public class FreeCanvas extends GameCanvas{
 									System.out.println("10초 감소");
 									selectedButt.setCurrentDir(2);
 									selectedButt.setMovIndex(4);
-									timer.setTenCount(timer.getTenCount() - 1);
+									selectedButt.setClickable(false);
+									freeService.setCreatableMiss(false);
+									if(timer.getTenCount() == 0)
+										timer.setOneCount(0);
+									else
+										timer.setTenCount(timer.getTenCount()-1);
 								}
 								System.out.println("공격");
 							}

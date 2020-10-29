@@ -79,8 +79,8 @@ public class DataService {
 		
 		if (isContain == false) {
 			userDatas.add("[" + id + "]");
-			userDatas.add("level=10");
-			userDatas.add("totalScore=100");
+			userDatas.add("level=1");
+			userDatas.add("totalScore=0");
 
 			saveUserData(userDatas);
 		}

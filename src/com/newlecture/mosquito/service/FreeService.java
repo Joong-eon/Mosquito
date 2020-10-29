@@ -37,6 +37,7 @@ public class FreeService {
 	private String freeStage;
 	private boolean isGameOver;
 	private boolean isGameClear;
+	private boolean isCreatableMiss = true;
 
 	private int currentMosqCount;		// 현재 생성 된 모기 수
 	private int mosqDeltaTime;
@@ -164,8 +165,19 @@ public class FreeService {
 	}
 
 	public void update() {
-		int mosqCreateCount = free.getMosqCreateCount();
-		int buttCreateCount = free.getButtCreateCount();
+		if(mosqDeltaTime >= mosqCreateTime) {
+			createMosquito();
+		} else {
+			mosqDeltaTime++;
+		}
+		
+		if(buttDeltaTime >= buttCreateTime) {
+			createButterfly();
+		} else {
+			buttDeltaTime++;
+		}
+		//int mosqCreateCount = free.getMosqCreateCount();
+		//int buttCreateCount = free.getButtCreateCount();
 
 		for(int i = 0; i<mosqCreateCount; i++) {
 			if(mosqs.get(i).getCurrentDir() == 2) {
@@ -177,6 +189,9 @@ public class FreeService {
 			if(mosqs.get(i).getDeleteTimer() == 0) {
 				mosqs.get(i).setX(-1);
 				mosqs.get(i).setY(-1);
+				mosqs.get(i).setClickable(true);
+				
+				isCreatableMiss = true;
 			}
 		}
 		
@@ -190,6 +205,8 @@ public class FreeService {
 			if(butts.get(i).getDeleteTimer() == 0) {
 				butts.get(i).setX(-1);
 				butts.get(i).setY(-1);
+				butts.get(i).setClickable(true);
+				isCreatableMiss = true;
 			}
 		}
 	}
@@ -270,6 +287,14 @@ public class FreeService {
 
 	public void setHpBar(PlayerHpBar hpBar) {
 		this.hpBar = hpBar;
+	}
+
+	public boolean isCreatableMiss() {
+		return isCreatableMiss;
+	}
+
+	public void setCreatableMiss(boolean isCreatableMiss) {
+		this.isCreatableMiss = isCreatableMiss;
 	}
 
 	
