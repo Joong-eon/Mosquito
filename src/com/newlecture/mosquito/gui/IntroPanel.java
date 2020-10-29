@@ -3,6 +3,10 @@ package com.newlecture.mosquito.gui;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Button;
+import java.awt.Dimension;
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -12,16 +16,40 @@ import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
 
 import com.newlecture.mosquito.GameFrame;
+import com.newlecture.mosquito.gui.listener.IntroListener;
 
 public class IntroPanel extends JPanel {
 	private Image img;
 	private AudioInputStream introAis;
 	private Clip introClip;
 
+	private IntroListener introListener;
+	
 	public IntroPanel() throws MalformedURLException {
 		img = Toolkit.getDefaultToolkit().createImage("res/introMovie.gif");
 		introSound("res/sound/introMovie.wav");
-		System.err.println("생성됨");
+		
+		Button skipButton = new Button("SKIP");
+		skipButton.setLocation(1000, 10);
+		skipButton.setSize(new Dimension(50,30));
+		skipButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(introListener != null) {
+					introListener.onIntroEnd();	
+				}
+			}
+		});
+		add(skipButton);
+	}
+	
+	public IntroListener getIntroListener() {
+		return introListener;
+	}
+
+	public void setIntroListener(IntroListener introListener) {
+		this.introListener = introListener;
 	}
 
 	@Override
@@ -55,5 +83,6 @@ public class IntroPanel extends JPanel {
 	public void introSoundOff() {
 		introClip.stop();
 	}
+	
 
 }

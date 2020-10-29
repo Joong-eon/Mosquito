@@ -33,7 +33,6 @@ public class GameFrame extends Frame {
 	public static int canvasHeight = 1000;
 	public String userName;
 	
-	private IntroListener introListener;
 
 	public GameFrame() throws MalformedURLException {
 		instance = this;		
@@ -48,7 +47,7 @@ public class GameFrame extends Frame {
 
 		revalidate();//재활성화(다시 유효하게 만든다)
 		
-		introListener = new IntroListener() {
+		intro.setIntroListener(new IntroListener() {
 			
 			@Override
 			public void onIntroEnd() {
@@ -81,7 +80,7 @@ public class GameFrame extends Frame {
 				});
 				
 			}
-		};
+		});
 		
 		Runnable sub = new Runnable() {
 			public void run() {				
@@ -94,8 +93,8 @@ public class GameFrame extends Frame {
 						e.printStackTrace();
 					}
 					
-					if(introListener != null) {
-						introListener.onIntroEnd();	
+					if(intro.getIntroListener() != null) {
+						intro.getIntroListener().onIntroEnd();	
 						System.out.println("On Intro End");
 					}					
 				}
