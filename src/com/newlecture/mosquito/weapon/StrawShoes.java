@@ -15,7 +15,7 @@ public class StrawShoes extends Weapon {
 		this.setType("StrawShoes");
 		this.setDamage(2);
 		this.setImg(ImageLoader.strawShoes);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 		
 		this.setWidth(250);

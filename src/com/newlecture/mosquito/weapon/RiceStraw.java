@@ -15,7 +15,7 @@ public class RiceStraw extends Weapon {
 		this.setType("riceStraw");
 		this.setDamage(2);
 		this.setImg(ImageLoader.riceStraw);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 		
 		this.setWidth(120);

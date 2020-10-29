@@ -1,10 +1,3 @@
 [rank]
-abc=0
-ddd=1
-cccccc=3
-popo=5
-hihi=2
-5555555555=103
-rrrrrrrrrrrrr=101
-jun=0
-jun=0
+eee=0
+eee=0

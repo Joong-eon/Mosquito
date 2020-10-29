@@ -15,9 +15,9 @@ public class Bow extends Weapon {
 	public Bow() {
 
 		this.setType("Bow");
-		this.setDamage(2);
+		this.setDamage(30);
 		this.setImg(ImageLoader.bow);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 
 		this.setWidth(348);

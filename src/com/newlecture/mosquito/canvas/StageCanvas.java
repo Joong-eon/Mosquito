@@ -532,9 +532,6 @@ public class StageCanvas extends GameCanvas {
 		g.drawImage(buf,0,0,this);
 	}
 
-
-	// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
-
 	@Override
 	public void gameUpdate() {
 		timer.update();

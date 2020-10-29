@@ -23,7 +23,7 @@ public class Hand extends Weapon {
 		this.setType("Hand");
 		this.setDamage(5);
 		this.setImg(ImageLoader.hand);
-		this.setProb(0.7);
+		this.setProb(0.9);
 		this.setRange(2);
 
 		this.setWidth(180);

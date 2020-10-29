@@ -26,7 +26,7 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedAdapter;
 import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.ImageLoader;
 
-public class MenuCanvas extends Canvas {
+public class MenuCanvas extends GameCanvas {
 	public static Canvas instance;
 
 	private Thread th; // 메뉴 화면이 사라지면 메뉴화면용 스레드도 종료할것이기 때문에 스레드를 멤버변수로 갖고 있을것
@@ -188,36 +188,6 @@ public class MenuCanvas extends Canvas {
 		}
 
 		g.drawImage(buf, 0, 0, this);
-	}
-
-	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		// super.update(g);
-		paint(g);
-	}
-
-	public void start() {
-
-		Runnable sub = new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-
-					repaint();
-					try {
-						Thread.sleep(17);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-					}
-				}
-
-			}
-		};
-
-		th = new Thread(sub);
-		th.start();
 	}
 
 	public void mainSound(String file) {

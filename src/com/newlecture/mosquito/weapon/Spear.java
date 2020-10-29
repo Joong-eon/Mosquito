@@ -21,7 +21,7 @@ public class Spear extends Weapon{
 		this.setType("spear");
 		this.setDamage(2);
 		this.setImg(ImageLoader.spear);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 		
 		this.setWidth(180);
