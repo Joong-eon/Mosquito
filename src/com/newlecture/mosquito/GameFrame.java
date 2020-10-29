@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.canvas.FreeCanvas;
+import com.newlecture.mosquito.canvas.GameCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.RankCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
