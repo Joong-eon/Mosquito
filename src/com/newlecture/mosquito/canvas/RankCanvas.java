@@ -29,7 +29,7 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 
-public class RankCanvas extends Canvas {
+public class RankCanvas extends GameCanvas {
 
 	private Image background;
 	private Button backButton;
@@ -180,35 +180,5 @@ public class RankCanvas extends Canvas {
 		
 		g.drawImage(buf, 0, 0, this);
 	}
-	
-	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		// super.update(g);
-		paint(g);
-	}
-	
-	public void start() {
 
-		Runnable sub = new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-
-					repaint();
-					try {
-						Thread.sleep(17);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-					}
-				}
-
-			}
-		};
-
-		Thread th = new Thread(sub);
-		th.start();
-	}
-	
 }

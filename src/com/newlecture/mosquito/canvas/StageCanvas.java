@@ -53,7 +53,7 @@ import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
 
-public class StageCanvas extends Canvas {
+public class StageCanvas extends GameCanvas {
 
 	private Image weapon1;
 	private Image weapon2;
@@ -553,65 +553,37 @@ public class StageCanvas extends Canvas {
 		g.drawImage(buf,0,0,this);
 	}
 
-
-	// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
-
 	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		paint(g);
-	}
+	public void gameUpdate() {
+		timer.update();
 
-	public void start() {//
+		int mosqSize = stageService.getMosqs().size();
+		for (int i = 0; i < mosqSize; i++) {
+			stageService.getMosqs().get(i).update();
+		}
 
-		Runnable sub = new Runnable() {
+		int buttSize = stageService.getButts().size();
+		for (int i = 0; i < buttSize; i++) {
+			stageService.getButts().get(i).update();
+		}
 
-			@Override
-			public void run() {
+		if (missList != null) {
 
-				while (true) {
-					timer.update();
+			for (int i = 0; i < missList.size(); i++) {
 
-					int mosqSize = stageService.getMosqs().size();
-					for (int i = 0; i < mosqSize; i++) {
-						stageService.getMosqs().get(i).update();
-					}
+				missList.get(i).update();
 
-					int buttSize = stageService.getButts().size();
-					for (int i = 0; i < buttSize; i++) {
-						stageService.getButts().get(i).update();
-					}
-
-					if (missList != null) {
-
-						for (int i = 0; i < missList.size(); i++) {
-
-							missList.get(i).update();
-
-						}
-						for (int i = 0; i < missList.size(); i++) {
-							if (missList.get(i).getDelTime() < 0) {
-								missList.remove(i);
-							}
-						}
-					}
-
-					player.getCurrentWp().update();
-					repaint();
-
-					try {
-						Thread.sleep(17);//ms 1000
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					stageService.update();
+			}
+			for (int i = 0; i < missList.size(); i++) {
+				if (missList.get(i).getDelTime() < 0) {
+					missList.remove(i);
 				}
 			}
-		};
+		}
 
-		th = new Thread(sub);
-		th.start();
+		player.getCurrentWp().update();
 
+		stageService.update();
 	}
+	
 }

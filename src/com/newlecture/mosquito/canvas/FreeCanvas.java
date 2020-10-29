@@ -34,7 +34,7 @@ import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.FreeService;
 import com.newlecture.mosquito.service.ImageLoader;
 
-public class FreeCanvas extends Canvas{
+public class FreeCanvas extends GameCanvas{
 	//	3. 무기 구현 // 
 	//	4. 데이터 저장 후 랭킹에 올리기
 
@@ -448,69 +448,35 @@ public class FreeCanvas extends Canvas{
 		g.drawImage(buf, 0, 0, this);
 	}
 
-	private int hpBar() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		paint(g);
-	}
+	public void gameUpdate() {
+		timer.update();
 
-	public void start() {// ������ ����
+		int mosqSize = freeService.getMosqs().size();
+		for (int i = 0; i < mosqSize; i++) {
+			freeService.getMosqs().get(i).update();
+		}
 
-		Runnable sub = new Runnable() {
+		int buttSize = freeService.getButts().size();
+		for (int i = 0; i < buttSize; i++) {
+			freeService.getButts().get(i).update();
+		}
 
-			@Override
-			public void run() {
+		if (missList != null) {
 
-				while (true) {
-					timer.update();
+			for (int i = 0; i < missList.size(); i++) {
 
-					int mosqSize = freeService.getMosqs().size();
-					for (int i = 0; i < mosqSize; i++) {
-						freeService.getMosqs().get(i).update();
-					}
+				missList.get(i).update();
 
-					int buttSize = freeService.getButts().size();
-					for (int i = 0; i < buttSize; i++) {
-						freeService.getButts().get(i).update();
-					}
-
-					if (missList != null) {
-
-						for (int i = 0; i < missList.size(); i++) {
-
-							missList.get(i).update();
-
-						}
-						for (int i = 0; i < missList.size(); i++) {
-							if (missList.get(i).getDelTime() < 0) {
-								missList.remove(i);
-							}
-						}
-					}
-
-					player.getCurrentWp().update();
-					
-
-					repaint();
-
-					try {
-						Thread.sleep(17);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					freeService.update();
+			}
+			for (int i = 0; i < missList.size(); i++) {
+				if (missList.get(i).getDelTime() < 0) {
+					missList.remove(i);
 				}
 			}
-		};
-		th = new Thread(sub);
-		th.start();
+		}
+
+		player.getCurrentWp().update();		
 	}
-	
 	
 }

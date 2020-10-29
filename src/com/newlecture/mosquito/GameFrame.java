@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 
 import com.newlecture.mosquito.canvas.FreeCanvas;
+import com.newlecture.mosquito.canvas.GameCanvas;
 import com.newlecture.mosquito.canvas.MenuCanvas;
 import com.newlecture.mosquito.canvas.RankCanvas;
 import com.newlecture.mosquito.canvas.StageCanvas;
@@ -48,7 +49,7 @@ public class GameFrame extends Frame {
 	}
 
 	// 메뉴가 바뀌었을때 호출됨/
-	public void switchCanvas(Canvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
+	public void switchCanvas(GameCanvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
 		boolean change = true;
 		if(oldCanvas instanceof MenuCanvas && checkId) {
 			
@@ -68,35 +69,22 @@ public class GameFrame extends Frame {
 				else
 					break;
 			}
-			
-			
-			
+
 			userName = id;
 		}
 		
-		
 		if(change) {
-			Canvas canvas = (Canvas)newCanvas.newInstance();
+			GameCanvas canvas = (GameCanvas)newCanvas.newInstance();
 			add(canvas);
-			if(canvas instanceof StageCanvas) {
-				StageCanvas stageCanvas = (StageCanvas) canvas;
-				stageCanvas.start();
-			} else if(canvas instanceof FreeCanvas) {
-				FreeCanvas freeCanvas = (FreeCanvas) canvas;
-				freeCanvas.start();
-				
-			} else if(canvas instanceof MenuCanvas) {			
-				MenuCanvas menuCanvas = (MenuCanvas) canvas;
-				menuCanvas.start();
-			} else if(canvas instanceof RankCanvas) {			
-				RankCanvas rankCanvas = (RankCanvas) canvas;
-				rankCanvas.start();
-			}
+
+			canvas.start();
+			
 			revalidate();//재활성화(다시 유효하게 만든다)
 			remove(oldCanvas);
 		}
 		
 	}
+	
 	//instance 변수 / static 변수
 	public static GameFrame getInstance() {
 		// TODO Auto-generated method stub

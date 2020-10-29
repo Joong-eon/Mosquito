@@ -95,7 +95,6 @@ public class DataService {
 		PrintWriter pw = new PrintWriter(userFileName);
 		pw.print("");
 		for (Object data : userDatas) {
-			System.out.println((String) data);
 			pw.append((String) data + "\n");
 		}
 		pw.close();
@@ -140,7 +139,7 @@ public class DataService {
 				}
 				//[김병준]  5
 				title = line.substring(1, line.length() - 1);
-				System.out.println("change Title : " + title);
+				//System.out.println("change Title : " + title);
 
 			} else if (false == title.equals("")) {
 				if (datas == null) { // 세부 항목 읽어올거라 담을 공간 만들어놓음
