@@ -26,7 +26,7 @@ public class IntroPanel extends JPanel {
 	private IntroListener introListener;
 	
 	public IntroPanel() throws MalformedURLException {
-		img = Toolkit.getDefaultToolkit().createImage("res/introMovie.gif");
+		img = Toolkit.getDefaultToolkit().createImage("res/anigif.gif");
 		introSound("res/sound/introMovie.wav");
 		
 		Button skipButton = new Button("SKIP");
