@@ -250,7 +250,13 @@ public class FreeCanvas extends GameCanvas{
 									player.setUserTotalScore(player.getUserTotalScore() + killScore);
 									selectedMosq.setCurrentDir(2);
 									selectedMosq.setMovIndex(4);
-									timer.setOneCount(timer.getOneCount() + 3);
+									if(timer.getOneCount() <= 8 )
+										timer.setOneCount(timer.getOneCount() + 1);
+									else {
+										timer.setTenCount(timer.getTenCount()+1);
+										timer.setOneCount(timer.getOneCount()-9);
+										timer.setAdded(true);
+									}
 								}
 
 							} else if (selectedButt != null) {
@@ -394,6 +400,7 @@ public class FreeCanvas extends GameCanvas{
 		}
 
 		player.getCurrentWp().update();		
+		freeService.update();
 	}
 	
 }
