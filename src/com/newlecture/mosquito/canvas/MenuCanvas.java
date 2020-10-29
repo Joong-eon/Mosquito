@@ -61,9 +61,7 @@ public class MenuCanvas extends GameCanvas {
 		double sx = 150;				// 200;
 		double sy = 530;
 		double space = 80;				// 180;
-
-		setBackground(Color.GREEN);
-
+		
 		mainSound("res/sound/mainBgm.wav");
 
 		// 메뉴 버튼의 이미지를 받아옴
