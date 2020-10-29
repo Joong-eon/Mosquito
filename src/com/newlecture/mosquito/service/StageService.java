@@ -19,15 +19,18 @@ import com.newlecture.mosquito.entity.Timer;
 import com.newlecture.mosquito.gui.GameClear;
 import com.newlecture.mosquito.gui.GameOver;
 import com.newlecture.mosquito.gui.PlayerHpBar;
+import com.newlecture.mosquito.gui.WeaponButton;
 
 public class StageService {
 	private ArrayList<Mosquito> mosqs;//==null
 	private ArrayList<Butterfly> butts;		// 스테이지에 생성되는 모든 모기와 나비
 	private ArrayList<Miss> missList;
+	private Image[] weaponImg;
 	private Stage stage;
 	private int stageIndex;
 	private Timer timer;
 	private Player p1;
+	private WeaponButton weapons;
 	private int totalScore=0;
 	private boolean isCreatableMiss = true;
 	
@@ -67,6 +70,30 @@ public class StageService {
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
 		p1 = new Player(GameFrame.getInstance().getUserName(),1);
+		
+		ArrayList wpDir = p1.getArrWpDir();//무기 이미지경로 리스트
+		ArrayList wp = p1.getArrWp();//무기 이름 리스트
+		weaponImg = new Image[wpDir.size()];
+
+		weaponImg[0] = ImageLoader.level1_weapon;
+		weaponImg[1] = ImageLoader.level2_weapon;
+		weaponImg[2] = ImageLoader.level3_weapon;
+		
+		System.out.println(p1.getUserLevel());
+		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
+		switch(p1.getUserLevel()/10) {
+		case 0:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 1:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 2:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		}
+		
+		
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
 		isGameOver = false;
@@ -363,6 +390,110 @@ public class StageService {
 
 	public void setCreatableMiss(boolean isCreatableMiss) {
 		this.isCreatableMiss = isCreatableMiss;
+	}
+
+	public Image[] getWeaponImg() {
+		return weaponImg;
+	}
+
+	public void setWeaponImg(Image[] weaponImg) {
+		this.weaponImg = weaponImg;
+	}
+
+	public WeaponButton getWeapons() {
+		return weapons;
+	}
+
+	public void setWeapons(WeaponButton weapons) {
+		this.weapons = weapons;
+	}
+
+	public int getCurrentMosqCount() {
+		return currentMosqCount;
+	}
+
+	public void setCurrentMosqCount(int currentMosqCount) {
+		this.currentMosqCount = currentMosqCount;
+	}
+
+	public int getMosqDeltaTime() {
+		return mosqDeltaTime;
+	}
+
+	public void setMosqDeltaTime(int mosqDeltaTime) {
+		this.mosqDeltaTime = mosqDeltaTime;
+	}
+
+	public int getMosqCreateCount() {
+		return mosqCreateCount;
+	}
+
+	public void setMosqCreateCount(int mosqCreateCount) {
+		this.mosqCreateCount = mosqCreateCount;
+	}
+
+	public int getMosqCreateTime() {
+		return mosqCreateTime;
+	}
+
+	public void setMosqCreateTime(int mosqCreateTime) {
+		this.mosqCreateTime = mosqCreateTime;
+	}
+
+	public int getCurrentButtCount() {
+		return currentButtCount;
+	}
+
+	public void setCurrentButtCount(int currentButtCount) {
+		this.currentButtCount = currentButtCount;
+	}
+
+	public int getButtDeltaTime() {
+		return buttDeltaTime;
+	}
+
+	public void setButtDeltaTime(int buttDeltaTime) {
+		this.buttDeltaTime = buttDeltaTime;
+	}
+
+	public int getButtCreateCount() {
+		return buttCreateCount;
+	}
+
+	public void setButtCreateCount(int buttCreateCount) {
+		this.buttCreateCount = buttCreateCount;
+	}
+
+	public int getButtCreateTime() {
+		return buttCreateTime;
+	}
+
+	public void setButtCreateTime(int buttCreateTime) {
+		this.buttCreateTime = buttCreateTime;
+	}
+
+	public Image getGameOverBtn() {
+		return gameOverBtn;
+	}
+
+	public void setGameOverBtn(Image gameOverBtn) {
+		this.gameOverBtn = gameOverBtn;
+	}
+
+	public Image getGameClearBtn() {
+		return gameClearBtn;
+	}
+
+	public void setGameClearBtn(Image gameClearBtn) {
+		this.gameClearBtn = gameClearBtn;
+	}
+
+	public void setGameOver(GameOver gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	public void setGameClear(GameClear gameClear) {
+		this.gameClear = gameClear;
 	}
 
 	

@@ -4,7 +4,7 @@ stageIndex=1
 stageCount=30
 [stage1]
 limitTime=60
-mosqMaxCount=20
+mosqMaxCount=5
 mosqCreateCount=5
 mosqCreateTime=10
 mosqMinSpeed=1

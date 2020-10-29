@@ -107,6 +107,15 @@ public class DataService {
 		}
 		
 		pw.close();
+		
+		allUserDatas.clear();
+		try {
+			loadConfig(userFileName);
+			System.out.println(getPlayerIntValue("jun", "level"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static DataService getInstance() {
@@ -182,7 +191,7 @@ public class DataService {
 		fis.close();
 	}
 
-	public static void save(String userName, int level, int totalScore) throws IOException {
+	public void save(String userName, int level, int totalScore) throws IOException {
 	      // 추후 개발 예정
 	      PrintWriter pw = new PrintWriter(userFileName);
 	      pw.print("");
@@ -201,6 +210,14 @@ public class DataService {
 	      }
 	      
 	      pw.close();
+	      
+	      allUserDatas.clear();
+			try {
+				loadConfig(userFileName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	   }
 	
 	public void saveRank(String name, int score) throws IOException {

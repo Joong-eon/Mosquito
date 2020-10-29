@@ -114,27 +114,10 @@ public class StageCanvas extends GameCanvas {
 		stageText = ImageLoader.stageText;
 		stageNumber = ImageLoader.stageNumber;
 
-		ArrayList wpDir = player.getArrWpDir();//무기 이미지경로 리스트
-		ArrayList wp = player.getArrWp();//무기 이름 리스트
-		weaponImg = new Image[wpDir.size()];
-
-		weaponImg[0] = ImageLoader.level1_weapon;
-		weaponImg[1] = ImageLoader.level2_weapon;
-		weaponImg[2] = ImageLoader.level3_weapon;
+		weaponImg = stageService.getWeaponImg();
 		
-
-		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
-		switch(player.getUserLevel()/10) {
-		case 0:
-			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
-			break;
-		case 1:
-			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
-			break;
-		case 2:
-			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
-			break;
-		}
+		System.out.println(player.getUserLevel());
+		weapons = stageService.getWeapons();
 		
 		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
 		// p1.current 정보변경
@@ -164,7 +147,7 @@ public class StageCanvas extends GameCanvas {
 				System.out.println("저장중");
 
 				try {
-					DataService.save(player.getUserName(), userLevel, player.getUserTotalScore());
+					DataService.getInstance().save(player.getUserName(), userLevel, player.getUserTotalScore());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -176,6 +159,7 @@ public class StageCanvas extends GameCanvas {
 				int hp = hpBar.getHp();
 				stageService = new StageService(stageStep);
 				stageService.setTimer(new Timer(stageService.getStageIndex()));
+				weapons = stageService.getWeapons();
 				timer = stageService.getTimer();
 				player = stageService.getP1();
 				hpBar = stageService.getHpBar();
