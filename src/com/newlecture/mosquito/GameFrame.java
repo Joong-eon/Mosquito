@@ -35,6 +35,11 @@ public class GameFrame extends Frame {
 		
 		//add(menuCanvas);
 		menuCanvas.start();
+
+		// 포커스 주기	
+		menuCanvas.setFocusable(true);	// 너 포커스 받을 수 있음
+		menuCanvas.requestFocus();		// 포커스 주기
+		
 		
 		this.setSize(canvasWidth, canvasHeight);
 		this.setVisible(true);
@@ -51,7 +56,7 @@ public class GameFrame extends Frame {
 	}
 
 	// 메뉴가 바뀌었을때 호출됨/
-	public void switchCanvas(Canvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException{
+	public void switchCanvas(GameCanvas oldCanvas, Class newCanvas, boolean checkId) throws InstantiationException, IllegalAccessException {
 		boolean change = true;
 		if(oldCanvas instanceof MenuCanvas && checkId) {
 			
@@ -82,42 +87,34 @@ public class GameFrame extends Frame {
 					id="";
 				}
 				
-				if((id.length() > 8 || id.length() < 2) && id.length()!=0)
+				if((id.length() > 8 || id.length() < 2) && id.length() !=0)
 					JOptionPane.showMessageDialog(null, "2자리 이상, 8자리 이하의 이름을 입력하시오.", "Warning",
 					        JOptionPane.WARNING_MESSAGE);
 				else
 					break;
 			}
-			
-			
-			
+
 			userName = id;
 		}
 		
-		System.out.println(newCanvas.getName().equals("com.newlecture.mosquito.canvas.FreeCanvas"));
-		
 		if(change) {
-			Canvas canvas = (Canvas)newCanvas.newInstance();
+			GameCanvas canvas = (GameCanvas)newCanvas.newInstance();
 			add(canvas);
-			if(canvas instanceof StageCanvas) {
-				StageCanvas stageCanvas = (StageCanvas) canvas;
-				stageCanvas.start();
-			} else if(canvas instanceof FreeCanvas) {
-				FreeCanvas freeCanvas = (FreeCanvas) canvas;
-				freeCanvas.start();
-				
-			} else if(canvas instanceof MenuCanvas) {			
-				MenuCanvas menuCanvas = (MenuCanvas) canvas;
-				menuCanvas.start();
-			} else if(canvas instanceof RankCanvas) {			
-				RankCanvas rankCanvas = (RankCanvas) canvas;
-				rankCanvas.start();
-			}
+			
+			// 포커스 주기	
+			canvas.setFocusable(true);	// 너 포커스 받을 수 있음
+			canvas.requestFocus();		// 포커스 주기
+			
 			revalidate();//재활성화(다시 유효하게 만든다)
+			
+			oldCanvas.stop();		// 스레드 종료
 			remove(oldCanvas);
+
+			canvas.start();
 		}
 		
 	}
+	
 	//instance 변수 / static 변수
 	public static GameFrame getInstance() {
 		// TODO Auto-generated method stub

@@ -29,7 +29,7 @@ import com.newlecture.mosquito.gui.listener.ButtonClickedListener;
 import com.newlecture.mosquito.service.DataService;
 import com.newlecture.mosquito.service.ImageLoader;
 
-public class RankCanvas extends Canvas {
+public class RankCanvas extends GameCanvas {
 
 	private Image background;
 	private Button backButton;
@@ -99,7 +99,6 @@ public class RankCanvas extends Canvas {
 		});
 
 		rankDatas = DataService.getInstance().getAllRankData();
-		//rankDatas = new LinkedHashMap<String, String>();
 		rowCount = 10;
 
 		// 임의 데이터 넣기
@@ -110,52 +109,53 @@ public class RankCanvas extends Canvas {
 		y = 320; // content 시작 위치
 
 		
-		
-		// 정렬
-	    List<Map.Entry<String, Integer>> entries = new LinkedList<>(rankDatas.entrySet());
-	    Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));		// value(score)기준으로 내림차순 정렬
-	    
-	    // 원래 있던거 비우고
-	    rankDatas.clear();
-	    
-	    // 정렬한거 다시 넣기
-	    for (Map.Entry<String, Integer> entry : entries) {
-	    	rankDatas.put(entry.getKey(), entry.getValue());
-	    }
-	    
-		if (rankDatas.size() > 0) {
-			contents = new ArrayList<TextRow>();
-			
-			int contentY = y;
-			
-			int i = 0;
-			for (String name : rankDatas.keySet()) {
-				if(i >= 10) {
-					break;
-				} 
+		if(rankDatas != null) {
+			// 정렬
+		    List<Map.Entry<String, Integer>> entries = new LinkedList<>(rankDatas.entrySet());
+		    Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));		// value(score)기준으로 내림차순 정렬
+		    
+		    // 원래 있던거 비우고
+		    rankDatas.clear();
+		    
+		    // 정렬한거 다시 넣기
+		    for (Map.Entry<String, Integer> entry : entries) {
+		    	rankDatas.put(entry.getKey(), entry.getValue());
+		    }
+		    
+			if (rankDatas.size() > 0) {
+				contents = new ArrayList<TextRow>();
 				
-				String[] rowText = new String[3];
-				if (i == rowCount / 2) {
-					contentY = y + space;
-				} else {
-					contentY += space;
-				}
+				int contentY = y;
+				
+				int i = 0;
+				for (String name : rankDatas.keySet()) {
+					if(i >= 10) {
+						break;
+					} 
+					
+					String[] rowText = new String[3];
+					if (i == rowCount / 2) {
+						contentY = y + space;
+					} else {
+						contentY += space;
+					}
 
-				int x = 0;
-				if ((i + 1) / 6 == 0) {
-					x = leftX;
-				} else {
-					x = rightX;
+					int x = 0;
+					if ((i + 1) / 6 == 0) {
+						x = leftX;
+					} else {
+						x = rightX;
+					}
+									
+					rowText[0] = String.valueOf(i+1) + "위";
+					rowText[1] = name; 
+					rowText[2] = rankDatas.get(name) + "점";
+					
+					contents.add(new TextRow(rowText, x, contentY, "궁서", 40, false));
+					i++;
 				}
-								
-				rowText[0] = String.valueOf(i+1) + "위";
-				rowText[1] = name; 
-				rowText[2] = rankDatas.get(name) + "점";
-				
-				contents.add(new TextRow(rowText, x, contentY, "궁서", 40, false));
-				i++;
-			}
-		} 
+			} 
+		}
 	}
 
 	@Override
@@ -180,35 +180,5 @@ public class RankCanvas extends Canvas {
 		
 		g.drawImage(buf, 0, 0, this);
 	}
-	
-	@Override
-	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		// super.update(g);
-		paint(g);
-	}
-	
-	public void start() {
 
-		Runnable sub = new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-
-					repaint();
-					try {
-						Thread.sleep(17);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-					}
-				}
-
-			}
-		};
-
-		Thread th = new Thread(sub);
-		th.start();
-	}
-	
 }

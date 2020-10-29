@@ -13,9 +13,9 @@ public class StrawShoes extends Weapon {
 	   private AudioInputStream bgAis;
 	public StrawShoes() {
 		this.setType("StrawShoes");
-		this.setDamage(2);
+		this.setDamage(10);
 		this.setImg(ImageLoader.strawShoes);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 		
 		this.setWidth(250);

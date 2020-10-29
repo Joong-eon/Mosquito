@@ -13,9 +13,9 @@ public class Money extends Weapon {
 	   private AudioInputStream bgAis;
 	public Money() {
 		this.setType("Money");
-		this.setDamage(2);
+		this.setDamage(20);
 		this.setImg(ImageLoader.money);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 
 		this.setWidth(240);

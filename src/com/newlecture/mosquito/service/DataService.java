@@ -148,7 +148,7 @@ public class DataService {
 				}
 				//[김병준]  5
 				title = line.substring(1, line.length() - 1);
-				System.out.println("change Title : " + title);
+				//System.out.println("change Title : " + title);
 
 			} else if (false == title.equals("")) {
 				if (datas == null) { // 세부 항목 읽어올거라 담을 공간 만들어놓음
@@ -209,12 +209,14 @@ public class DataService {
 			
 		PrintWriter pw = new PrintWriter(rankFileName);
 		pw.println("[rank]");
-		// 이전 데이터 저장
-		for(String key : datas.keySet()) {
-			pw.println(key+"=" + datas.get(key));			
-		}		
+		if(datas != null) {
+			// 이전 데이터 저장
+			for(String key : datas.keySet()) {
+				pw.println(key+"=" + datas.get(key));			
+			}	
+		}	
 		// 추가된 데이터 저장
-		pw.println(name+"=" + score);
+		pw.print(name+"=" + score);
 		pw.close();
 		
 		allRankDatas.clear();
@@ -258,12 +260,14 @@ public class DataService {
 			String mosqCreateTime = datas.get("mosqCreateTime");
 			String mosqMinSpeed = datas.get("mosqMinSpeed");
 			String mosqMaxSpeed = datas.get("mosqMaxSpeed");
+			String mosqHP = datas.get("mosqHP");
 			
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
 			String buttMinSpeed = datas.get("buttMinSpeed");
 			String buttMaxSpeed = datas.get("buttMaxSpeed");
+			String buttHP = datas.get("buttHP");
 
 			String killScore = datas.get("killScore");
 
@@ -274,6 +278,7 @@ public class DataService {
 			stage.mosqCreateTime = Integer.parseInt(mosqCreateTime);
 			stage.mosqMinSpeed = Integer.parseInt(mosqMinSpeed);
 			stage.mosqMaxSpeed = Integer.parseInt(mosqMaxSpeed);
+			stage.mosqHP = Integer.parseInt(mosqHP);
 
 			// 값 넣기
 			stage.buttMaxCount = Integer.parseInt(buttMaxCount);
@@ -281,7 +286,7 @@ public class DataService {
 			stage.buttCreateTime = Integer.parseInt(buttCreateTime);
 			stage.buttMinSpeed = Integer.parseInt(buttMinSpeed);
 			stage.buttMaxSpeed = Integer.parseInt(buttMaxSpeed);
-			
+			stage.buttHP = Integer.parseInt(buttHP);
 			
 			stage.killScore = Integer.parseInt(killScore);
 		}
@@ -339,25 +344,36 @@ public class DataService {
 			String limitTime = datas.get("limitTime");
 			String mosqCreateCount = datas.get("mosqCreateCount");
 			String mosqMaxCount = datas.get("mosqMaxCount");
-			// String mosqCreateTime = datas.get("mosqCreateTime");
+			String mosqCreateTime = datas.get("mosqCreateTime");
+			String mosqMinSpeed = datas.get("mosqMinSpeed");
+			String mosqMaxSpeed = datas.get("mosqMaxSpeed");
+			String mosqHP = datas.get("mosqHP");
 
 			String buttMaxCount = datas.get("buttMaxCount");
 			String buttCreateCount = datas.get("buttCreateCount");
 			String buttCreateTime = datas.get("buttCreateTime");
-
+			String buttMinSpeed = datas.get("buttMinSpeed");
+			String buttMaxSpeed = datas.get("buttMaxSpeed");
+			String buttHP = datas.get("buttHP");
+			
 			String killScore = datas.get("killScore");
 
 			// 값 넣기
 			free.limitTime = Integer.parseInt(limitTime);
 			free.mosqCreateCount = Integer.parseInt(mosqCreateCount);
 			free.mosqMaxCount = Integer.parseInt(mosqMaxCount);
-			// free.mosqCreateTime = Integer.parseInt(mosqCreateTime);
+			free.mosqCreateTime = Integer.parseInt(mosqCreateTime);
+			free.mosqMinSpeed = Integer.parseInt(mosqMinSpeed);
+			free.mosqMaxSpeed = Integer.parseInt(mosqMaxSpeed);
+			free.mosqHP = Integer.parseInt(mosqHP);
 
 			// 값 넣기
 			free.buttMaxCount = Integer.parseInt(buttMaxCount);
 			free.buttCreateCount = Integer.parseInt(buttCreateCount);
 			free.buttCreateTime = Integer.parseInt(buttCreateTime);
-
+			free.buttMinSpeed = Integer.parseInt(buttMinSpeed);
+			free.buttMaxSpeed = Integer.parseInt(buttMaxSpeed);
+			free.buttHP = Integer.parseInt(buttHP);
 			free.killScore = Integer.parseInt(killScore);
 		}
 
@@ -369,11 +385,14 @@ public class DataService {
 		LinkedHashMap<String, String> datas = allRankDatas.get("rank");
 		
 		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
-		for(String key : datas.keySet()) {
-			String value = datas.get(key);
-			int score = Integer.parseInt(value);
-			result.put(key, score);
-		}
+		
+		if(datas != null) {
+			for(String key : datas.keySet()) {
+				String value = datas.get(key);
+				int score = Integer.parseInt(value);
+				result.put(key, score);
+			}
+		}	
 		
 		return result;
 	}

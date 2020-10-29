@@ -15,12 +15,14 @@ public class Stage {
 	public int mosqCreateTime;		// 모기 생성주기
 	public int mosqMinSpeed;		// 모기 최소 스피드
 	public int mosqMaxSpeed;		// 모기 최대 스피드
+	public int mosqHP;				// 스테이지 별 모기 체력
 	
 	public int buttMaxCount;		// 스테이지 당 최대 생성 가능한 나비 수
 	public int buttCreateCount;		// 생성 주기에 따라 생성되는 나비 수
 	public int buttCreateTime; 		// 나비 생성 주기
 	public int buttMinSpeed;		// 나비 최소 스피드
 	public int buttMaxSpeed;		// 나비 최대 스피드
+	public int buttHP;				// 스테이지 별 나비 체력
 	
 	public int killScore;
 	
@@ -30,10 +32,16 @@ public class Stage {
 		mosqMaxCount = 0;
 		mosqCreateCount = 0;
 		mosqCreateTime = 0;
+		mosqMinSpeed = 0;
+		mosqMaxSpeed = 0;
+		mosqHP = 0;
 		
 		buttMaxCount = 0;
 		buttCreateCount = 0;
 		buttCreateTime = 0;
+		buttMinSpeed = 0;
+		buttMaxSpeed = 0;
+		buttHP = 0;
 		killScore = 0;
 	}
 

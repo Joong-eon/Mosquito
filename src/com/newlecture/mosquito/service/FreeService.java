@@ -43,13 +43,20 @@ public class FreeService {
 	private int mosqMaxCount;
 	private int mosqCreateCount;
 	private int mosqCreateTime;
+	private int mosqMinSpeed;
+	private int mosqMaxSpeed;
+	private int mosqHP;
 
 	private int currentButtCount;		// 현재 생성 된 나비 수
 	private int buttDeltaTime;
 	private int buttMaxCount;
 	private int buttCreateCount;
 	private int buttCreateTime;
+	private int buttMinSpeed;
+	private int buttMaxSpeed;
+	private int buttHP;
 	
+
 	private PlayerHpBar hpBar;
 
 	public FreeService() {
@@ -90,6 +97,9 @@ public class FreeService {
 		mosqMaxCount = free.getMosqMaxCount();
 		mosqCreateCount = free.getMosqCreateCount();
 		mosqCreateTime = free.getMosqCreateTime() * 60;			// 60FPS라서 60을 곱함
+		mosqMinSpeed = free.getMosqMinSpeed();
+		mosqMaxSpeed = free.getMosqMaxSpeed();
+		mosqHP = free.getMosqHP();
 		createMosquito();
 
 		currentButtCount = 0;		// 현재 생성 된 나비 수
@@ -97,6 +107,9 @@ public class FreeService {
 		buttMaxCount = free.getButtMaxCount();
 		buttCreateCount = free.getButtCreateCount();
 		buttCreateTime = free.getButtCreateTime() * 60;			// 60FPS라서 60을 곱함
+		buttMinSpeed = free.getButtMinSpeed();
+		buttMaxSpeed = free.getButtMaxSpeed();
+		buttHP = free.getButtHP();
 		createButterfly();
 	}
 	
@@ -115,6 +128,9 @@ public class FreeService {
 			for (int i = 0 ;i < mosqCreateCount; i++) {
 				// 모기
 				Mosquito m = new Mosquito();
+				m.setMinSpeed(mosqMinSpeed);		// 스피드 설정
+				m.setMaxSpeed(mosqMaxSpeed);		// 스피드 설정
+				m.setHp(mosqHP);					// 체력 설정
 				m.setMosqAttackListener(new MosqAttackListener() {
 
 					@Override
@@ -138,7 +154,11 @@ public class FreeService {
 			currentButtCount += buttCreateCount;
 			
 			for (int i = 0; i < buttCreateCount; i++) {		// 나비
-				butts.add(new Butterfly());
+				Butterfly butt = new Butterfly();
+				butt.setMinSpeed(buttMinSpeed);		// 스피드 설정
+				butt.setMaxSpeed(buttMaxSpeed);		// 스피드 설정
+				butt.setHp(buttHP);					// 체력 설정
+				butts.add(butt);
 			}
 		}
 	}

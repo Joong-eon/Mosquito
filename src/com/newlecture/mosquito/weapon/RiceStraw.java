@@ -13,9 +13,9 @@ public class RiceStraw extends Weapon {
 	   private AudioInputStream bgAis;
 	public RiceStraw() {
 		this.setType("riceStraw");
-		this.setDamage(2);
+		this.setDamage(10);
 		this.setImg(ImageLoader.riceStraw);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 		
 		this.setWidth(120);

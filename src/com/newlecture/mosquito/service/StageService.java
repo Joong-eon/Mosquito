@@ -144,6 +144,8 @@ public class StageService {
 				Mosquito m = new Mosquito();
 				m.setMinSpeed(stage.mosqMinSpeed);		// 스피드 설정
 				m.setMaxSpeed(stage.mosqMaxSpeed);		// 스피드 설정
+				m.setHp(stage.mosqHP);					// 체력 설정
+				
 				m.setMosqAttackListener(new MosqAttackListener() {
 					
 					@Override
@@ -168,6 +170,8 @@ public class StageService {
 				Butterfly butt = new Butterfly();
 				butt.setMinSpeed(stage.buttMinSpeed);		// 스피드 설정
 				butt.setMaxSpeed(stage.buttMaxSpeed);		// 스피드 설정
+				butt.setHp(stage.buttHP);					// 체력 설정
+				
 				butts.add(butt);
 			}
 		}

@@ -18,9 +18,9 @@ public class Fan extends Weapon {
 	   private AudioInputStream bgAis;
 	public Fan() {
 		this.setType("Fan");
-		this.setDamage(2);
+		this.setDamage(20);
 		this.setImg(ImageLoader.fan);
-		this.setProb(0.42);
+		this.setProb(0.9);
 		this.setRange(2);
 
 		this.setWidth(100);

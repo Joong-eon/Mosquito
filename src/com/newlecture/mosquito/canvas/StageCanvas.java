@@ -53,7 +53,7 @@ import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
 
-public class StageCanvas extends Canvas {
+public class StageCanvas extends GameCanvas {
 
 	private Image weapon1;
 	private Image weapon2;
@@ -122,6 +122,8 @@ public class StageCanvas extends Canvas {
 		weaponImg[1] = ImageLoader.level2_weapon;
 		weaponImg[2] = ImageLoader.level3_weapon;
 		
+
+		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
 		switch(player.getUserLevel()/10) {
 		case 0:
 			weapons = new WeaponButton("WeaponList", weaponImg[player.getUserLevel()/10], weaponImg[player.getUserLevel()/10], 400, 200, 732, 700);
@@ -134,11 +136,14 @@ public class StageCanvas extends Canvas {
 			break;
 		}
 		
+		// 이벤트 발생시 웨폰버튼에서 이름 가져오고
+		// p1.current 정보변경
 		score = new Score();
 		userLevel = DataService.getInstance().getPlayerIntValue(GameFrame.getInstance().getUserName(), "level");
 		userScore = player.getUserTotalScore();
 		stageService.getGameOver().addClickListener(new ButtonClickedAdapter() {
-		
+			// 이벤트 리스너 객체가 캔버스 생성할때는 되지만 스테이지 2로 넘어가면서 새로
+			// 생성한 stageService에서는 객체 생성을 안하고 있음... 그래서 문제
 			@Override
 			public void onClicked(GameOver gameOver) {
 				try {
@@ -237,6 +242,7 @@ public class StageCanvas extends Canvas {
 			}
 		});
 
+		// addMouseMotionListener를 사용하면 기존에 override 해놓은 mouseDown 메소드가 안먹힘.
 		addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -258,7 +264,7 @@ public class StageCanvas extends Canvas {
 				} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
 					
 					mosSoundOff();
-					clearSound("res/sound/gameclear.wav");
+				//	clearSound("res/sound/gameclear.wav");
 					if (stageService.getGameClear().contains(x, y)) {
 						stageService.setGameClear(false);
 						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
@@ -266,7 +272,9 @@ public class StageCanvas extends Canvas {
 
 				} else if (true == player.getCurrentWp().isClickable()) {
 					player.getCurrentWp().AttackSound();
-					
+					// 클릭 좌표를 중심으로 range안에 들어어오는 벌레를 잡음
+					// 클릭 범위 설정 해야함.(타이머위치, 보유무기 위치)
+					// 무기 영역과 비교해서 걸리는 모든 객체 갖고오기 => 범위공격 고려해서 범위에 걸린 모든 벌레 반환
 					Mosquito selectedMosq = null;
 					Butterfly selectedButt = null;
 
@@ -290,7 +298,7 @@ public class StageCanvas extends Canvas {
 
 					boolean isMiss = false;
 
-					if (selectedMosq != null) {
+					if (selectedMosq != null) { // null이 아니면 찾은거임
 						System.out.println("모기 클릭 성공");
 						isMiss = player.attack(selectedMosq);
 					}
@@ -484,59 +492,36 @@ public class StageCanvas extends Canvas {
 	}
 
 	@Override
-	public void update(Graphics g) {
-		paint(g);
-	}
+	public void gameUpdate() {
+		timer.update();
 
-	public void start() {//
+		int mosqSize = stageService.getMosqs().size();
+		for (int i = 0; i < mosqSize; i++) {
+			stageService.getMosqs().get(i).update();
+		}
 
-		Runnable sub = new Runnable() {
+		int buttSize = stageService.getButts().size();
+		for (int i = 0; i < buttSize; i++) {
+			stageService.getButts().get(i).update();
+		}
 
-			@Override
-			public void run() {
+		if (missList != null) {
 
-				while (true) {
-					timer.update();
+			for (int i = 0; i < missList.size(); i++) {
 
-					int mosqSize = stageService.getMosqs().size();
-					for (int i = 0; i < mosqSize; i++) {
-						stageService.getMosqs().get(i).update();
-					}
+				missList.get(i).update();
 
-					int buttSize = stageService.getButts().size();
-					for (int i = 0; i < buttSize; i++) {
-						stageService.getButts().get(i).update();
-					}
-
-					if (missList != null) {
-
-						for (int i = 0; i < missList.size(); i++) {
-
-							missList.get(i).update();
-
-						}
-						for (int i = 0; i < missList.size(); i++) {
-							if (missList.get(i).getDelTime() < 0) {
-								missList.remove(i);
-							}
-						}
-					}
-
-					player.getCurrentWp().update();
-					repaint();
-
-					try {
-						Thread.sleep(17);//ms 1000
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					stageService.update();
+			}
+			for (int i = 0; i < missList.size(); i++) {
+				if (missList.get(i).getDelTime() < 0) {
+					missList.remove(i);
 				}
 			}
-		};
+		}
 
-		th = new Thread(sub);
-		th.start();
+		player.getCurrentWp().update();
 
+		stageService.update();
 	}
+	
 }
