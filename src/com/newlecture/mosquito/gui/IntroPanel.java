@@ -19,7 +19,7 @@ public class IntroPanel extends JPanel {
 	private Clip introClip;
 
 	public IntroPanel() throws MalformedURLException {
-		img = Toolkit.getDefaultToolkit().createImage("res/introMovie.gif");
+		img = Toolkit.getDefaultToolkit().createImage("res/anigif.gif");
 		introSound("res/sound/introMovie.wav");
 		System.err.println("생성됨");
 	}
