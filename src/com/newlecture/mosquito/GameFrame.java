@@ -80,6 +80,7 @@ public class GameFrame extends Frame {
 			canvas.start();
 			
 			revalidate();//재활성화(다시 유효하게 만든다)
+			oldCanvas.stop();		// 스레드 종료
 			remove(oldCanvas);
 		}
 		
