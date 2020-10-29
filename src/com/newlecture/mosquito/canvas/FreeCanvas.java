@@ -363,11 +363,6 @@ public class FreeCanvas extends GameCanvas{
 		g.drawImage(buf, 0, 0, this);
 	}
 
-	private int hpBar() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
 	public void gameUpdate() {
 		timer.update();
