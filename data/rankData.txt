@@ -1,5 +1,5 @@
 [rank]
 eee=0
-sje=11
+sje=6
 jun=34
-sje=11
+sje=6
