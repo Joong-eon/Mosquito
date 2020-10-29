@@ -33,6 +33,11 @@ public class GameFrame extends Frame {
 		
 		//add(menuCanvas);
 		menuCanvas.start();
+
+		// 포커스 주기	
+		menuCanvas.setFocusable(true);	// 너 포커스 받을 수 있음
+		menuCanvas.requestFocus();		// 포커스 주기
+		
 		
 		this.setSize(canvasWidth, canvasHeight);
 		this.setVisible(true);
@@ -76,12 +81,17 @@ public class GameFrame extends Frame {
 		if(change) {
 			GameCanvas canvas = (GameCanvas)newCanvas.newInstance();
 			add(canvas);
-
-			canvas.start();
+			
+			// 포커스 주기	
+			canvas.setFocusable(true);	// 너 포커스 받을 수 있음
+			canvas.requestFocus();		// 포커스 주기
 			
 			revalidate();//재활성화(다시 유효하게 만든다)
+			
 			oldCanvas.stop();		// 스레드 종료
 			remove(oldCanvas);
+
+			canvas.start();
 		}
 		
 	}
