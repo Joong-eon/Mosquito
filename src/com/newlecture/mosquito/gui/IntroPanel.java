@@ -81,7 +81,7 @@ public class IntroPanel extends JPanel {
 	}
 
 	public void introSoundOff() {
-		introClip.stop();
+		//introClip.stop();
 	}
 	
 

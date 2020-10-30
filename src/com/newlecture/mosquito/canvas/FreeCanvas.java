@@ -240,16 +240,16 @@ public class FreeCanvas extends GameCanvas{
 							System.out.println("빗나감");
 
 						} else {// 빗나간게 아니라면
-							if (selectedMosq != null) {
+							if (selectedMosq != null && selectedMosq.getCurrentDir() != 2) {
 								if (selectedMosq.getHp() <= 0) {
 									String stageName = "freeStage";
-
+									System.out.println("모기죽임");
 									int killScore = DataService.getInstance().getGameIntValue(stageName, "killScore");
 									int nowScore = score.getScore();
 									score.setScore(nowScore += killScore);
 									player.setUserTotalScore(player.getUserTotalScore() + killScore);
-									selectedMosq.setCurrentDir(2);
 									selectedMosq.setMovIndex(4);
+									selectedMosq.setCurrentDir(2);
 									
 									selectedMosq.setClickable(false);
 									freeService.setCreatableMiss(false);
