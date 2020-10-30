@@ -14,8 +14,9 @@ import com.newlecture.mosquito.canvas.StageCanvas;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Fan extends Weapon {
-	  private Clip bgClip;
-	   private AudioInputStream bgAis;
+	private Clip bgClip;
+	private AudioInputStream bgAis;
+
 	public Fan() {
 		this.setType("Fan");
 		this.setDamage(20);
@@ -25,12 +26,13 @@ public class Fan extends Weapon {
 
 		this.setWidth(100);
 		this.setHeight(136);
-		this.setImgX(75);
-		this.setImgY(60);
+		this.setImgX(50);
+		this.setImgY(40);
 		this.setAttackSpeed(40); // 공격속도는 imgTempo * imgSize 보다 낮을 수 없음
 		this.setImgSize(23);
 		this.setImgTempo(1);
 	}
+
 	public void AttackSound() {
 		try {
 			bgAis = AudioSystem.getAudioInputStream(new File("res/sound/fan.wav"));
@@ -45,6 +47,4 @@ public class Fan extends Weapon {
 
 	}
 
-	
-	
 }

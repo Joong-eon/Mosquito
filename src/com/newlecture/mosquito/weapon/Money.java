@@ -9,8 +9,9 @@ import javax.sound.sampled.Clip;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Money extends Weapon {
-	 private Clip bgClip;
-	   private AudioInputStream bgAis;
+	private Clip bgClip;
+	private AudioInputStream bgAis;
+
 	public Money() {
 		this.setType("Money");
 		this.setDamage(20);
@@ -26,7 +27,7 @@ public class Money extends Weapon {
 		this.setImgSize(21);
 		this.setImgTempo(1);
 	}
-	
+
 	public void AttackSound() {
 		try {
 			bgAis = AudioSystem.getAudioInputStream(new File("res/sound/coin.wav"));
