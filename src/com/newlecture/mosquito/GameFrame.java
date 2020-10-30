@@ -86,7 +86,7 @@ public class GameFrame extends Frame {
 			public void run() {				
 					try {
 						System.err.println("슬립");
-						Thread.sleep(47000);
+						Thread.sleep(44000);
 
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
