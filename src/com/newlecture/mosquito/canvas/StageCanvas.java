@@ -54,12 +54,15 @@ import com.newlecture.mosquito.weapon.Spear;
 import com.newlecture.mosquito.weapon.StrawShoes;
 import com.newlecture.mosquito.weapon.Weapon;
 
+
 public class StageCanvas extends GameCanvas {
 
 	private Image weapon1;
 	private Image weapon2;
 	private Image weapon22;
 	private Image[] weaponImg;
+	private boolean isLevelUp = false;
+	private boolean isClearSound = true;
 
 	// ü
 	public static Canvas instance;
@@ -73,6 +76,8 @@ public class StageCanvas extends GameCanvas {
 	private AudioInputStream effectAis;
 	private Clip mosClip;
 	private AudioInputStream mosAis;
+	
+	private int showLevelupTime=0;
 
 	/// 여기서 보유무기 이미지 stageService에서 받아오고,
 
@@ -97,6 +102,7 @@ public class StageCanvas extends GameCanvas {
 	private int killCount = 0;
 
 	private ButtonClickedListener clickListener;
+	private Image levelUp;
 
 	public StageCanvas() {//
 
@@ -251,9 +257,13 @@ public class StageCanvas extends GameCanvas {
 					mosSoundOff();
 				//	clearSound("res/sound/gameclear.wav");
 					if (stageService.getGameClear().contains(x, y)) {
-						stageService.setGameClear(false);
-						stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
-					}
+						 stageService.setGameClear(false);
+		                  killCount = 0;
+		                  isClearSound = true;
+		                  clearSoundOff();
+		                  mosSound("res/sound/mos.wav");
+		                  stageService.getGameClear().getClickListener().onClicked(stageService.getGameClear());
+		            }
 
 				} else if (true == player.getCurrentWp().isClickable()) {
 					player.getCurrentWp().AttackSound();
@@ -318,8 +328,10 @@ public class StageCanvas extends GameCanvas {
 								int levelBound = DataService.getInstance().getGameIntValue("default", "levelBound");
 								levelBound *= stageService.getP1().getUserLevel();
 								if(player.getUserTotalScore() >= levelBound) { 
+									effectSound("res/sound/Levelup.wav");
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 									stageService.getP1().setUserLevel(userLevel);
+									isLevelUp = true;
 								}
 								
 //								if (player.getUserTotalScore() % levelBound == 0 && player.getUserTotalScore() / 100 != 0) {
@@ -372,6 +384,10 @@ public class StageCanvas extends GameCanvas {
 	public void mosSoundOff() {
 		mosClip.stop();
 	}
+	
+	 public void clearSoundOff() {
+	      bgClip.stop();
+	 }
 
 	private void effectSound(String file) {
 
@@ -455,8 +471,11 @@ public class StageCanvas extends GameCanvas {
 			stageService.getGameOver().paint(bg);
 
 		} else if (killCount == stageService.getMosqMaxCount() && stageService.isGameOver() == false) {
-			mosSoundOff();
-			clearSound("res/sound/gameclear.wav");
+			if(isClearSound) {
+	            mosSoundOff();
+	            clearSound("res/sound/gameclear.wav");
+	            isClearSound = false;
+	         }
 
 			stageService.setGameClear(true);
 			stageService.getGameClear().paint(bg);
@@ -482,6 +501,11 @@ public class StageCanvas extends GameCanvas {
 			if (isTypedTab) {
 				weapons.paint(bg);
 			}
+			
+			if(isLevelUp) {
+	            levelUp = ImageLoader.Levelup;
+	            bg.drawImage(levelUp, 500, 500, StageCanvas.instance);
+	         }
 
 
 			player.getCurrentWp().paint(bg);
@@ -494,6 +518,14 @@ public class StageCanvas extends GameCanvas {
 
 	@Override
 	public void gameUpdate() {
+		
+		showLevelupTime++;
+
+		if (showLevelupTime >= 500) {
+			isLevelUp = false;
+			showLevelupTime = 0;
+		}
+		
 		timer.update();
 
 		int mosqSize = stageService.getMosqs().size();

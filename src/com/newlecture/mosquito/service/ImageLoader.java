@@ -56,6 +56,7 @@ public class ImageLoader {
 	public static Image level3_weapon;
 
 	public static Image hpBar;
+	public static Image Levelup;
 
 	static {
 		try {
@@ -109,7 +110,9 @@ public class ImageLoader {
 			backBtnNormal = ImageIO.read(new File("res/back_normal.png"));		  
 			backBtnPressed = ImageIO.read(new File("res/back_pressed.png"));		
 			
-			hpBar = ImageIO.read(new File("res/hp_bar.png"));	
+			hpBar = ImageIO.read(new File("res/hp_bar.png"));
+			
+			Levelup = ImageIO.read(new File("res/Levelup.png"));
 			
 			
 			level1_weapon = ImageIO.read(new File("res/level1_weapon.png"));
