@@ -73,7 +73,8 @@ public class DataService {
 			String line = scan.nextLine();
 			userDatas.add(line);
 
-			if (line.contains(id))
+			String name = line.substring(1, line.length()-1);
+			if (name.equals(id))
 				isContain = true;
 		}
 		
@@ -84,6 +85,7 @@ public class DataService {
 
 			saveUserData(userDatas);
 		}
+		
 		try {
 			loadConfig("data/userConfig.txt");
 		} catch (IOException e) {
@@ -321,6 +323,17 @@ public class DataService {
 	}
 
 	public int getPlayerIntValue(String key, String attribute) {
+		
+		for (String name : allUserDatas.keySet()) {
+
+			System.out.println("[" + name + "]");
+			LinkedHashMap<String, String> contents = allUserDatas.get(name);
+			for (String key2 : contents.keySet()) {
+				String value = contents.get(key2);
+				System.out.printf("%s = %s\n", key2, value);
+			}
+		}
+		
 		String data = allUserDatas.get(key).get(attribute);
 		int value = 0;
 		if (false == data.equals("")) {
