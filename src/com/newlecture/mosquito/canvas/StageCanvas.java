@@ -331,6 +331,10 @@ public class StageCanvas extends GameCanvas {
 									effectSound("res/sound/Levelup.wav");
 									System.out.println("레벨 업! 현재 레벨 : " + (++userLevel));
 									stageService.getP1().setUserLevel(userLevel);
+									stageService.getP1().setWeapons();
+									player = stageService.getP1();
+									stageService.setWeaponButton();
+									weapons = stageService.getWeapons();
 									isLevelUp = true;
 								}
 								
@@ -460,7 +464,7 @@ public class StageCanvas extends GameCanvas {
 		    
 		    bg.setColor(Color.BLACK);
 		    bg.setFont(new Font("돋움", Font.BOLD, 20));
-		    bg.drawString("LEVEL." + level, 700, 890);
+		    bg.drawString("계급 : " + level, 700, 890);
 	    }
 	    
 		if (((timer.getOneCount() == 0 && timer.getTenCount() == 0) || player.getHp() <= 0)

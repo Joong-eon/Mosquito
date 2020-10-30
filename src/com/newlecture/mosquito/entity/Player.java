@@ -33,13 +33,6 @@ public class Player {
 	//player에 점수를 넣어놓고 인터페이스 구현해서 스테이지 클리어 시점만 알려주게끔 하면 되지 않을까?
 	
 	public Player(String name,int mode) {
-		/*
-		try {
-	         DataService.getInstance().checkId(name);
-	      } catch (FileNotFoundException e1) {
-	         // TODO Auto-generated catch block
-	         e1.printStackTrace();
-	     }*/
 		
 		tier = 1;//추후 파일 입출력으로 구현
 		money = 0;
@@ -48,23 +41,24 @@ public class Player {
 		userName = name;
 		
 		userLevel = DataService.getInstance().getPlayerIntValue(userName, "level");
-		arrWp = DataService.getInstance().getWeaponList(userLevel);
+		
 		/*
-		for(int i=0;i<arrWp.size();i++) {
-			System.out.println(arrWp.get(i));
-		}
-		*/
+		arrWp = DataService.getInstance().getWeaponList(userLevel);
 		
 		arrWpDir = new ArrayList();
 		
 		for(int i=0;i<arrWp.size();i++) {								//"level1"
 			arrWpDir.add(DataService.getInstance().getWeaponStringValue("level"+userLevel, (String)arrWp.get(i)));
 		}
+		*/
+		
 		/*
 		for(int i=0;i<arrWp.size();i++) {
 			System.out.println(arrWpDir.get(i));
 		}*/
 		
+		setWeapons();
+		/*
 		weapons = new Weapon[arrWp.size()];
 		
 		for(int i=0;i<arrWp.size();i++) {
@@ -89,6 +83,7 @@ public class Player {
 			}
 		}
 		currentWp = weapons[0];
+		*/
 		
 		
 		
@@ -110,6 +105,46 @@ public class Player {
 		//나중에 정리해야함 일단 기능만 확인
 		
 		
+	}
+	
+	public void setWeapons() {
+		arrWp = DataService.getInstance().getWeaponList(userLevel);
+		/*
+		for(int i=0;i<arrWp.size();i++) {
+			System.out.println(arrWp.get(i));
+		}
+		*/
+		
+		arrWpDir = new ArrayList();
+		
+		for(int i=0;i<arrWp.size();i++) {								//"level1"
+			arrWpDir.add(DataService.getInstance().getWeaponStringValue("level"+userLevel, (String)arrWp.get(i)));
+		}
+		
+		weapons = new Weapon[arrWp.size()];
+
+		for (int i = 0; i < arrWp.size(); i++) {
+			String weaponName = "com.newlecture.mosquito.weapon." + arrWp.get(i);
+			Class t = null;
+
+			try {
+				t = Class.forName(weaponName);
+				try {
+					Object newObj = t.newInstance();
+					weapons[i] = (Weapon) newObj;
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		currentWp = weapons[0];
 	}
 	
 	

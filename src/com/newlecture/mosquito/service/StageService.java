@@ -55,7 +55,7 @@ public class StageService {
 	private PlayerHpBar hpBar;
 	private boolean isGameClear;
 	private boolean isGameOver;
-	
+
 	private Image background;
 	
 	public StageService() {
@@ -64,13 +64,14 @@ public class StageService {
 	
 	public StageService(int stageStep) {
 		
-		
 		missList = new ArrayList<Miss>();
 		
 		stageIndex = stageStep;
 		timer = new Timer(this.getStageIndex());
 		p1 = new Player(GameFrame.getInstance().getUserName(),1);
 		
+		setWeaponButton();
+		/*
 		ArrayList wpDir = p1.getArrWpDir();//무기 이미지경로 리스트
 		ArrayList wp = p1.getArrWp();//무기 이름 리스트
 		weaponImg = new Image[wpDir.size()];
@@ -92,7 +93,7 @@ public class StageService {
 			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
 			break;
 		}
-		
+		*/
 		
 		hpBar = new PlayerHpBar(p1.getHp());
 		isGameClear = false;
@@ -102,6 +103,30 @@ public class StageService {
 		//System.out.println("gameover, gameclear 객체 생성 완료");
 		
 		changeStage(stageStep);
+	}
+	
+	public void setWeaponButton() {
+		ArrayList wpDir = p1.getArrWpDir();//무기 이미지경로 리스트
+		ArrayList wp = p1.getArrWp();//무기 이름 리스트
+		weaponImg = new Image[wpDir.size()];
+
+		weaponImg[0] = ImageLoader.level1_weapon;
+		weaponImg[1] = ImageLoader.level2_weapon;
+		weaponImg[2] = ImageLoader.level3_weapon;
+		
+		System.out.println(p1.getUserLevel());
+		// 해당 레벨에 보유한 무기 갯수만큼 for문 돌려서 버튼 생성. 버튼 생성 위치도 변수화 해야함.
+		switch(p1.getUserLevel()/10) {
+		case 0:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 1:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		case 2:
+			weapons = new WeaponButton("WeaponList", weaponImg[p1.getUserLevel()/10], weaponImg[p1.getUserLevel()/10], 400, 200, 732, 700);
+			break;
+		}
 	}
 
 	public GameClear getGameClear() {
@@ -130,7 +155,7 @@ public class StageService {
 		mosqCreateCount = stage.getMosqCreateCount();
 		mosqCreateTime = stage.getMosqCreateTime() * 60;			// 60FPS라서 60을 곱함
 		createMosquito();
-	
+		
 		currentButtCount = 0;		// 현재 생성 된 나비 수
 		buttDeltaTime = 0;
 		buttMaxCount = stage.getButtMaxCount();
@@ -231,8 +256,8 @@ public class StageService {
 				
 				if(mosqs.get(i).getDeleteTimer() == 0) {
 					//mosqs.remove(i);
-					mosqs.get(i).setX(-1);
-					mosqs.get(i).setY(-1);
+					mosqs.get(i).setX(-100);
+					mosqs.get(i).setY(-100);
 					mosqs.get(i).setClickable(true);
 					
 					isCreatableMiss = true;
@@ -256,8 +281,8 @@ public class StageService {
 				}
 				
 				if(butts.get(i).getDeleteTimer() == 0) {
-					butts.get(i).setX(-1);
-					butts.get(i).setY(-1);
+					butts.get(i).setX(-100);
+					butts.get(i).setY(-100);
 					butts.get(i).setClickable(true);
 					isCreatableMiss = true;
 				}
