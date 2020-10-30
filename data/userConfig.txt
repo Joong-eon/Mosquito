@@ -1,3 +1,6 @@
 [jun]
-level=20
-totalScore=1140
+level=10
+totalScore=1040
+[junnnn]
+level=1
+totalScore=0
