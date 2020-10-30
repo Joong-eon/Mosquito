@@ -12,11 +12,10 @@ import javax.sound.sampled.Clip;
 import com.newlecture.mosquito.service.ImageLoader;
 
 public class Hand extends Weapon {
-	   private Clip bgClip;
-	   private AudioInputStream bgAis;
-	
+	private Clip bgClip;
+	private AudioInputStream bgAis;
 
-//	public static AudioInputStream handSound;
+	// public static AudioInputStream handSound;
 
 	public Hand() {
 
@@ -33,10 +32,10 @@ public class Hand extends Weapon {
 		this.setAttackSpeed(40); // 공격속도는 imgTempo * imgSize 보다 낮을 수 없음
 		this.setImgSize(18);
 		this.setImgTempo(1);
-		
-//		this.setBgm(handSound);
+
+		// this.setBgm(handSound);
 	}
-	
+
 	public void AttackSound() {
 		try {
 			bgAis = AudioSystem.getAudioInputStream(new File("res/sound/hand.wav"));
@@ -50,8 +49,5 @@ public class Hand extends Weapon {
 		}
 
 	}
-			
-		
-	}
 
-
+}
