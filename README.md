@@ -15,9 +15,6 @@
 
 - 2020.10 ~ 2020.10
 
-## 📖 Issues 관리
-
-<img width="1552" alt="스크린샷 2020-12-30 오전 12 02 39" src="[https://user-images.githubusercontent.com/65852909/103293003-5a601a80-4a32-11eb-9d6c-65c7c84177ae.png](https://user-images.githubusercontent.com/65852909/103293003-5a601a80-4a32-11eb-9d6c-65c7c84177ae.png)">
 
 ## 🎞 실행 화면
 
@@ -47,11 +44,12 @@
 
 ## Contribution
 
-- 담당 역할 및 기능 기술
-
+- 프로젝트 기획
+  - [x] Java
+    -모기 개체와 나비 개체 코드구현
 ## 느낀점
 
-- [x]  느낀점 기술
+- 수업에서 이해가지 않던 객체지향이라는 단어가 미니프로젝트를 통해 직접 객체를 생성하고 사용하면서 와닿는 계기가 되었다.
 
 ## 💼Download
 
